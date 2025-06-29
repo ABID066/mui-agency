@@ -30,7 +30,13 @@ export default function Testimonials() {
       role: 'Founder, Creative Studio',
       avatar: 'EW',
       review: 'We\'ve seen a significant improvement in our social media engagement since working with AgencyBoost. Amazing results!'
-    }
+    },
+    {
+      name: 'Sarah Chen',
+      role: 'CEO, Tech Solutions',
+      avatar: 'SC',
+      review: 'AgencyBoost helped us increase our website traffic by 50% in just three months! Their SEO expertise is unmatched.'
+    },
   ];
 
   return (
@@ -64,7 +70,7 @@ export default function Testimonials() {
 
       <Grid container spacing={4} sx={{ maxWidth: '1200px', mx: 'auto' }}>
         {testimonials.map((testimonial, index) => (
-          <Grid item xs={12} sm={6} md={6} lg={3} key={index}>
+          <Grid  size={{xs: 12, sm: 6, md: 6, lg: 3}} key={index}>
             <Card 
               elevation={0} 
               sx={{ 

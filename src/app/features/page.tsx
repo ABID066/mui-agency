@@ -147,7 +147,7 @@ export default function FeaturesPage() {
           {/* Features Grid */}
           <Grid container spacing={4} sx={{ mb: 12 }}>
             {features.map((feature, index) => (
-              <Grid item xs={12} md={4} key={index}>
+              <Grid size={{xs: 12, md: 4}} key={index}>
                 <Card 
                   sx={{ 
                     height: '100%',
@@ -227,7 +227,7 @@ export default function FeaturesPage() {
             
             <Grid container spacing={4}>
               {benefits.map((benefit, index) => (
-                <Grid item xs={12} md={4} key={index}>
+                <Grid size={{xs: 12, md: 4}} key={index}>
                   <Box sx={{ textAlign: 'center' }}>
                     <Typography 
                       variant="h2" 

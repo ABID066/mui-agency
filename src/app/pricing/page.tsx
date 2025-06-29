@@ -149,7 +149,7 @@ export default function Pricing() {
           {/* Pricing Cards */}
           <Grid container spacing={{ xs: 3, sm: 4 }} sx={{ mb: { xs: 8, sm: 10, lg: 12 } }}>
             {pricingPlans.map((plan, index) => (
-              <Grid item xs={12} sm={6} lg={4} key={index}>
+              <Grid size={{xs: 12, sm: 6, lg: 4}} key={index}>
                 <Box sx={{ position: 'relative', height: '100%' }}>
                   {/* Popular Badge - Fixed positioning */}
                   {plan.popular && (
@@ -366,7 +366,7 @@ export default function Pricing() {
             
             <Grid container spacing={{ xs: 3, sm: 4 }}>
               {faqs.map((faq, index) => (
-                <Grid item xs={12} md={6} key={index}>
+                <Grid size={{xs: 12, md: 6}} key={index}>
                   <Box 
                     sx={{ 
                       p: { xs: 3, sm: 4 },

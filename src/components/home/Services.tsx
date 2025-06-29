@@ -76,7 +76,7 @@ export default function Services() {
 
       <Grid container spacing={4} sx={{ maxWidth: '1200px', mx: 'auto' }}>
         {services.map((service, index) => (
-          <Grid item xs={12} sm={6} md={6} lg={3} key={index} sx={{ display: 'flex' }}>
+          <Grid size={{xs: 12, sm: 6, md: 6, lg: 3}} key={index} sx={{ display: 'flex' }}>
             <Card 
               elevation={0} 
               sx={{ 

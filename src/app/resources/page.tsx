@@ -222,7 +222,7 @@ export default function ResourcesPage() {
             justifyContent="center"
           >
             {resourceCategories.map((category, index) => (
-              <Grid item xs={12} sm={6} lg={4} key={index}>
+              <Grid size={{xs: 12, sm: 6, lg: 4}} key={index}>
                 <Card 
                   sx={{ 
                     height: { xs: '380px', sm: '420px', md: '450px' },
@@ -355,7 +355,7 @@ export default function ResourcesPage() {
               justifyContent="center"
             >
               {popularResources.map((resource, index) => (
-                <Grid item xs={12} md={6} key={index}>
+                <Grid size={{xs: 12, md: 6}} key={index}>
                   <Card 
                     sx={{ 
                       p: { xs: 2, sm: 3 },
@@ -484,7 +484,7 @@ export default function ResourcesPage() {
               justifyContent="center"
             >
               {supportOptions.map((option, index) => (
-                <Grid item xs={12} sm={6} md={3} key={index}>
+                <Grid size={{xs: 12, sm: 6, md: 3}} key={index}>
                   <Box sx={{ 
                     textAlign: 'center', 
                     height: { xs: '200px', sm: '220px', md: '200px' },

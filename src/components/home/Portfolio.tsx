@@ -27,7 +27,12 @@ export default function Portfolio() {
       title: 'Project Gamma',
       description: 'An engaging social media strategy that grew followers by 500% for a growing brand.',
       image: 'https://images.unsplash.com/photo-1611224923853-80b023f02d71?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
-    }
+    },
+    {
+      title: 'Project Alpha',
+      description: 'A successful SEO campaign that increased organic traffic by 200% for a local business.',
+      image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+    },
   ];
 
   return (
@@ -64,7 +69,7 @@ export default function Portfolio() {
 
         <Grid container spacing={4} sx={{ maxWidth: '1200px', mx: 'auto' }}>
           {projects.map((project, index) => (
-            <Grid item xs={12} sm={6} md={6} lg={3} key={index}>
+            <Grid size={{xs: 12, sm: 6, md: 6, lg: 3}} key={index}>
               <Card 
                 elevation={0} 
                 sx={{ 
@@ -105,7 +110,7 @@ export default function Portfolio() {
                     sx={{ 
                       color: '#6b7280',
                       mb: 3,
-                      maxWidth: 310,
+                      maxWidth: 1200,
                       lineHeight: 1.6
                     }}
                   >
