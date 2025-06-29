@@ -64,7 +64,7 @@ export default function Portfolio() {
 
         <Grid container spacing={4} sx={{ maxWidth: '1200px', mx: 'auto' }}>
           {projects.map((project, index) => (
-            <Grid xs={12} sm={6} md={6} lg={3} key={index}>
+            <Grid item xs={12} sm={6} md={6} lg={3} key={index}>
               <Card 
                 elevation={0} 
                 sx={{ 
@@ -74,7 +74,8 @@ export default function Portfolio() {
                   '&:hover': { 
                     transform: 'translateY(-4px)',
                     boxShadow: '0 20px 25px -5px rgb(0 0 0 / 0.1)'
-                  }
+                  },
+                  Width: {xm: 1, md: 200, lg: 200 },
                 }}
               >
                 <Box

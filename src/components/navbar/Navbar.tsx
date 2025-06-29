@@ -1,6 +1,8 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation'; // For Next.js 13+ App Router
+// import { useNavigate } from 'react-router-dom'; // For React Router
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import {
   AppBar,
@@ -97,18 +99,39 @@ const theme = createTheme({
 
 function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const router = useRouter(); // For Next.js
+  // const navigate = useNavigate(); // For React Router
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
 
-  const navigationItems = ['Features', 'Pricing', 'Resources'];
+  // Navigation handler
+  const handleNavigate = (path: string) => {
+    router.push(path); // For Next.js
+    // navigate(path); // For React Router
+    setMobileOpen(false); // Close mobile drawer after navigation
+  };
+
+  // Navigation items with their corresponding routes
+  const navigationItems = [
+    { name: 'Features', path: '/features' },
+    { name: 'Pricing', path: '/pricing' },
+    { name: 'Resources', path: '/resources' }
+  ];
 
   // Mobile drawer content
   const drawer = (
     <Box sx={{ width: 250, height: '100%', bgcolor: 'white' }}>
       <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', p: 2 }}>
-        <Typography variant="h6" sx={{ fontWeight: 900 }}>
+        <Typography 
+          variant="h6" 
+          sx={{ 
+            fontWeight: 900,
+            cursor: 'pointer'
+          }}
+          onClick={() => handleNavigate('/')}
+        >
           AgencyBoost
         </Typography>
         <IconButton onClick={handleDrawerToggle}>
@@ -118,9 +141,10 @@ function Navbar() {
       <Divider />
       <List sx={{ pt: 2 }}>
         {navigationItems.map((item) => (
-          <ListItem key={item} sx={{ px: 2, py: 1 }}>
+          <ListItem key={item.name} sx={{ px: 2, py: 1 }}>
             <Button 
               fullWidth 
+              onClick={() => handleNavigate(item.path)}
               sx={{ 
                 color: '#6b7280', 
                 justifyContent: 'flex-start',
@@ -128,7 +152,7 @@ function Navbar() {
                 fontSize: '1rem'
               }}
             >
-              {item}
+              {item.name}
             </Button>
           </ListItem>
         ))}
@@ -136,6 +160,7 @@ function Navbar() {
           <Button 
             variant="outlined" 
             fullWidth
+            onClick={() => handleNavigate('/login')}
             sx={{ 
               py: 1.5,
               mb: 1
@@ -148,6 +173,7 @@ function Navbar() {
           <Button 
             variant="contained" 
             fullWidth
+            onClick={() => handleNavigate('/register')}
             sx={{ 
               py: 1.5
             }}
@@ -170,27 +196,38 @@ function Navbar() {
           <Typography 
             variant="h5" 
             component="div"
+            sx={{ 
+              cursor: 'pointer',
+              '&:hover': {
+                opacity: 0.8
+              }
+            }}
+            onClick={() => handleNavigate('/')}
           >
             AgencyBoost
           </Typography>
           
           {/* Desktop Navigation */}
           <Stack direction="row" spacing={3} alignItems="center" sx={{ display: { xs: 'none', md: 'flex' } }}>
-            <Button color="secondary">
-              Features
-            </Button>
-            <Button color="secondary">
-              Pricing
-            </Button>
-            <Button color="secondary">
-              Resources
-            </Button>
-            <Button variant="outlined">
+            {navigationItems.map((item) => (
+              <Button 
+                key={item.name}
+                color="secondary"
+                onClick={() => handleNavigate(item.path)}
+              >
+                {item.name}
+              </Button>
+            ))}
+            <Button 
+              variant="outlined"
+              onClick={() => handleNavigate('/login')}
+            >
               Sign In
             </Button>
             <Button 
               variant="contained" 
               sx={{ px: 3 }}
+              onClick={() => handleNavigate('/register')}
             >
               Get Started
             </Button>
