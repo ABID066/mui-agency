@@ -64,7 +64,7 @@ export default function Testimonials() {
             fontWeight: 400
           }}
         >
-          Don't just take our word for it. Here's what our satisfied clients have to say about working with AgencyBoost.
+          Don&#39;t just take our word for it. Here&#39;s what our satisfied clients have to say about working with AgencyBoost.
         </Typography>
       </Box>
 
@@ -91,7 +91,7 @@ export default function Testimonials() {
                   lineHeight: 1.6
                 }}
               >
-                "{testimonial.review}"
+                &quot;{testimonial.review}&quot;
               </Typography>
               <Stack direction="row" spacing={2} alignItems="center">
                 <Avatar 

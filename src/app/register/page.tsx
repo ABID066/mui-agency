@@ -21,10 +21,8 @@ import {
   Visibility,
   VisibilityOff,
   Google,
-  GitHub,
-  ArrowBack
+  GitHub
 } from '@mui/icons-material';
-import { useRouter } from 'next/navigation';
 
 export default function RegisterPage() {
   const [showPassword, setShowPassword] = useState(false);
@@ -37,7 +35,7 @@ export default function RegisterPage() {
     agreeToTerms: false,
     subscribeNewsletter: false
   });
-  const router = useRouter();
+
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();

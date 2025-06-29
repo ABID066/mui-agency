@@ -63,7 +63,8 @@ export default function Portfolio() {
               fontWeight: 400
             }}
           >
-            Take a look at some of our recent projects and the results we've achieved for our clients.
+            Take a look at some of our recent projects and the results we&#39;ve achieved for our clients.
+            Don&#39;t just take our word for it. Here&#39;s what our satisfied clients have to say about working with AgencyBoost.
           </Typography>
         </Box>
 

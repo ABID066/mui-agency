@@ -22,16 +22,16 @@ import {
   VisibilityOff,
   Google,
   GitHub,
-  ArrowBack
+  
 } from '@mui/icons-material';
-import { useRouter } from 'next/navigation';
+
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
-  const router = useRouter();
+  
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -227,7 +227,7 @@ export default function LoginPage() {
             {/* Sign Up Link */}
             <Box sx={{ textAlign: 'center', mt: 4 }}>
               <Typography variant="body2" sx={{ color: '#6b7280' }}>
-                Don't have an account?{' '}
+                Don&#39;t have an account?{' '}
                 <Link
                   href="/register"
                   sx={{

@@ -103,15 +103,15 @@ export default function Hero() {
         
         {/* Trust Indicators */}
         <Grid container spacing={4} justifyContent="center" sx={{ mt: 4, maxWidth: '800px', mx: 'auto' }}>
-          <Grid xs={4} sm={4} md={4}>
+          <Grid size={{xs: 4, sm: 4, md: 4}}>
              <Typography variant="h4" fontWeight="900" color="black">500+</Typography>
              <Typography variant="body2" color="#6b7280" fontWeight={500}>Active Clients</Typography>
            </Grid>
-           <Grid xs={4} sm={4} md={4}>
+           <Grid size={{xs: 4, sm: 4, md: 4}}>
              <Typography variant="h4" fontWeight="900" color="black">50K+</Typography>
              <Typography variant="body2" color="#6b7280" fontWeight={500}>Projects Done</Typography>
            </Grid>
-           <Grid xs={4} sm={4} md={4}>
+           <Grid size={{xs: 4, sm: 4, md: 4}}>
             <Typography variant="h4" fontWeight="900" color="black">99.9%</Typography>
             <Typography variant="body2" color="#6b7280" fontWeight={500}>Success Rate</Typography>
           </Grid>
