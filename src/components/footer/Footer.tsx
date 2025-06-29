@@ -14,7 +14,7 @@ export default function Footer() {
     <Box sx={{ bgcolor: '#111827', py: 8 }}>
       <Container maxWidth="xl">
         <Grid container spacing={6}>
-          <Grid xs={12} md={4}>
+          <Grid size={{xs: 12, md: 4}}>
             <Typography 
               variant="h5" 
               sx={{ 
@@ -33,7 +33,7 @@ export default function Footer() {
               The complete digital marketing platform for modern businesses.
             </Typography>
           </Grid>
-          <Grid xs={12} sm={6} md={2}>
+          <Grid size={{xs: 12, sm: 6, md: 2}}>
             <Typography 
               variant="subtitle1" 
               sx={{ fontWeight: 700, color: 'white', mb: 2 }}
@@ -47,7 +47,7 @@ export default function Footer() {
               <Typography variant="body2" sx={{ color: '#9ca3af' }}>Content</Typography>
             </Stack>
           </Grid>
-          <Grid xs={12} sm={6} md={2}>
+          <Grid size={{xs: 12, sm: 6, md: 2}}>
             <Typography 
               variant="subtitle1" 
               sx={{ fontWeight: 700, color: 'white', mb: 2 }}
@@ -61,7 +61,7 @@ export default function Footer() {
               <Typography variant="body2" sx={{ color: '#9ca3af' }}>Contact</Typography>
             </Stack>
           </Grid>
-          <Grid xs={12} sm={6} md={2}>
+          <Grid size={{xs: 12, sm: 6, md: 2}}>
             <Typography 
               variant="subtitle1" 
               sx={{ fontWeight: 700, color: 'white', mb: 2 }}
@@ -75,7 +75,7 @@ export default function Footer() {
               <Typography variant="body2" sx={{ color: '#9ca3af' }}>Guides</Typography>
             </Stack>
           </Grid>
-          <Grid xs={12} sm={6} md={2}>
+          <Grid size={{xs: 12, sm: 6, md: 2}}>
             <Typography 
               variant="subtitle1" 
               sx={{ fontWeight: 700, color: 'white', mb: 2 }}
