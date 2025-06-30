@@ -58,7 +58,15 @@ export default function CTA() {
               mb: 4
             }}
           >
-            <Stack direction="row" spacing={0} sx={{ bgcolor: 'white', borderRadius: 2, p: 1 }}>
+            <Stack 
+              direction={{ xs: 'column', md: 'row' }} 
+              spacing={{ xs: 1, md: 0 }} 
+              sx={{ 
+                bgcolor: 'white', 
+                borderRadius: 2, 
+                p: 1 
+              }}
+            >
               <TextField
                 type="email"
                 placeholder="Enter your email address"
@@ -83,9 +91,10 @@ export default function CTA() {
                   color: 'white',
                   fontWeight: 900,
                   textTransform: 'none',
-                  px: 4,  // Reduced from px: 8
-                  whiteSpace: 'nowrap', // Prevents text wrapping
-                  minWidth: 'fit-content', // Makes button only as wide as needed
+                  px: 4,
+                  whiteSpace: 'nowrap',
+                  minWidth: { xs: 'auto', md: 'fit-content' },
+                  width: { xs: '100%', md: 'auto' },
                   '&:hover': { bgcolor: '#1f2937' }
                 }}
               >
