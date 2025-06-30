@@ -27,9 +27,11 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <meta name="emotion-insertion-point" content="" />
+        <meta name="format-detection" content="telephone=no, date=no, email=no, address=no" />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        suppressHydrationWarning={true}
       >
         <MUIThemeProvider>
           {children}

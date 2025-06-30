@@ -3,7 +3,7 @@
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { CacheProvider } from '@emotion/react';
 import CssBaseline from '@mui/material/CssBaseline';
-import { ReactNode } from 'react';
+import { ReactNode, useState, useEffect } from 'react';
 import createEmotionCache from '../lib/emotion-cache';
 
 const theme = createTheme({
@@ -21,18 +21,28 @@ const theme = createTheme({
   },
 });
 
-// Client-side cache, shared for the whole session of the user in the browser.
-const clientSideEmotionCache = createEmotionCache();
-
 interface MUIThemeProviderProps {
   children: ReactNode;
-  emotionCache?: ReturnType<typeof createEmotionCache>;
 }
 
-export default function MUIThemeProvider({ 
-  children, 
-  emotionCache = clientSideEmotionCache 
-}: MUIThemeProviderProps) {
+export default function MUIThemeProvider({ children }: MUIThemeProviderProps) {
+  const [emotionCache, setEmotionCache] = useState<ReturnType<typeof createEmotionCache> | null>(null);
+
+  useEffect(() => {
+    // Create emotion cache only on client side to prevent hydration mismatch
+    setEmotionCache(createEmotionCache());
+  }, []);
+
+  // During SSR or before hydration, render without CacheProvider
+  if (!emotionCache) {
+    return (
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        {children}
+      </ThemeProvider>
+    );
+  }
+
   return (
     <CacheProvider value={emotionCache}>
       <ThemeProvider theme={theme}>

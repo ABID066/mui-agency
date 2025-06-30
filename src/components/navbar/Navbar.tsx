@@ -115,6 +115,7 @@ function Navbar() {
 
   // Navigation items with their corresponding routes
   const navigationItems = [
+    { name: 'Dashboard', path: '/dashboard' },
     { name: 'Features', path: '/features' },
     { name: 'Pricing', path: '/pricing' },
     { name: 'Resources', path: '/resources' }
