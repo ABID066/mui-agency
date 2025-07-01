@@ -9,9 +9,9 @@ import {
   Avatar, 
   Chip, 
   Grid,
-  Container,
-  IconButton
+  Container
 } from '@mui/material';
+import CompanyLogos from './CompanyLogos';
 import { 
   Google as GoogleIcon, 
   LocationOn as LocationIcon,
@@ -80,6 +80,7 @@ export default function MedicalSchedulingTemplate() {
   const [currentYear, setCurrentYear] = useState(2025);
   const [selectedDate, setSelectedDate] = useState(27);
   const [animationCounter, setAnimationCounter] = useState(0);
+  const [highlightedDates, setHighlightedDates] = useState<number[]>([19, 20, 21, 22, 23, 26, 28, 29, 30]);
 
   // Animation effect for changing values (from first code)
   useEffect(() => {
@@ -98,11 +99,26 @@ export default function MedicalSchedulingTemplate() {
           const currentIndex = dates.indexOf(prev);
           return dates[(currentIndex + 1) % dates.length];
         });
+        
+        // Update highlighted dates based on selected date
+        setHighlightedDates(prev => {
+          const allHighlightSets = [
+            [6, 10, 16, 17, 20, 21, 22, 23, 24], // for date 15
+            [8, 9, 10, 13, 14, 15],  // for date 16
+            [21, 22, 23, 24, 27], // for date 20
+            [8, 12, 19, 26, 27],     // for date 21
+            [27,28, 30, 21, 23],     // for date 22
+            [19, 20, 21, 22, 23, ],      // for date 27
+            [26, 28, 29, 30, 27]      // for date 28
+          ];
+          const currentDateIndex = [15, 16, 20, 21, 22, 27, 28].indexOf(selectedDate);
+          return allHighlightSets[currentDateIndex] || prev;
+        });
       }
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [animationCounter]);
+  }, [animationCounter, selectedDate]);
 
   const generateCalendarDays = () => {
     const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
@@ -235,8 +251,10 @@ export default function MedicalSchedulingTemplate() {
               gap: 0,
               maxWidth: '600px',
               mx: 'auto',
-              boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
-              borderRadius: '12px',
+              //boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+              borderRadius: '10px',
+              border: 1,
+              borderColor: '#e5e7eb',
               overflow: 'hidden'
             }}>
               {/* Medical Appointment Card */}
@@ -246,7 +264,8 @@ export default function MedicalSchedulingTemplate() {
                   boxShadow: 'none',
                   borderRadius: 0,
                   bgcolor: '#fff',
-                  border: 'none'
+                  //border: 1,
+                  //borderColor: '#e5e7eb'
                 }}
               >
                 <CardContent sx={{ p: 4 }}>
@@ -355,8 +374,9 @@ export default function MedicalSchedulingTemplate() {
                   flex: 1,
                   boxShadow: 'none',
                   borderRadius: 0,
-                  bgcolor: '#f9fafb',
-                  border: 'none'
+                  //bgcolor: '#f9fafb',
+                  borderLeft: 1,
+                  borderColor: '#e5e7eb'
                 }}
               >
                 <CardContent sx={{ p: 4 }}>
@@ -387,7 +407,8 @@ export default function MedicalSchedulingTemplate() {
                         <Typography sx={{ 
                           fontSize: '12px', 
                           color: '#6b7280', 
-                          fontWeight: 600 
+                          fontWeight: 600,
+                          px: 1
                         }}>
                           {day}
                         </Typography>
@@ -402,21 +423,23 @@ export default function MedicalSchedulingTemplate() {
                     gap: 1
                   }}>
                     {generateCalendarDays().map((day, index) => (
-                      <Box key={index} sx={{ textAlign: 'center', p: 0.5 }}>
+                      <Box key={index} sx={{ textAlign: 'center',  }}>
                         {day && (
                           <Box
                             sx={{
-                              width: 36,
-                              height: 36,
+                              width: 44,
+                              height: 44,
                               display: 'flex',
                               alignItems: 'center',
                               justifyContent: 'center',
-                              borderRadius: '8px',
-                              bgcolor: selectedDate === day ? '#111827' : 'transparent',
+                              borderRadius: '7px',
+                              bgcolor: selectedDate === day ? '#111827' : 
+                                      highlightedDates.includes(day) ? '#e5e7eb' : 'transparent',
                               color: selectedDate === day ? '#fff' : '#374151',
                               fontSize: '14px',
-                              fontWeight: selectedDate === day ? 600 : 500,
-                              transition: 'all 0.2s ease',
+                              fontWeight: selectedDate === day ? 600 : 
+                                        highlightedDates.includes(day) ? 500 : 400,
+                              transition: 'all 0.3s ease',
                               mx: 'auto',
                               cursor: 'pointer',
                               '&:hover': {
@@ -520,244 +543,8 @@ export default function MedicalSchedulingTemplate() {
         </Grid>
       </Container>
       
-      {/* Moving Logos Section */}
-      <Box sx={{ 
-        mt: 8, 
-        py: 6, 
-        bgcolor: '#f9fafb',
-        overflow: 'hidden',
-        position: 'relative'
-      }}>
-        <Typography 
-          variant="body2" 
-          sx={{ 
-            textAlign: 'center',
-            color: '#6b7280',
-            fontSize: '14px',
-            fontWeight: 500,
-            mb: 4,
-            textTransform: 'uppercase',
-            letterSpacing: '0.05em'
-          }}
-        >
-          Trusted by fast-growing companies around the world
-        </Typography>
-        
-        <Box sx={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: 12,
-          animation: 'scroll 25s linear infinite',
-          '@keyframes scroll': {
-            '0%': {
-              transform: 'translateX(100%)'
-            },
-            '100%': {
-              transform: 'translateX(-100%)'
-            }
-          }
-        }}>
-          {/* Company Logos/Names - First Set */}
-          <Box sx={{ 
-            display: 'flex',
-            alignItems: 'center',
-            gap: 2,
-            whiteSpace: 'nowrap'
-          }}>
-            <Box sx={{
-              width: 32,
-              height: 32,
-              bgcolor: '#000',
-              borderRadius: '6px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center'
-            }}>
-              <Typography sx={{ color: '#fff', fontSize: '12px', fontWeight: 'bold' }}>N</Typography>
-            </Box>
-            <Typography sx={{ fontSize: '24px', fontWeight: 600, color: '#6b7280' }}>
-              nbase
-            </Typography>
-          </Box>
-          
-          <Box sx={{ 
-            display: 'flex',
-            alignItems: 'center',
-            gap: 2,
-            whiteSpace: 'nowrap'
-          }}>
-            <Box sx={{
-              width: 24,
-              height: 24,
-              color: '#000'
-            }}>
-              ▲
-            </Box>
-            <Typography sx={{ fontSize: '24px', fontWeight: 600, color: '#6b7280' }}>
-              Vercel
-            </Typography>
-          </Box>
-          
-          <Box sx={{ 
-            display: 'flex',
-            alignItems: 'center',
-            gap: 2,
-            whiteSpace: 'nowrap'
-          }}>
-            <Box sx={{ fontSize: '20px' }}>⚡</Box>
-            <Typography sx={{ fontSize: '24px', fontWeight: 600, color: '#6b7280' }}>
-              supabase
-            </Typography>
-          </Box>
-          
-          <Box sx={{ 
-            display: 'flex',
-            alignItems: 'center',
-            gap: 2,
-            whiteSpace: 'nowrap'
-          }}>
-            <Box sx={{ fontSize: '20px' }}>🎯</Box>
-            <Typography sx={{ fontSize: '24px', fontWeight: 600, color: '#6b7280' }}>
-              Raycast
-            </Typography>
-          </Box>
-          
-          <Box sx={{ 
-            display: 'flex',
-            alignItems: 'center',
-            gap: 2,
-            whiteSpace: 'nowrap'
-          }}>
-            <Box sx={{ fontSize: '20px' }}>🖼️</Box>
-            <Typography sx={{ fontSize: '24px', fontWeight: 600, color: '#6b7280' }}>
-              Framer
-            </Typography>
-          </Box>
-          
-          <Box sx={{ 
-            display: 'flex',
-            alignItems: 'center',
-            gap: 2,
-            whiteSpace: 'nowrap'
-          }}>
-            <Typography sx={{ fontSize: '24px', fontWeight: 600, color: '#6b7280' }}>
-              AngelList
-            </Typography>
-          </Box>
-          
-          <Box sx={{ 
-            display: 'flex',
-            alignItems: 'center',
-            gap: 2,
-            whiteSpace: 'nowrap'
-          }}>
-            <Box sx={{ fontSize: '20px' }}>📖</Box>
-            <Typography sx={{ fontSize: '24px', fontWeight: 600, color: '#6b7280' }}>
-              storyblok
-            </Typography>
-          </Box>
-          
-          {/* Duplicate Set for Seamless Loop */}
-          <Box sx={{ 
-            display: 'flex',
-            alignItems: 'center',
-            gap: 2,
-            whiteSpace: 'nowrap'
-          }}>
-            <Box sx={{
-              width: 32,
-              height: 32,
-              bgcolor: '#000',
-              borderRadius: '6px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center'
-            }}>
-              <Typography sx={{ color: '#fff', fontSize: '12px', fontWeight: 'bold' }}>N</Typography>
-            </Box>
-            <Typography sx={{ fontSize: '24px', fontWeight: 600, color: '#6b7280' }}>
-              nbase
-            </Typography>
-          </Box>
-          
-          <Box sx={{ 
-            display: 'flex',
-            alignItems: 'center',
-            gap: 2,
-            whiteSpace: 'nowrap'
-          }}>
-            <Box sx={{
-              width: 24,
-              height: 24,
-              color: '#000'
-            }}>
-              ▲
-            </Box>
-            <Typography sx={{ fontSize: '24px', fontWeight: 600, color: '#6b7280' }}>
-              Vercel
-            </Typography>
-          </Box>
-          
-          <Box sx={{ 
-            display: 'flex',
-            alignItems: 'center',
-            gap: 2,
-            whiteSpace: 'nowrap'
-          }}>
-            <Box sx={{ fontSize: '20px' }}>⚡</Box>
-            <Typography sx={{ fontSize: '24px', fontWeight: 600, color: '#6b7280' }}>
-              supabase
-            </Typography>
-          </Box>
-          
-          <Box sx={{ 
-            display: 'flex',
-            alignItems: 'center',
-            gap: 2,
-            whiteSpace: 'nowrap'
-          }}>
-            <Box sx={{ fontSize: '20px' }}>🎯</Box>
-            <Typography sx={{ fontSize: '24px', fontWeight: 600, color: '#6b7280' }}>
-              Raycast
-            </Typography>
-          </Box>
-          
-          <Box sx={{ 
-            display: 'flex',
-            alignItems: 'center',
-            gap: 2,
-            whiteSpace: 'nowrap'
-          }}>
-            <Box sx={{ fontSize: '20px' }}>🖼️</Box>
-            <Typography sx={{ fontSize: '24px', fontWeight: 600, color: '#6b7280' }}>
-              Framer
-            </Typography>
-          </Box>
-          
-          <Box sx={{ 
-            display: 'flex',
-            alignItems: 'center',
-            gap: 2,
-            whiteSpace: 'nowrap'
-          }}>
-            <Typography sx={{ fontSize: '24px', fontWeight: 600, color: '#6b7280' }}>
-              AngelList
-            </Typography>
-          </Box>
-          
-          <Box sx={{ 
-            display: 'flex',
-            alignItems: 'center',
-            gap: 2,
-            whiteSpace: 'nowrap'
-          }}>
-            <Box sx={{ fontSize: '20px' }}>📖</Box>
-            <Typography sx={{ fontSize: '24px', fontWeight: 600, color: '#6b7280' }}>
-              storyblok
-            </Typography>
-          </Box>
-        </Box>
-      </Box>
+      
+
     </Box>
   );
 }
