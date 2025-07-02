@@ -5,6 +5,7 @@ import SchedulingTemplate from '../components/home/SchedulingTemplate';
 import CompanyLogos from '../components/home/CompanyLogos';
 import AppointmentSteps from '../components/home/AppointmentSteps';
 import Benefits from '../components/home/Benefits';
+import Muchmore from '../components/home/Muchmore';
 
 export default function Home() {
   return (
@@ -19,6 +20,8 @@ export default function Home() {
         <AppointmentSteps />
         {/* Benefits Section */}
         <Benefits />
+        {/* Much More Section */}
+        <Muchmore />
       </Box>
       <Footer />
     </Box>
