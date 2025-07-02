@@ -143,7 +143,7 @@ const AppointmentSteps = () => {
             transform: 'translateY(-2px)'
           }
         }}>
-          Get started <ArrowForwardIosIcon sx={{ ml: 2, fontSize: '12px' }} />
+          Get Started <ArrowForwardIosIcon sx={{ ml: 2, fontSize: '12px' }} />
         </Box>
       </Box>
 
