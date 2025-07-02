@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation'; // For Next.js 13+ App Router
 // import { useNavigate } from 'react-router-dom'; // For React Router
 import { createTheme, ThemeProvider } from '@mui/material/styles';
@@ -15,7 +15,8 @@ import {
   List,
   ListItem,
   Box,
-  Divider
+  Divider,
+  Container
 } from '@mui/material';
 import { Menu, Close } from '@mui/icons-material';
 
@@ -87,10 +88,9 @@ const theme = createTheme({
     MuiAppBar: {
       styleOverrides: {
         root: {
-          backgroundColor: '#ffffff',
+          backgroundColor: 'transparent',
           color: '#000000',
           boxShadow: 'none',
-          borderBottom: '1px solid #e5e7eb',
         },
       },
     },
@@ -99,8 +99,23 @@ const theme = createTheme({
 
 function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const router = useRouter(); // For Next.js
   // const navigate = useNavigate(); // For React Router
+
+  // Scroll detection effect
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY;
+      const windowHeight = window.innerHeight;
+      const scrollThreshold = windowHeight * 0.1; // 10% of screen height
+      
+      setIsScrolled(scrollPosition > scrollThreshold);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -189,59 +204,100 @@ function Navbar() {
   return (
     <>
       <AppBar 
-        position="static" 
+        position="fixed" 
         elevation={0}
-        sx={{ py: 1 }}
+        sx={{ 
+          py: 1,
+          backgroundColor: 'transparent',
+          transition: 'all 0.3s ease-in-out'
+        }}
       >
-        <Toolbar sx={{ justifyContent: 'space-between' }}>
-          <Typography 
-            variant="h5" 
-            component="div"
-            sx={{ 
-              cursor: 'pointer',
-              '&:hover': {
-                opacity: 0.8
-              }
+        <Container maxWidth="lg" sx={{ px: { xs: 2, sm: 3, md: 4 } }}>
+          <Box
+            sx={{
+              backgroundColor: '#ffffff',
+              borderRadius: isScrolled ? '12px' : '0px',
+              border: isScrolled ? '1px solid #e5e7eb' : 'none',
+              boxShadow: isScrolled ? '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)' : 'none',
+              transition: 'all 0.3s ease-in-out',
+              mx:  2 ,
+              my:  1,
             }}
-            onClick={() => handleNavigate('/')}
           >
-            AgencyBoost
-          </Typography>
-          
-          {/* Desktop Navigation */}
-          <Stack direction="row" spacing={3} alignItems="center" sx={{ display: { xs: 'none', md: 'flex' } }}>
-            {navigationItems.map((item) => (
-              <Button 
-                key={item.name}
-                color="secondary"
-                onClick={() => handleNavigate(item.path)}
+            <Toolbar sx={{ 
+              justifyContent: 'space-between',
+              minHeight: isScrolled ? '56px' : '64px',
+              transition: 'min-height 0.3s ease-in-out',
+              px: { xs: 2, sm: 3 }
+            }}>
+              <Typography 
+                variant={isScrolled ? "h6" : "h5"} 
+                component="div"
+                sx={{ 
+                  cursor: 'pointer',
+                  fontWeight: 900,
+                  fontSize: isScrolled ? '1.25rem' : '1.5rem',
+                  transition: 'font-size 0.3s ease-in-out',
+                  '&:hover': {
+                    opacity: 0.8
+                  }
+                }}
+                onClick={() => handleNavigate('/')}
               >
-                {item.name}
-              </Button>
-            ))}
-            <Button 
-              variant="outlined"
-              onClick={() => handleNavigate('/login')}
-            >
-              Sign In
-            </Button>
-            <Button 
-              variant="contained" 
-              sx={{ px: 3 }}
-              onClick={() => handleNavigate('/register')}
-            >
-              Get Started
-            </Button>
-          </Stack>
-          
-          {/* Mobile Menu Button */}
-          <IconButton 
-            sx={{ display: { xs: 'flex', md: 'none' } }}
-            onClick={handleDrawerToggle}
-          >
-            <Menu />
-          </IconButton>
-        </Toolbar>
+                AgencyBoost
+              </Typography>
+              
+              {/* Desktop Navigation */}
+              <Stack direction="row" spacing={3} alignItems="center" sx={{ display: { xs: 'none', md: 'flex' } }}>
+                {navigationItems.map((item) => (
+                  <Button 
+                    key={item.name}
+                    color="secondary"
+                    onClick={() => handleNavigate(item.path)}
+                    sx={{
+                      fontSize: '0.875rem',
+                      fontWeight: 500,
+                      px: 2,
+                      py: 1
+                    }}
+                  >
+                    {item.name}
+                  </Button>
+                ))}
+                <Button 
+                  variant="outlined"
+                  onClick={() => handleNavigate('/login')}
+                  sx={{
+                    fontSize: '0.875rem',
+                    px: 2.5,
+                    py: 1
+                  }}
+                >
+                  Sign In
+                </Button>
+                <Button 
+                  variant="contained" 
+                  sx={{ 
+                    px: 2.5,
+                    py: 1,
+                    fontSize: '0.875rem'
+                  }}
+                  onClick={() => handleNavigate('/register')}
+                >
+                  Get Started
+                </Button>
+              </Stack>
+              
+              {/* Mobile Menu Button */}
+              <IconButton 
+                sx={{ display: { xs: 'flex', md: 'none' } }}
+                onClick={handleDrawerToggle}
+              >
+                <Menu />
+              </IconButton>
+            </Toolbar>
+          </Box>
+        </Container>
       </AppBar>
 
       {/* Mobile Navigation Drawer */}

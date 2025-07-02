@@ -1,24 +1,30 @@
-'use client';
-
 import { Box } from '@mui/material';
 import Navbar from '../components/navbar/Navbar';
-import Hero from '../components/home/Hero';
-import Services from '../components/home/Services';
-import Portfolio from '../components/home/Portfolio';
-import Testimonials from '../components/home/Testimonials';
-import CTA from '../components/home/CTA';
 import Footer from '../components/footer/Footer';
+import SchedulingTemplate from '../components/home/SchedulingTemplate';
+import CompanyLogos from '../components/home/CompanyLogos';
+import AppointmentSteps from '../components/home/AppointmentSteps';
+import Benefits from '../components/home/Benefits';
+import Muchmore from '../components/home/Muchmore';
+import Testimonials from '../components/home/Testimonials';
 
-export default function CalcomInspiredLanding() {
+export default function Home() {
   return (
-    <Box sx={{ minHeight: '100vh', bgcolor: '#fafafa' }}>
+    <Box sx={{ minHeight: '100vh', bgcolor: '#ffffff' }}>
       <Navbar />
-      <Box component="main">
-        <Hero />
-        <Services />
-        <Portfolio />
+      <Box component="main" sx={{ pt: '80px' }}>
+        {/* Hero Section */}
+        <SchedulingTemplate />
+        {/* Moving Logos Section */}
+        <CompanyLogos />
+        {/* Appointment Steps Section */}
+        <AppointmentSteps />
+        {/* Benefits Section */}
+        <Benefits />
+        {/* Much More Section */}
+        <Muchmore />
+        {/* Testimonials Section */}
         <Testimonials />
-        <CTA />
       </Box>
       <Footer />
     </Box>
