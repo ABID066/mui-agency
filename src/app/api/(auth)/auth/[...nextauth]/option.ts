@@ -1,7 +1,6 @@
 import bcrypt from "bcryptjs";
 import GoogleProvider from "next-auth/providers/google";
 import GitHubProvider from "next-auth/providers/github";
-
 import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import User from "@/models/userModel";
@@ -81,7 +80,6 @@ export const authOptions: NextAuthOptions = {
         token.name = user?.name;
         token.email = user?.email;
         token.role = user?.role;
-        token.image = user?.image;
       }
       return token;
     },
