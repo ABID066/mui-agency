@@ -6,6 +6,7 @@ import CompanyLogos from '../components/home/CompanyLogos';
 import AppointmentSteps from '../components/home/AppointmentSteps';
 import Benefits from '../components/home/Benefits';
 import Muchmore from '../components/home/Muchmore';
+import Testimonials from '../components/home/Testimonials';
 
 export default function Home() {
   return (
@@ -22,6 +23,8 @@ export default function Home() {
         <Benefits />
         {/* Much More Section */}
         <Muchmore />
+        {/* Testimonials Section */}
+        <Testimonials />
       </Box>
       <Footer />
     </Box>
