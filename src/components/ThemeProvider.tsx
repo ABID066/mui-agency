@@ -4,7 +4,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { CacheProvider } from '@emotion/react';
 import CssBaseline from '@mui/material/CssBaseline';
 import { ReactNode, useState, useEffect } from 'react';
-import createEmotionCache from '../lib/emotion-cache';
+import createEmotionCache from '@/lib/emotion-cache';
 
 const theme = createTheme({
   palette: {
