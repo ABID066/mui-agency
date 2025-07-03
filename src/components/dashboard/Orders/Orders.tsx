@@ -69,17 +69,17 @@ const orderStats = [
 function getStatusColor(status: string) {
   switch (status.toLowerCase()) {
     case 'delivered':
-      return { backgroundColor: '#dcfce7', color: '#166534' };
+      return { backgroundColor: '#1e293b', color: '#ffffff' };
     case 'shipped':
-      return { backgroundColor: '#dbeafe', color: '#1e40af' };
+      return { backgroundColor: '#1e293b', color: '#ffffff' };
     case 'processing':
-      return { backgroundColor: '#fef3c7', color: '#92400e' };
+      return { backgroundColor: '#1e293b', color: '#ffffff' };
     case 'pending':
-      return { backgroundColor: '#f3f4f6', color: '#374151' };
+      return { backgroundColor: '#1e293b', color: '#ffffff' };
     case 'cancelled':
-      return { backgroundColor: '#fee2e2', color: '#991b1b' };
+      return { backgroundColor: '#1e293b', color: '#ffffff' };
     default:
-      return { backgroundColor: '#f3f4f6', color: '#374151' };
+      return { backgroundColor: '#1e293b', color: '#ffffff' };
   }
 }
 
@@ -166,14 +166,14 @@ export default function Orders() {
   const filteredOrders = getFilteredOrders();
 
   return (
-    <Box sx={{ p: 4 }}>
+    <Box sx={{ p: 4, backgroundColor: '#0f172a', minHeight: '100vh' }}>
       {/* Header */}
       <Box sx={{ mb: 4 }}>
-        <Typography variant="h4" fontWeight={700} sx={{ color: '#000000', mb: 1 }}>
-          Order Management
+        <Typography variant="h4" fontWeight={700} sx={{ color: '#ffffff', mb: 1 }}>
+          Orders Management
         </Typography>
-        <Typography variant="body1" sx={{ color: '#6b7280' }}>
-          Track and manage all customer orders
+        <Typography variant="body1" sx={{ color: '#94a3b8' }}>
+          Track and manage customer orders and shipments
         </Typography>
       </Box>
 
@@ -184,20 +184,20 @@ export default function Orders() {
           return (
             <Grid size={{ xs: 12, sm: 6, md: 3 }} key={index}>
               <Card sx={{ 
-                backgroundColor: '#ffffff',
-                border: '1px solid #e5e7eb',
+                backgroundColor: '#1e293b',
+                border: '1px solid #334155',
                 boxShadow: 'none',
                 '&:hover': {
-                  boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.1)'
+                  boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.3)'
                 }
               }}>
                 <CardContent>
                   <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                     <Box>
-                      <Typography variant="body2" sx={{ color: '#6b7280', mb: 1 }}>
+                      <Typography variant="body2" sx={{ color: '#94a3b8', mb: 1 }}>
                         {stat.title}
                       </Typography>
-                      <Typography variant="h5" fontWeight={700} sx={{ color: '#000000', mb: 1 }}>
+                      <Typography variant="h5" fontWeight={700} sx={{ color: '#ffffff', mb: 1 }}>
                         {stat.value}
                       </Typography>
                       <Box sx={{ display: 'flex', alignItems: 'center' }}>
@@ -211,7 +211,7 @@ export default function Orders() {
                         </Typography>
                       </Box>
                     </Box>
-                    <Avatar sx={{ backgroundColor: '#f3f4f6', color: '#6b7280' }}>
+                    <Avatar sx={{ backgroundColor: '#475569', color: '#94a3b8' }}>
                       <IconComponent />
                     </Avatar>
                   </Box>
@@ -224,15 +224,16 @@ export default function Orders() {
 
       {/* Orders Table */}
       <Paper sx={{ 
-        backgroundColor: '#ffffff',
-        border: '1px solid #e5e7eb',
+        backgroundColor: '#1e293b',
+        border: '1px solid #334155',
         boxShadow: 'none',
-        borderRadius: 2
+        borderRadius: 2,
+        overflow: 'hidden'
       }}>
         {/* Table Header */}
-        <Box sx={{ p: 3, borderBottom: '1px solid #e5e7eb' }}>
+        <Box sx={{ p: 3, borderBottom: '1px solid #334155' }}>
           <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 3 }}>
-            <Typography variant="h6" fontWeight={600} sx={{ color: '#000000' }}>
+            <Typography variant="h6" fontWeight={600} sx={{ color: '#ffffff' }}>
               Order History
             </Typography>
             <Box sx={{ display: 'flex', gap: 2 }}>
@@ -241,9 +242,9 @@ export default function Orders() {
                 startIcon={<Download />}
                 sx={{
                   borderColor: '#d1d5db',
-                  color: '#000000',
+                  color: '#ffffff',
                   '&:hover': {
-                    borderColor: '#000000',
+                    borderColor: '#ffffff',
                     backgroundColor: 'rgba(0, 0, 0, 0.04)'
                   }
                 }}
@@ -255,9 +256,9 @@ export default function Orders() {
                 startIcon={<FilterList />}
                 sx={{
                   borderColor: '#d1d5db',
-                  color: '#000000',
+                  color: '#ffffff',
                   '&:hover': {
-                    borderColor: '#000000',
+                    borderColor: '#ffffff',
                     backgroundColor: 'rgba(0, 0, 0, 0.04)'
                   }
                 }}
@@ -274,13 +275,13 @@ export default function Orders() {
             sx={{
               mb: 3,
               '& .MuiTab-root': {
-                color: '#6b7280',
+                color: '#94a3b8',
                 '&.Mui-selected': {
-                  color: '#000000'
+                  color: '#ffffff'
                 }
               },
               '& .MuiTabs-indicator': {
-                backgroundColor: '#000000'
+                backgroundColor: '#1e293b'
               }
             }}
           >
@@ -294,33 +295,34 @@ export default function Orders() {
           {/* Search and Filters */}
           <Box sx={{ display: 'flex', gap: 2, alignItems: 'center' }}>
             <TextField
-              placeholder="Search orders..."
-              variant="outlined"
-              size="small"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <Search sx={{ color: '#6b7280' }} />
-                  </InputAdornment>
-                ),
-              }}
-              sx={{
-                flex: 1,
-                '& .MuiOutlinedInput-root': {
-                  backgroundColor: '#ffffff',
-                  '& fieldset': {
-                    borderColor: '#d1d5db',
+                placeholder="Search orders..."
+                variant="outlined"
+                size="small"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <Search sx={{ color: '#94a3b8' }} />
+                    </InputAdornment>
+                  ),
+                }}
+                sx={{
+                  flex: 1,
+                  '& .MuiOutlinedInput-root': {
+                    backgroundColor: '#0f172a',
+                    color: '#ffffff',
+                    '& fieldset': {
+                      borderColor: '#475569',
+                    },
+                    '&:hover fieldset': {
+                      borderColor: '#64748b',
+                    },
+                    '&.Mui-focused fieldset': {
+                      borderColor: '#3b82f6',
+                    },
                   },
-                  '&:hover fieldset': {
-                    borderColor: '#9ca3af',
-                  },
-                  '&.Mui-focused fieldset': {
-                    borderColor: '#000000',
-                  },
-                },
-              }}
+                }}
             />
             <FormControl size="small" sx={{ minWidth: 120 }}>
               <InputLabel>Status</InputLabel>
@@ -332,12 +334,14 @@ export default function Orders() {
                   '& .MuiOutlinedInput-notchedOutline': {
                     borderColor: '#d1d5db',
                   },
+                  color: '#ffffff',
                   '&:hover .MuiOutlinedInput-notchedOutline': {
                     borderColor: '#9ca3af',
                   },
                   '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                    borderColor: '#000000',
+                    borderColor: '#475569',
                   },
+                  
                 }}
               >
                 <MenuItem value="all">All Status</MenuItem>
@@ -355,49 +359,49 @@ export default function Orders() {
         <TableContainer>
           <Table>
             <TableHead>
-              <TableRow sx={{ backgroundColor: '#f9fafb' }}>
-                <TableCell sx={{ fontWeight: 600, color: '#374151' }}>Order ID</TableCell>
-                <TableCell sx={{ fontWeight: 600, color: '#374151' }}>Date</TableCell>
-                <TableCell sx={{ fontWeight: 600, color: '#374151' }}>Customer</TableCell>
-                <TableCell sx={{ fontWeight: 600, color: '#374151' }}>Items</TableCell>
-                <TableCell sx={{ fontWeight: 600, color: '#374151' }}>Status</TableCell>
-                <TableCell sx={{ fontWeight: 600, color: '#374151' }}>Shipping</TableCell>
-                <TableCell sx={{ fontWeight: 600, color: '#374151' }}>Amount</TableCell>
-                <TableCell sx={{ fontWeight: 600, color: '#374151' }}>Actions</TableCell>
+              <TableRow sx={{ backgroundColor: '#0f172a' }}>
+                <TableCell sx={{ fontWeight: 600, color: '#ffffff' }}>Order ID</TableCell>
+                <TableCell sx={{ fontWeight: 600, color: '#ffffff' }}>Date</TableCell>
+                <TableCell sx={{ fontWeight: 600, color: '#ffffff' }}>Customer</TableCell>
+                <TableCell sx={{ fontWeight: 600, color: '#ffffff' }}>Items</TableCell>
+                <TableCell sx={{ fontWeight: 600, color: '#ffffff' }}>Status</TableCell>
+                <TableCell sx={{ fontWeight: 600, color: '#ffffff' }}>Shipping</TableCell>
+                <TableCell sx={{ fontWeight: 600, color: '#ffffff' }}>Amount</TableCell>
+                <TableCell sx={{ fontWeight: 600, color: '#ffffff' }}>Actions</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {filteredOrders
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((order) => (
-                <TableRow key={order.id} sx={{ '&:hover': { backgroundColor: '#f9fafb' } }}>
+                <TableRow key={order.id} sx={{ '&:hover': { backgroundColor: '#334155' } }}>
                   <TableCell>
-                    <Typography variant="body2" fontWeight={500} sx={{ color: '#000000' }}>
+                    <Typography variant="body2" fontWeight={500} sx={{ color: '#ffffff' }}>
                       {order.id}
                     </Typography>
                   </TableCell>
                   <TableCell>
-                    <Typography variant="body2" sx={{ color: '#6b7280' }}>
+                    <Typography variant="body2" sx={{ color: '#94a3b8' }}>
                       {order.date}
                     </Typography>
                   </TableCell>
                   <TableCell>
                     <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                      <Avatar sx={{ width: 32, height: 32, mr: 2, backgroundColor: '#f3f4f6', color: '#6b7280' }}>
+                      <Avatar sx={{ width: 32, height: 32, mr: 2, backgroundColor: '#1e293b', color: '#94a3b8' }}>
                         {order.customer.charAt(0)}
                       </Avatar>
                       <Box>
-                        <Typography variant="body2" fontWeight={500} sx={{ color: '#000000' }}>
+                        <Typography variant="body2" fontWeight={500} sx={{ color: '#ffffff' }}>
                           {order.customer}
                         </Typography>
-                        <Typography variant="caption" sx={{ color: '#6b7280' }}>
+                        <Typography variant="caption" sx={{ color: '#94a3b8' }}>
                           {order.email}
                         </Typography>
                       </Box>
                     </Box>
                   </TableCell>
                   <TableCell>
-                    <Typography variant="body2" sx={{ color: '#6b7280' }}>
+                    <Typography variant="body2" sx={{ color: '#94a3b8' }}>
                       {order.items} items
                     </Typography>
                   </TableCell>
@@ -424,19 +428,19 @@ export default function Orders() {
                     />
                   </TableCell>
                   <TableCell>
-                    <Typography variant="body2" fontWeight={500} sx={{ color: '#000000' }}>
+                    <Typography variant="body2" fontWeight={500} sx={{ color: '#ffffff' }}>
                       {order.amount}
                     </Typography>
                   </TableCell>
                   <TableCell>
                     <Box sx={{ display: 'flex', gap: 1 }}>
-                      <IconButton size="small" sx={{ color: '#6b7280' }}>
+                      <IconButton size="small" sx={{ color: '#94a3b8' }}>
                         <Visibility />
                       </IconButton>
                       <IconButton
                         size="small"
                         onClick={handleMenuClick}
-                        sx={{ color: '#6b7280' }}
+                        sx={{ color: '#94a3b8' }}
                       >
                         <MoreVert />
                       </IconButton>
@@ -460,7 +464,7 @@ export default function Orders() {
           onRowsPerPageChange={handleChangeRowsPerPage}
           sx={{
             '& .MuiTablePagination-toolbar': {
-              color: '#6b7280'
+              color: '#94a3b8'
             }
           }}
         />
@@ -478,11 +482,11 @@ export default function Orders() {
           }
         }}
       >
-        <MenuItem onClick={handleMenuClose} sx={{ color: '#374151' }}>View Details</MenuItem>
-        <MenuItem onClick={handleMenuClose} sx={{ color: '#374151' }}>Edit Order</MenuItem>
-        <MenuItem onClick={handleMenuClose} sx={{ color: '#374151' }}>Update Status</MenuItem>
-        <MenuItem onClick={handleMenuClose} sx={{ color: '#374151' }}>Print Invoice</MenuItem>
-        <MenuItem onClick={handleMenuClose} sx={{ color: '#dc2626' }}>Cancel Order</MenuItem>
+        <MenuItem onClick={handleMenuClose} sx={{ color: 'black' }}>View Details</MenuItem>
+         <MenuItem onClick={handleMenuClose} sx={{ color: 'black' }}>Edit Order</MenuItem>
+         <MenuItem onClick={handleMenuClose} sx={{ color: 'black' }}>Update Status</MenuItem>
+         <MenuItem onClick={handleMenuClose} sx={{ color: 'black' }}>Print Invoice</MenuItem>
+        <MenuItem onClick={handleMenuClose} sx={{ color: 'black' }}>Cancel Order</MenuItem>
       </Menu>
     </Box>
   );

@@ -143,13 +143,13 @@ export default function Messages() {
   const selectedMessageData = messages.find(msg => msg.id === selectedMessage);
 
   return (
-    <Box sx={{ p: 4 }}>
+    <Box sx={{ p: 4, backgroundColor: '#0f172a', minHeight: '100vh' }}>
       {/* Header */}
       <Box sx={{ mb: 4 }}>
-        <Typography variant="h4" fontWeight={700} sx={{ color: '#000000', mb: 1 }}>
+        <Typography variant="h4" fontWeight={700} sx={{ color: '#ffffff', mb: 1 }}>
           Messages
         </Typography>
-        <Typography variant="body1" sx={{ color: '#6b7280' }}>
+        <Typography variant="body1" sx={{ color: '#94a3b8' }}>
           Manage your team communications and messages
         </Typography>
       </Box>
@@ -161,24 +161,24 @@ export default function Messages() {
           return (
             <Grid size={{ xs: 12, sm: 6, md: 3 }} key={index}>
               <Card sx={{ 
-                backgroundColor: '#ffffff',
-                border: '1px solid #e5e7eb',
+                backgroundColor: '#1e293b',
+                border: '1px solid #334155',
                 boxShadow: 'none',
                 '&:hover': {
-                  boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.1)'
+                  boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.3)'
                 }
               }}>
                 <CardContent>
                   <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                     <Box>
-                      <Typography variant="body2" sx={{ color: '#6b7280', mb: 1 }}>
+                      <Typography variant="body2" sx={{ color: '#94a3b8', mb: 1 }}>
                         {stat.title}
                       </Typography>
-                      <Typography variant="h5" fontWeight={700} sx={{ color: '#000000' }}>
+                      <Typography variant="h5" fontWeight={700} sx={{ color: '#ffffff' }}>
                         {stat.value}
                       </Typography>
                     </Box>
-                    <Avatar sx={{ backgroundColor: '#f3f4f6', color: '#6b7280' }}>
+                    <Avatar sx={{ backgroundColor: '#475569', color: '#94a3b8' }}>
                       <IconComponent />
                     </Avatar>
                   </Box>
@@ -193,8 +193,8 @@ export default function Messages() {
         {/* Messages List */}
         <Grid size={{ xs: 12, md: 4 }}>
           <Paper sx={{ 
-            backgroundColor: '#ffffff',
-            border: '1px solid #e5e7eb',
+            backgroundColor: '#1e293b',
+            border: '1px solid #334155',
             boxShadow: 'none',
             borderRadius: 2,
             height: '600px',
@@ -202,13 +202,13 @@ export default function Messages() {
             flexDirection: 'column'
           }}>
             {/* Search and Filter */}
-            <Box sx={{ p: 3, borderBottom: '1px solid #e5e7eb' }}>
+            <Box sx={{ p: 3, borderBottom: '1px solid #334155' }}>
               <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 2 }}>
-                <Typography variant="h6" fontWeight={600} sx={{ color: '#000000' }}>
+                <Typography variant="h6" fontWeight={600} sx={{ color: '#ffffff' }}>
                   Inbox
                 </Typography>
                 <IconButton size="small" onClick={handleMenuClick}>
-                  <FilterList sx={{ color: '#6b7280' }} />
+                  <FilterList sx={{ color: '#94a3b8' }} />
                 </IconButton>
               </Box>
               <TextField
@@ -221,21 +221,22 @@ export default function Messages() {
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
-                      <Search sx={{ color: '#6b7280' }} />
+                      <Search sx={{ color: '#94a3b8' }} />
                     </InputAdornment>
                   ),
                 }}
                 sx={{
                   '& .MuiOutlinedInput-root': {
-                    backgroundColor: '#ffffff',
+                    backgroundColor: '#0f172a',
+                    color: '#ffffff',
                     '& fieldset': {
-                      borderColor: '#d1d5db',
+                      borderColor: '#475569',
                     },
                     '&:hover fieldset': {
-                      borderColor: '#9ca3af',
+                      borderColor: '#64748b',
                     },
                     '&.Mui-focused fieldset': {
-                      borderColor: '#000000',
+                      borderColor: '#3b82f6',
                     },
                   },
                 }}
@@ -250,74 +251,74 @@ export default function Messages() {
                     <ListItemButton
                       onClick={() => handleMessageSelect(message.id)}
                       sx={{
-                        backgroundColor: selectedMessage === message.id ? '#f3f4f6' : 'transparent',
+                        backgroundColor: selectedMessage === message.id ? '#475569' : 'transparent',
                         '&:hover': {
-                          backgroundColor: '#f9fafb'
+                          backgroundColor: '#334155'
                         },
                         py: 2
                       }}
                     >
-                    <ListItemAvatar>
-                      <Badge
-                        color="primary"
-                        variant="dot"
-                        invisible={!message.unread}
-                      >
-                        <Avatar sx={{ backgroundColor: '#f3f4f6', color: '#6b7280' }}>
-                          {message.avatar}
-                        </Avatar>
-                      </Badge>
-                    </ListItemAvatar>
-                    <ListItemText
-                      primary={
-                        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                          <Typography
-                            variant="body2"
-                            fontWeight={message.unread ? 600 : 400}
-                            sx={{ color: '#000000' }}
-                          >
-                            {message.sender}
-                          </Typography>
-                          <Typography variant="caption" sx={{ color: '#6b7280' }}>
-                            {message.time}
-                          </Typography>
-                        </Box>
-                      }
-                      secondary={
-                        <Box>
-                          <Typography
-                            variant="body2"
-                            fontWeight={message.unread ? 500 : 400}
-                            sx={{ color: '#000000', mb: 0.5 }}
-                          >
-                            {message.subject}
-                          </Typography>
-                          <Typography
-                            variant="caption"
-                            sx={{ 
-                              color: '#6b7280',
-                              display: '-webkit-box',
-                              WebkitLineClamp: 2,
-                              WebkitBoxOrient: 'vertical',
-                              overflow: 'hidden'
-                            }}
-                          >
-                            {message.preview}
-                          </Typography>
-                          <Box sx={{ mt: 1 }}>
-                            <Chip
-                              label={message.priority}
-                              size="small"
-                              sx={{
-                                ...getPriorityColor(message.priority),
-                                fontSize: '0.7rem',
-                                height: 20
-                              }}
-                            />
+                      <ListItemAvatar>
+                        <Badge
+                          color="primary"
+                          variant="dot"
+                          invisible={!message.unread}
+                        >
+                          <Avatar sx={{ backgroundColor: '#f3f4f6', color: '#6b7280' }}>
+                            {message.avatar}
+                          </Avatar>
+                        </Badge>
+                      </ListItemAvatar>
+                      <ListItemText
+                        primary={
+                          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                            <Typography
+                              variant="body2"
+                              fontWeight={message.unread ? 600 : 400}
+                              sx={{ color: '#ffffff' }}
+                            >
+                              {message.sender}
+                            </Typography>
+                            <Typography variant="caption" sx={{ color: '#64748b' }}>
+                              {message.time}
+                            </Typography>
                           </Box>
-                        </Box>
-                      }
-                    />
+                        }
+                        secondary={
+                          <Box>
+                            <Typography
+                              variant="body2"
+                              fontWeight={message.unread ? 500 : 400}
+                              sx={{ color: '#94a3b8', mb: 0.5 }}
+                            >
+                              {message.subject}
+                            </Typography>
+                            <Typography
+                              variant="caption"
+                              sx={{ 
+                                color: '#64748b',
+                                display: '-webkit-box',
+                                WebkitLineClamp: 2,
+                                WebkitBoxOrient: 'vertical',
+                                overflow: 'hidden'
+                              }}
+                            >
+                              {message.preview}
+                            </Typography>
+                            <Box sx={{ mt: 1 }}>
+                              <Chip
+                                label={message.priority}
+                                size="small"
+                                sx={{
+                                  ...getPriorityColor(message.priority),
+                                  fontSize: '0.7rem',
+                                  height: 20
+                                }}
+                              />
+                            </Box>
+                          </Box>
+                        }
+                      />
                     </ListItemButton>
                   </ListItem>
                   {index < filteredMessages.length - 1 && <Divider />}
@@ -330,8 +331,8 @@ export default function Messages() {
         {/* Message Detail/Compose */}
         <Grid size={{ xs: 12, md: 8 }}>
           <Paper sx={{ 
-            backgroundColor: '#ffffff',
-            border: '1px solid #e5e7eb',
+            backgroundColor: '#1e293b',
+            border: '1px solid #334155',
             boxShadow: 'none',
             borderRadius: 2,
             height: '600px',
@@ -342,50 +343,50 @@ export default function Messages() {
               // Message Detail View
               <>
                 {/* Message Header */}
-                <Box sx={{ p: 3, borderBottom: '1px solid #e5e7eb' }}>
+                <Box sx={{ p: 3, borderBottom: '1px solid #334155' }}>
                   <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 2 }}>
                     <Box sx={{ display: 'flex', alignItems: 'center' }}>
                       <Avatar sx={{ backgroundColor: '#f3f4f6', color: '#6b7280', mr: 2 }}>
                         {selectedMessageData.avatar}
                       </Avatar>
                       <Box>
-                        <Typography variant="h6" fontWeight={600} sx={{ color: '#000000' }}>
+                        <Typography variant="h6" fontWeight={600} sx={{ color: '#ffffff' }}>
                           {selectedMessageData.subject}
                         </Typography>
-                        <Typography variant="body2" sx={{ color: '#6b7280' }}>
+                        <Typography variant="body2" sx={{ color: '#94a3b8' }}>
                           From: {selectedMessageData.sender} &lt;{selectedMessageData.email}&gt;
                         </Typography>
                       </Box>
                     </Box>
                     <Box sx={{ display: 'flex', alignItems: 'center' }}>
                       <IconButton size="small">
-                        <Star sx={{ color: '#6b7280' }} />
+                        <Star sx={{ color: '#94a3b8' }} />
                       </IconButton>
                       <IconButton size="small" onClick={handleMenuClick}>
-                        <MoreVert sx={{ color: '#6b7280' }} />
+                        <MoreVert sx={{ color: '#94a3b8' }} />
                       </IconButton>
                     </Box>
                   </Box>
-                  <Typography variant="caption" sx={{ color: '#6b7280' }}>
+                  <Typography variant="caption" sx={{ color: '#94a3b8' }}>
                     Received {selectedMessageData.time}
                   </Typography>
                 </Box>
 
                 {/* Message Content */}
                 <Box sx={{ flex: 1, p: 3, overflow: 'auto' }}>
-                  <Typography variant="body1" sx={{ color: '#374151', lineHeight: 1.6 }}>
+                  <Typography variant="body1" sx={{ color: '#ffffff', lineHeight: 1.6 }}>
                     {selectedMessageData.preview}
                   </Typography>
-                  <Typography variant="body1" sx={{ color: '#374151', lineHeight: 1.6, mt: 2 }}>
+                  <Typography variant="body1" sx={{ color: '#ffffff', lineHeight: 1.6, mt: 2 }}>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
                   </Typography>
-                  <Typography variant="body1" sx={{ color: '#374151', lineHeight: 1.6, mt: 2 }}>
+                  <Typography variant="body1" sx={{ color: '#ffffff', lineHeight: 1.6, mt: 2 }}>
                     Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
                   </Typography>
                 </Box>
 
                 {/* Reply Section */}
-                <Box sx={{ p: 3, borderTop: '1px solid #e5e7eb' }}>
+                <Box sx={{ p: 3, borderTop: '1px solid #334155' }}>
                   <TextField
                     placeholder="Type your reply..."
                     multiline
@@ -396,14 +397,16 @@ export default function Messages() {
                     sx={{
                       mb: 2,
                       '& .MuiOutlinedInput-root': {
+                        backgroundColor: '#0f172a',
+                        color: '#ffffff',
                         '& fieldset': {
-                          borderColor: '#d1d5db',
+                          borderColor: '#475569',
                         },
                         '&:hover fieldset': {
-                          borderColor: '#9ca3af',
+                          borderColor: '#64748b',
                         },
                         '&.Mui-focused fieldset': {
-                          borderColor: '#000000',
+                          borderColor: '#3b82f6',
                         },
                       },
                     }}
@@ -411,19 +414,19 @@ export default function Messages() {
                   <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                     <Box>
                       <IconButton size="small">
-                        <AttachFile sx={{ color: '#6b7280' }} />
+                        <AttachFile sx={{ color: '#94a3b8' }} />
                       </IconButton>
                       <IconButton size="small">
-                        <EmojiEmotions sx={{ color: '#6b7280' }} />
+                        <EmojiEmotions sx={{ color: '#94a3b8' }} />
                       </IconButton>
                     </Box>
                     <Button
                       variant="contained"
                       startIcon={<Send />}
                       sx={{
-                        backgroundColor: '#000000',
+                        backgroundColor: '#3b82f6',
                         '&:hover': {
-                          backgroundColor: '#374151'
+                          backgroundColor: '#2563eb'
                         }
                       }}
                     >
@@ -442,10 +445,10 @@ export default function Messages() {
                 flexDirection: 'column'
               }}>
                 <Inbox sx={{ fontSize: 64, color: '#d1d5db', mb: 2 }} />
-                <Typography variant="h6" sx={{ color: '#6b7280', mb: 1 }}>
+                <Typography variant="h6" sx={{ color: '#94a3b8', mb: 1 }}>
                   No message selected
                 </Typography>
-                <Typography variant="body2" sx={{ color: '#9ca3af' }}>
+                <Typography variant="body2" sx={{ color: '#64748b' }}>
                   Choose a message from the list to view its content
                 </Typography>
               </Box>
@@ -461,14 +464,15 @@ export default function Messages() {
         onClose={handleMenuClose}
         PaperProps={{
           sx: {
-            border: '1px solid #e5e7eb',
-            boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
+            backgroundColor: '#1e293b',
+            border: '1px solid #334155',
+            boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.3)'
           }
         }}
       >
-        <MenuItem onClick={handleMenuClose} sx={{ color: '#374151' }}>Mark as Read</MenuItem>
-        <MenuItem onClick={handleMenuClose} sx={{ color: '#374151' }}>Star Message</MenuItem>
-        <MenuItem onClick={handleMenuClose} sx={{ color: '#374151' }}>Forward</MenuItem>
+        <MenuItem onClick={handleMenuClose} sx={{ color: '#ffffff', '&:hover': { backgroundColor: '#334155' } }}>Mark as Read</MenuItem>
+        <MenuItem onClick={handleMenuClose} sx={{ color: '#ffffff', '&:hover': { backgroundColor: '#334155' } }}>Star Message</MenuItem>
+        <MenuItem onClick={handleMenuClose} sx={{ color: '#ffffff', '&:hover': { backgroundColor: '#334155' } }}>Forward</MenuItem>
         <MenuItem onClick={handleMenuClose} sx={{ color: '#dc2626' }}>Delete</MenuItem>
       </Menu>
     </Box>
