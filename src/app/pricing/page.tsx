@@ -98,10 +98,11 @@ const faqs = [
 export default function Pricing() {
   return (
     <PageLayout>
-      <Box sx={{ py: { xs: 6, sm: 8, lg: 10 } }}>
+      <Box sx={{pt:"180px", py: { xs: 6, sm: 8, lg: 10 } }}>
         <Container maxWidth="lg">
           {/* Header Section */}
-          <Box sx={{ 
+          <Box sx={{
+            pt: "100px",  
             textAlign: 'center', 
             mb: { xs: 6, sm: 8, lg: 10 },
             px: { xs: 2, sm: 0 }

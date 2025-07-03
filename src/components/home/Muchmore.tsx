@@ -94,11 +94,11 @@ const Muchmore = () => {
         <Box
           sx={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(4, 1fr)',
+            gridTemplateColumns: { xs: 'repeat(2, 1fr)', sm: 'repeat(2, 1fr)', md: 'repeat(4, 1fr)' },
             gap: { xs: 2, sm: 2.5, md: 3 },
             justifyContent: 'center',
             justifyItems: 'center',
-            maxWidth: '800px',
+            maxWidth: { xs: '400px', sm: '500px', md: '800px' },
             margin: '0 auto',
             animation: `${slideUp} 0.8s ease-out 0.2s both`
           }}

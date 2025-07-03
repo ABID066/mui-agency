@@ -173,12 +173,13 @@ export default function ResourcesPage() {
       <Box sx={{ py: { xs: 4, sm: 6, md: 8 } }}>
         <Container maxWidth="lg">
           {/* Header Section */}
-          <Box sx={{ textAlign: 'center', mb: { xs: 6, md: 8 } }}>
+          <Box sx={{ pt: "100px", textAlign: 'center', mb: { xs: 6, md: 8 } }}>
             <Chip 
               label="Resources" 
               sx={{ 
                 mb: 2, 
                 bgcolor: '#000000', 
+                
                 color: '#ffffff',
                 fontWeight: 600,
                 fontSize: { xs: '0.75rem', sm: '0.875rem' }
