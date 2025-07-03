@@ -38,6 +38,14 @@ const userSchema = new Schema(
       type: Boolean,
       default: false,
     },
+    acceptedTermsAndConditions: {
+      type: Boolean,
+      default: false,
+    },
+    subscribeNewsletter: {
+      type: Boolean,
+      default: false,
+    },
     verifyToken: String,
     verifyTokenExpire: Date,
     resetToken: String,
