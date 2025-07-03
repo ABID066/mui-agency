@@ -10,7 +10,7 @@ export const POST = async (request: NextRequest) => {
 
     // Parse the request body
     const userInfo = await request.json();
-    const { name, email, password, image } = userInfo;
+    const { name, email, password, image = "" } = userInfo;
 
     // Validate required fields
     if (!name || !email || !password) {
@@ -42,8 +42,8 @@ export const POST = async (request: NextRequest) => {
     let responseMessage = "";
 
     if (typeof emailResponse == "object") {
-      responseMessage = emailResponse.message;
-      emailHash = emailResponse.emailHash;
+      responseMessage = emailResponse?.message;
+      emailHash = emailResponse?.emailHash;
     }
 
     return NextResponse.json(

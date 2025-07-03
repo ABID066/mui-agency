@@ -7,7 +7,7 @@ import bcrypt from "bcryptjs";
 export async function POST(req: NextRequest) {
   try {
     // Validate request body
-    const { verificationCode, email: hashedEmail } = await req.json();
+    const { code:verificationCode, email: hashedEmail } = await req.json();
     if (!verificationCode || !hashedEmail) {
       return NextResponse.json(
         { error: "Code and hashed email are required" },
