@@ -302,7 +302,7 @@ const Benefits = () => {
             key={index}
             sx={{
               p: 3,
-              height: '500px', // Reduced from 500px by 15% (500 * 0.85 = 425px)
+              height: { xs: '600px', md: '500px' }, // Increased mobile height from 500px to 600px
               border: '1px solid #e5e7eb',
               borderRadius: '16px',
               boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
