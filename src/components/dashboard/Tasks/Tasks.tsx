@@ -210,13 +210,13 @@ export default function Tasks() {
   const completionRate = totalTasks > 0 ? (completedTasks / totalTasks) * 100 : 0;
 
   return (
-    <Box sx={{ p: 4 }}>
+    <Box sx={{ p: 4, backgroundColor: '#0f172a', minHeight: '100vh', color: '#ffffff' }}>
       {/* Header */}
       <Box sx={{ mb: 4 }}>
-        <Typography variant="h4" fontWeight={700} sx={{ color: '#000000', mb: 1 }}>
+        <Typography variant="h4" fontWeight={700} sx={{ color: '#ffffff', mb: 1 }}>
           Task Management
         </Typography>
-        <Typography variant="body1" sx={{ color: '#6b7280' }}>
+        <Typography variant="body1" sx={{ color: '#94a3b8' }}>
           Track and manage team tasks and projects
         </Typography>
       </Box>
@@ -228,24 +228,24 @@ export default function Tasks() {
           return (
             <Grid size={{ xs: 12, sm: 6, md: 3 }} key={index}>
               <Card sx={{ 
-                backgroundColor: '#ffffff',
-                border: '1px solid #e5e7eb',
+                backgroundColor: '#1e293b',
+                border: '1px solid #334155',
                 boxShadow: 'none',
                 '&:hover': {
-                  boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.1)'
+                  boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.3)'
                 }
               }}>
                 <CardContent>
                   <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                     <Box>
-                      <Typography variant="body2" sx={{ color: '#6b7280', mb: 1 }}>
+                      <Typography variant="body2" sx={{ color: '#94a3b8', mb: 1 }}>
                         {stat.title}
                       </Typography>
-                      <Typography variant="h5" fontWeight={700} sx={{ color: '#000000' }}>
+                      <Typography variant="h5" fontWeight={700} sx={{ color: '#ffffff' }}>
                         {stat.value}
                       </Typography>
                     </Box>
-                    <Avatar sx={{ backgroundColor: '#f3f4f6', color: '#6b7280' }}>
+                    <Avatar sx={{ backgroundColor: '#334155', color: '#94a3b8' }}>
                       <IconComponent />
                     </Avatar>
                   </Box>
@@ -260,15 +260,15 @@ export default function Tasks() {
         {/* Task List */}
         <Grid size={{ xs: 12, md: 8 }}>
           <Paper sx={{ 
-            backgroundColor: '#ffffff',
-            border: '1px solid #e5e7eb',
+            backgroundColor: '#1e293b',
+            border: '1px solid #334155',
             boxShadow: 'none',
             borderRadius: 2
           }}>
             {/* Header */}
-            <Box sx={{ p: 3, borderBottom: '1px solid #e5e7eb' }}>
+            <Box sx={{ p: 3, borderBottom: '1px solid #334155' }}>
               <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 3 }}>
-                <Typography variant="h6" fontWeight={600} sx={{ color: '#000000' }}>
+                <Typography variant="h6" fontWeight={600} sx={{ color: '#ffffff' }}>
                   Task List
                 </Typography>
                 <Button
@@ -276,9 +276,9 @@ export default function Tasks() {
                   startIcon={<Add />}
                   onClick={() => setOpenDialog(true)}
                   sx={{
-                    backgroundColor: '#000000',
+                    backgroundColor: '#3b82f6',
                     '&:hover': {
-                      backgroundColor: '#374151'
+                      backgroundColor: '#2563eb'
                     }
                   }}
                 >
@@ -304,25 +304,34 @@ export default function Tasks() {
                   sx={{
                     flex: 1,
                     '& .MuiOutlinedInput-root': {
-                      backgroundColor: '#ffffff',
+                      backgroundColor: '#0f172a',
+                      color: '#ffffff',
                       '& fieldset': {
-                        borderColor: '#d1d5db',
+                        borderColor: '#475569',
                       },
                       '&:hover fieldset': {
-                        borderColor: '#9ca3af',
+                        borderColor: '#64748b',
                       },
                       '&.Mui-focused fieldset': {
-                        borderColor: '#000000',
+                        borderColor: '#3b82f6',
                       },
                     },
+                    '& .MuiInputLabel-root': {
+                      color: '#94a3b8'
+                    },
+                    '& .MuiInputBase-input': {
+                      color: '#ffffff'
+                    }
                   }}
                 />
-                <FormControl size="small" sx={{ minWidth: 120 }}>
+                <FormControl size="small" sx={{ minWidth: 120, '& .MuiInputLabel-root': { color: '#94a3b8' }, '& .MuiOutlinedInput-root': { color: '#ffffff', '& fieldset': { borderColor: '#475569' }, '&:hover fieldset': { borderColor: '#64748b' }, '&.Mui-focused fieldset': { borderColor: '#3b82f6' } } }}>
                   <InputLabel>Status</InputLabel>
                   <Select
                     value={statusFilter}
                     label="Status"
                     onChange={(e) => setStatusFilter(e.target.value)}
+                    sx={{ color: '#ffffff', '& .MuiSvgIcon-root': { color: '#94a3b8' } }}
+                    MenuProps={{ PaperProps: { sx: { backgroundColor: '#1e293b', border: '1px solid #334155' } } }}
                   >
                     <MenuItem value="all">All Status</MenuItem>
                     <MenuItem value="todo">To Do</MenuItem>
@@ -330,12 +339,14 @@ export default function Tasks() {
                     <MenuItem value="completed">Completed</MenuItem>
                   </Select>
                 </FormControl>
-                <FormControl size="small" sx={{ minWidth: 120 }}>
+                <FormControl size="small" sx={{ minWidth: 120, '& .MuiInputLabel-root': { color: '#94a3b8' }, '& .MuiOutlinedInput-root': { color: '#ffffff', '& fieldset': { borderColor: '#475569' }, '&:hover fieldset': { borderColor: '#64748b' }, '&.Mui-focused fieldset': { borderColor: '#3b82f6' } } }}>
                   <InputLabel>Priority</InputLabel>
                   <Select
                     value={priorityFilter}
                     label="Priority"
                     onChange={(e) => setPriorityFilter(e.target.value)}
+                    sx={{ color: '#ffffff', '& .MuiSvgIcon-root': { color: '#94a3b8' } }}
+                    MenuProps={{ PaperProps: { sx: { backgroundColor: '#1e293b', border: '1px solid #334155' } } }}
                   >
                     <MenuItem value="all">All Priority</MenuItem>
                     <MenuItem value="high">High</MenuItem>
@@ -355,7 +366,7 @@ export default function Tasks() {
                       py: 2,
                       px: 3,
                       '&:hover': {
-                        backgroundColor: '#f9fafb'
+                        backgroundColor: '#334155'
                       }
                     }}
                   >
@@ -364,9 +375,9 @@ export default function Tasks() {
                         checked={task.completed}
                         onChange={() => handleTaskToggle(task.id)}
                         sx={{
-                          color: '#d1d5db',
+                          color: '#475569',
                           '&.Mui-checked': {
-                            color: '#000000'
+                            color: '#3b82f6'
                           }
                         }}
                       />
@@ -378,7 +389,7 @@ export default function Tasks() {
                             variant="body1"
                             fontWeight={500}
                             sx={{ 
-                              color: task.completed ? '#9ca3af' : '#000000',
+                              color: task.completed ? '#64748b' : '#ffffff',
                               textDecoration: task.completed ? 'line-through' : 'none'
                             }}
                           >
@@ -406,7 +417,7 @@ export default function Tasks() {
                             <IconButton
                               size="small"
                               onClick={(e) => handleMenuClick(e, task.id)}
-                              sx={{ color: '#6b7280' }}
+                              sx={{ color: '#94a3b8' }}
                             >
                               <MoreVert />
                             </IconButton>
@@ -418,7 +429,7 @@ export default function Tasks() {
                           <Typography
                             variant="body2"
                             sx={{ 
-                              color: task.completed ? '#9ca3af' : '#6b7280',
+                              color: task.completed ? '#64748b' : '#94a3b8',
                               mb: 1
                             }}
                           >
@@ -427,14 +438,14 @@ export default function Tasks() {
                           <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                             <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
                               <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
-                                <Person sx={{ fontSize: 16, color: '#6b7280' }} />
-                                <Typography variant="caption" sx={{ color: '#6b7280' }}>
+                                <Person sx={{ fontSize: 16, color: '#94a3b8' }} />
+                                <Typography variant="caption" sx={{ color: '#94a3b8' }}>
                                   {task.assignee}
                                 </Typography>
                               </Box>
                               <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
-                                <CalendarToday sx={{ fontSize: 16, color: '#6b7280' }} />
-                                <Typography variant="caption" sx={{ color: '#6b7280' }}>
+                                <CalendarToday sx={{ fontSize: 16, color: '#94a3b8' }} />
+                                <Typography variant="caption" sx={{ color: '#94a3b8' }}>
                                   {task.dueDate}
                                 </Typography>
                               </Box>
@@ -447,13 +458,13 @@ export default function Tasks() {
                                   flex: 1,
                                   height: 6,
                                   borderRadius: 3,
-                                  backgroundColor: '#f3f4f6',
+                                  backgroundColor: '#334155',
                                   '& .MuiLinearProgress-bar': {
-                                    backgroundColor: task.completed ? '#059669' : '#000000'
+                                    backgroundColor: task.completed ? '#10b981' : '#3b82f6'
                                   }
                                 }}
                               />
-                              <Typography variant="caption" sx={{ color: '#6b7280', minWidth: 35 }}>
+                              <Typography variant="caption" sx={{ color: '#94a3b8', minWidth: 35 }}>
                                 {task.progress}%
                               </Typography>
                             </Box>
@@ -465,8 +476,8 @@ export default function Tasks() {
                                 label={tag}
                                 size="small"
                                 sx={{
-                                  backgroundColor: '#f3f4f6',
-                                  color: '#6b7280',
+                                  backgroundColor: '#334155',
+                                  color: '#e2e8f0',
                                   fontSize: '0.7rem',
                                   height: 18
                                 }}
@@ -487,23 +498,23 @@ export default function Tasks() {
         {/* Task Summary */}
         <Grid size={{ xs: 12, md: 4 }}>
           <Paper sx={{ 
-            backgroundColor: '#ffffff',
-            border: '1px solid #e5e7eb',
+            backgroundColor: '#1e293b',
+            border: '1px solid #334155',
             boxShadow: 'none',
             borderRadius: 2,
             p: 3
           }}>
-            <Typography variant="h6" fontWeight={600} sx={{ color: '#000000', mb: 3 }}>
+            <Typography variant="h6" fontWeight={600} sx={{ color: '#ffffff', mb: 3 }}>
               Task Summary
             </Typography>
             
             {/* Progress Overview */}
             <Box sx={{ mb: 4 }}>
               <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
-                <Typography variant="body2" sx={{ color: '#6b7280' }}>
+                <Typography variant="body2" sx={{ color: '#94a3b8' }}>
                   Overall Progress
                 </Typography>
-                <Typography variant="body2" fontWeight={500} sx={{ color: '#000000' }}>
+                <Typography variant="body2" fontWeight={500} sx={{ color: '#ffffff' }}>
                   {Math.round(completionRate)}%
                 </Typography>
               </Box>
@@ -519,19 +530,19 @@ export default function Tasks() {
                   }
                 }}
               />
-              <Typography variant="caption" sx={{ color: '#6b7280', mt: 1, display: 'block' }}>
+              <Typography variant="caption" sx={{ color: '#94a3b8', mt: 1, display: 'block' }}>
                 {completedTasks} of {totalTasks} tasks completed
               </Typography>
             </Box>
 
             {/* Team Members */}
             <Box sx={{ mb: 4 }}>
-              <Typography variant="body1" fontWeight={500} sx={{ color: '#000000', mb: 2 }}>
+              <Typography variant="body1" fontWeight={500} sx={{ color: '#ffffff', mb: 2 }}>
                 Team Members
               </Typography>
               <AvatarGroup max={4} sx={{ justifyContent: 'flex-start' }}>
                 {Array.from(new Set(taskList.map(task => task.assigneeAvatar))).map((avatar, index) => (
-                  <Avatar key={index} sx={{ backgroundColor: '#f3f4f6', color: '#6b7280' }}>
+                  <Avatar key={index} sx={{ backgroundColor: '#334155', color: '#94a3b8' }}>
                     {avatar}
                   </Avatar>
                 ))}
@@ -540,7 +551,7 @@ export default function Tasks() {
 
             {/* Quick Actions */}
             <Box>
-              <Typography variant="body1" fontWeight={500} sx={{ color: '#000000', mb: 2 }}>
+              <Typography variant="body1" fontWeight={500} sx={{ color: '#ffffff', mb: 2 }}>
                 Quick Actions
               </Typography>
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
@@ -548,11 +559,11 @@ export default function Tasks() {
                   variant="outlined"
                   size="small"
                   sx={{
-                    borderColor: '#d1d5db',
-                    color: '#000000',
+                    borderColor: '#475569',
+                    color: '#ffffff',
                     '&:hover': {
-                      borderColor: '#000000',
-                      backgroundColor: 'rgba(0, 0, 0, 0.04)'
+                      borderColor: '#64748b',
+                      backgroundColor: 'rgba(255, 255, 255, 0.04)'
                     }
                   }}
                 >
@@ -599,29 +610,59 @@ export default function Tasks() {
         onClose={handleMenuClose}
         PaperProps={{
           sx: {
-            border: '1px solid #e5e7eb',
-            boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
+            backgroundColor: '#1e293b',
+            border: '1px solid #334155',
+            boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.3)'
           }
         }}
       >
-        <MenuItem onClick={handleMenuClose} sx={{ color: '#374151' }}>Edit Task</MenuItem>
-        <MenuItem onClick={handleMenuClose} sx={{ color: '#374151' }}>Assign to</MenuItem>
-        <MenuItem onClick={handleMenuClose} sx={{ color: '#374151' }}>Set Priority</MenuItem>
-        <MenuItem onClick={handleMenuClose} sx={{ color: '#374151' }}>Duplicate</MenuItem>
+        <MenuItem onClick={handleMenuClose} sx={{ color: '#e2e8f0', '&:hover': { backgroundColor: '#334155' } }}>Edit Task</MenuItem>
+        <MenuItem onClick={handleMenuClose} sx={{ color: '#e2e8f0', '&:hover': { backgroundColor: '#334155' } }}>Assign to</MenuItem>
+        <MenuItem onClick={handleMenuClose} sx={{ color: '#e2e8f0', '&:hover': { backgroundColor: '#334155' } }}>Set Priority</MenuItem>
+        <MenuItem onClick={handleMenuClose} sx={{ color: '#e2e8f0', '&:hover': { backgroundColor: '#334155' } }}>Duplicate</MenuItem>
         <MenuItem onClick={handleMenuClose} sx={{ color: '#dc2626' }}>Delete Task</MenuItem>
       </Menu>
 
       {/* New Task Dialog */}
-      <Dialog open={openDialog} onClose={() => setOpenDialog(false)} maxWidth="sm" fullWidth>
-        <DialogTitle>Create New Task</DialogTitle>
-        <DialogContent>
+      <Dialog 
+        open={openDialog} 
+        onClose={() => setOpenDialog(false)} 
+        maxWidth="sm" 
+        fullWidth
+        PaperProps={{
+          sx: {
+            backgroundColor: '#1e293b',
+            border: '1px solid #334155'
+          }
+        }}
+      >
+        <DialogTitle sx={{ color: '#ffffff' }}>Create New Task</DialogTitle>
+        <DialogContent sx={{ backgroundColor: '#1e293b' }}>
           <TextField
             autoFocus
             margin="dense"
             label="Task Title"
             fullWidth
             variant="outlined"
-            sx={{ mb: 2 }}
+            sx={{ 
+              mb: 2,
+              '& .MuiOutlinedInput-root': {
+                backgroundColor: '#0f172a',
+                color: '#ffffff',
+                '& fieldset': {
+                  borderColor: '#475569',
+                },
+                '&:hover fieldset': {
+                  borderColor: '#64748b',
+                },
+                '&.Mui-focused fieldset': {
+                  borderColor: '#3b82f6',
+                },
+              },
+              '& .MuiInputLabel-root': {
+                color: '#94a3b8'
+              }
+            }}
           />
           <TextField
             margin="dense"
@@ -630,20 +671,38 @@ export default function Tasks() {
             multiline
             rows={3}
             variant="outlined"
-            sx={{ mb: 2 }}
+            sx={{ 
+              mb: 2,
+              '& .MuiOutlinedInput-root': {
+                backgroundColor: '#0f172a',
+                color: '#ffffff',
+                '& fieldset': {
+                  borderColor: '#475569',
+                },
+                '&:hover fieldset': {
+                  borderColor: '#64748b',
+                },
+                '&.Mui-focused fieldset': {
+                  borderColor: '#3b82f6',
+                },
+              },
+              '& .MuiInputLabel-root': {
+                color: '#94a3b8'
+              }
+            }}
           />
           <Box sx={{ display: 'flex', gap: 2 }}>
-            <FormControl fullWidth>
+            <FormControl fullWidth sx={{ '& .MuiInputLabel-root': { color: '#94a3b8' }, '& .MuiOutlinedInput-root': { backgroundColor: '#0f172a', color: '#ffffff', '& fieldset': { borderColor: '#475569' }, '&:hover fieldset': { borderColor: '#64748b' }, '&.Mui-focused fieldset': { borderColor: '#3b82f6' } } }}>
               <InputLabel>Priority</InputLabel>
-              <Select label="Priority" defaultValue="medium">
+              <Select label="Priority" defaultValue="medium" sx={{ color: '#ffffff', '& .MuiSvgIcon-root': { color: '#94a3b8' } }} MenuProps={{ PaperProps: { sx: { backgroundColor: '#1e293b', border: '1px solid #334155' } } }}>
                 <MenuItem value="low">Low</MenuItem>
                 <MenuItem value="medium">Medium</MenuItem>
                 <MenuItem value="high">High</MenuItem>
               </Select>
             </FormControl>
-            <FormControl fullWidth>
+            <FormControl fullWidth sx={{ '& .MuiInputLabel-root': { color: '#94a3b8' }, '& .MuiOutlinedInput-root': { backgroundColor: '#0f172a', color: '#ffffff', '& fieldset': { borderColor: '#475569' }, '&:hover fieldset': { borderColor: '#64748b' }, '&.Mui-focused fieldset': { borderColor: '#3b82f6' } } }}>
               <InputLabel>Assignee</InputLabel>
-              <Select label="Assignee">
+              <Select label="Assignee" sx={{ color: '#ffffff', '& .MuiSvgIcon-root': { color: '#94a3b8' } }} MenuProps={{ PaperProps: { sx: { backgroundColor: '#1e293b', border: '1px solid #334155' } } }}>
                 <MenuItem value="sarah">Sarah Johnson</MenuItem>
                 <MenuItem value="mike">Mike Chen</MenuItem>
                 <MenuItem value="emily">Emily Davis</MenuItem>
@@ -653,17 +712,17 @@ export default function Tasks() {
             </FormControl>
           </Box>
         </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setOpenDialog(false)} sx={{ color: '#6b7280' }}>
+        <DialogActions sx={{ backgroundColor: '#1e293b' }}>
+          <Button onClick={() => setOpenDialog(false)} sx={{ color: '#94a3b8' }}>
             Cancel
           </Button>
           <Button 
             onClick={() => setOpenDialog(false)} 
             variant="contained"
             sx={{
-              backgroundColor: '#000000',
+              backgroundColor: '#3b82f6',
               '&:hover': {
-                backgroundColor: '#374151'
+                backgroundColor: '#2563eb'
               }
             }}
           >
