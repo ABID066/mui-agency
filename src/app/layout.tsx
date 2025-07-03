@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import MUIThemeProvider from "../components/ThemeProvider";
+import AppProvider from "@/providers/AppProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -24,18 +24,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang='en'>
       <head>
-        <meta name="emotion-insertion-point" content="" />
-        <meta name="format-detection" content="telephone=no, date=no, email=no, address=no" />
+        <meta name='emotion-insertion-point' content='' />
+        <meta
+          name='format-detection'
+          content='telephone=no, date=no, email=no, address=no'
+        />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-        suppressHydrationWarning={true}
-      >
-        <MUIThemeProvider>
-          {children}
-        </MUIThemeProvider>
+        suppressHydrationWarning={true}>
+        <AppProvider>{children}</AppProvider>
       </body>
     </html>
   );
