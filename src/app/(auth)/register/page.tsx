@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useState } from "react";
 import {
   Box,
@@ -20,6 +21,7 @@ import { Visibility, VisibilityOff, Google, GitHub } from "@mui/icons-material";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { registerAction } from "@/actions/auth/registerAction";
+import { signIn } from "next-auth/react";
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -40,6 +42,23 @@ export default function RegisterPage() {
     agreeToTerms: false,
     subscribeNewsletter: false,
   });
+
+  const resetForm = () => {
+    setFormData({
+      fullName: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+      agreeToTerms: false,
+      subscribeNewsletter: false,
+    });
+    setErrors({
+      fullName: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+    });
+  };
 
   const validateForm = () => {
     let isValid = true;
@@ -75,9 +94,26 @@ export default function RegisterPage() {
     return isValid;
   };
 
+  const handleGoogleSignup = async () => {
+    try {
+      await signIn("google", { callbackUrl: "/" });
+    } catch (error) {
+      toast.error("Google signup failed");
+    }
+  };
+
+  const handleGithubSignup = async () => {
+    try {
+      await signIn("github", { callbackUrl: "/" });
+    } catch (error) {
+      toast.error("GitHub signup failed");
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setRegisterLoading(true);
+
     if (!formData.agreeToTerms) {
       toast.error("Please agree to the Terms of Service and Privacy Policy");
       setRegisterLoading(false);
@@ -86,46 +122,51 @@ export default function RegisterPage() {
 
     if (validateForm()) {
       try {
-        // Handle registration logic here
-        const { fullName, email, password, agreeToTerms, subscribeNewsletter  } = formData;
-        const image = ""
-        const response = await registerAction(fullName, email, password, image,  agreeToTerms, subscribeNewsletter);
-        console.log("Registration attempt:", formData);
+        const { fullName, email, password, agreeToTerms, subscribeNewsletter } = formData;
+        const image = "";
+        const response = await registerAction(
+          fullName,
+          email,
+          password,
+          image,
+          agreeToTerms,
+          subscribeNewsletter
+        );
+
         if (response.success) {
+          resetForm();
           router.push(`${process.env.NEXT_PUBLIC_BASE_URL}/verify-email/?email=${response?.emailHash}`);
-          toast.success("Registration Successful!. Now Please Verify Your Email!");
+          toast.success("Registration successful! Please verify your email.");
+        } else {
+          toast.error(response.message || "Registration failed");
         }
       } catch (error) {
-        toast.error("Registration failed. Please try again.");
-        console.error("Registration error:", error);
-      }finally{
+        const errorMessage = error instanceof Error ? error.message : "Registration failed";
+        toast.error(errorMessage);
+      } finally {
         setRegisterLoading(false);
       }
     } else {
-      toast.error("Please fix the errors in the form");
       setRegisterLoading(false);
     }
   };
 
-  const handleInputChange =
-    (field: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
-      setFormData((prev) => ({
-        ...prev,
-        [field]:
-          e.target.type === "checkbox" ? e.target.checked : e.target.value,
-      }));
+  const handleInputChange = (field: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData((prev) => ({
+      ...prev,
+      [field]: e.target.type === "checkbox" ? e.target.checked : e.target.value,
+    }));
 
-      if (errors[field as keyof typeof errors]) {
-        setErrors((prev) => ({
-          ...prev,
-          [field]: "",
-        }));
-      }
-    };
+    if (errors[field as keyof typeof errors]) {
+      setErrors((prev) => ({
+        ...prev,
+        [field]: "",
+      }));
+    }
+  };
 
   const handleClickShowPassword = () => setShowPassword(!showPassword);
-  const handleClickShowConfirmPassword = () =>
-    setShowConfirmPassword(!showConfirmPassword);
+  const handleClickShowConfirmPassword = () => setShowConfirmPassword(!showConfirmPassword);
 
   return (
     <Box
@@ -160,6 +201,7 @@ export default function RegisterPage() {
                 variant='outlined'
                 fullWidth
                 startIcon={<Google sx={{ color: "#333333" }} />}
+                onClick={handleGoogleSignup}
                 sx={{
                   py: 1.5,
                   borderColor: "#e5e7eb",
@@ -175,6 +217,7 @@ export default function RegisterPage() {
                 variant='outlined'
                 fullWidth
                 startIcon={<GitHub sx={{ color: "#333333" }} />}
+                onClick={handleGithubSignup}
                 sx={{
                   py: 1.5,
                   borderColor: "#e5e7eb",
@@ -256,7 +299,7 @@ export default function RegisterPage() {
 
                 <TextField
                   fullWidth
-                  label='Confirm password'
+                  label='Confirm Password'
                   type={showConfirmPassword ? "text" : "password"}
                   value={formData.confirmPassword}
                   onChange={handleInputChange("confirmPassword")}
@@ -269,11 +312,7 @@ export default function RegisterPage() {
                         <IconButton
                           onClick={handleClickShowConfirmPassword}
                           edge='end'>
-                          {showConfirmPassword ? (
-                            <VisibilityOff />
-                          ) : (
-                            <Visibility />
-                          )}
+                          {showConfirmPassword ? <VisibilityOff /> : <Visibility />}
                         </IconButton>
                       </InputAdornment>
                     ),
@@ -298,7 +337,7 @@ export default function RegisterPage() {
                       <Typography variant='body2' sx={{ color: "#6b7280" }}>
                         I agree to the{" "}
                         <Link
-                          href='#'
+                          href='/terms'
                           sx={{
                             color: "#000000",
                             textDecoration: "none",
@@ -311,7 +350,7 @@ export default function RegisterPage() {
                         </Link>{" "}
                         and{" "}
                         <Link
-                          href='#'
+                          href='/privacy'
                           sx={{
                             color: "#000000",
                             textDecoration: "none",
@@ -336,8 +375,7 @@ export default function RegisterPage() {
                     }
                     label={
                       <Typography variant='body2' sx={{ color: "#6b7280" }}>
-                        Subscribe to our newsletter for marketing tips and
-                        updates
+                        Subscribe to our newsletter
                       </Typography>
                     }
                   />
@@ -347,8 +385,8 @@ export default function RegisterPage() {
                   type='submit'
                   fullWidth
                   variant='contained'
+                  disabled={registerLoading}
                   size='large'
-                  disabled={!formData.agreeToTerms || registerLoading}
                   sx={{
                     py: 1.5,
                     bgcolor: "#000000",
@@ -358,12 +396,8 @@ export default function RegisterPage() {
                     "&:hover": {
                       bgcolor: "#1f2937",
                     },
-                    "&:disabled": {
-                      bgcolor: "#9ca3af",
-                      color: "#ffffff",
-                    },
                   }}>
-                  {registerLoading ? "Account Creating..." : "Create account"}
+                  {registerLoading ? "Creating account..." : "Create account"}
                 </Button>
               </Stack>
             </Box>
@@ -376,7 +410,7 @@ export default function RegisterPage() {
                   sx={{
                     color: "#000000",
                     textDecoration: "none",
-                    fontWeight: 600,
+                    fontWeight: 500,
                     "&:hover": {
                       textDecoration: "underline",
                     },
