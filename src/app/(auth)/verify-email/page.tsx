@@ -1,34 +1,30 @@
 "use client";
+import { verifyEmailAction } from "@/actions/auth/verifyEmailAction";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useState } from "react";
 
 export default function VerifyEmailPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const email = searchParams.get("email") || "";
+  const hashedEmail = searchParams.get("email") || "";
 
   const [code, setCode] = useState("");
   const [status, setStatus] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleVerify = async () => {
+    setLoading(true);
     if (code.length !== 6) {
       setStatus("Code must be 6 digits");
       return;
     }
-    setLoading(true);
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/auth/verify-email`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ code, email }),
-    });
-
-    const data = await res.json();
-    if (res.ok) {
-      setStatus("Email verified! Redirecting to login...");
-      setTimeout(() => router.push("/login"), 1500);
+    const res = await verifyEmailAction(code, hashedEmail);
+    console.log(res)
+    if (res.success) {
+      setStatus(res.message);
+      router.push("/login")
     } else {
-      setStatus(data.error || "Verification failed");
+      setStatus(res.message);
     }
     setLoading(false);
   };

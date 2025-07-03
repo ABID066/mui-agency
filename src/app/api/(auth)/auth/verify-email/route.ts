@@ -7,7 +7,7 @@ import bcrypt from "bcryptjs";
 export async function POST(req: NextRequest) {
   try {
     // Validate request body
-    const { code:verificationCode, email: hashedEmail } = await req.json();
+    const { verificationCode, hashedEmail } = await req.json();
     if (!verificationCode || !hashedEmail) {
       return NextResponse.json(
         { error: "Code and hashed email are required" },
@@ -24,13 +24,14 @@ export async function POST(req: NextRequest) {
 
     // Validate user and token
     if (!user) {
-      return NextResponse.json(
-        { error: "User not found!" },
-        { status: 404 }
-      );
+      return NextResponse.json({ error: "User not found!" }, { status: 404 });
     }
 
-    if (!user.verifyToken || !user.verifyTokenExpire || Date.now() > new Date(user.verifyTokenExpire as Date).getTime()) {
+    if (
+      !user.verifyToken ||
+      !user.verifyTokenExpire ||
+      Date.now() > new Date(user.verifyTokenExpire as Date).getTime()
+    ) {
       return NextResponse.json(
         { error: "Invalid or expired verification token" },
         { status: 400 }
@@ -38,7 +39,10 @@ export async function POST(req: NextRequest) {
     }
 
     // Verify the code
-    const isCodeValid = await bcrypt.compare(verificationCode, user.verifyToken);
+    const isCodeValid = await bcrypt.compare(
+      verificationCode,
+      user.verifyToken
+    );
     if (!isCodeValid) {
       return NextResponse.json(
         { error: "Invalid verification code" },
@@ -53,10 +57,9 @@ export async function POST(req: NextRequest) {
     await user.save();
 
     return NextResponse.json(
-      { message: "Email verified successfully" },
+      { message: "Email verified successfully!", status: 200 },
       { status: 200 }
     );
-
   } catch (error) {
     console.error("Verification error:", error);
     return NextResponse.json(

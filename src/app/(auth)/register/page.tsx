@@ -18,8 +18,8 @@ import {
 } from "@mui/material";
 import { Visibility, VisibilityOff, Google, GitHub } from "@mui/icons-material";
 import toast from "react-hot-toast";
-import { registerAction } from "@/actions/registerActions";
 import { useRouter } from "next/navigation";
+import { registerAction } from "@/actions/auth/registerAction";
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -87,8 +87,9 @@ export default function RegisterPage() {
     if (validateForm()) {
       try {
         // Handle registration logic here
-        const { fullName, email, password } = formData;
-        const response = await registerAction(fullName, email, password);
+        const { fullName, email, password, agreeToTerms, subscribeNewsletter  } = formData;
+        const image = ""
+        const response = await registerAction(fullName, email, password, image,  agreeToTerms, subscribeNewsletter);
         console.log("Registration attempt:", formData);
         if (response.success) {
           router.push(`${process.env.NEXT_PUBLIC_BASE_URL}/verify-email/?email=${response?.emailHash}`);

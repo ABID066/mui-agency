@@ -5,10 +5,12 @@ export async function registerAction(
   name: string,
   email: string,
   password: string,
-  photoUrl?: string
+  photoUrl?: string,
+  agreeToTerms?: boolean, 
+  subscribeNewsletter?: boolean
 ) {
   try {
-    const userData = { name, email, image: photoUrl || "", password };
+    const userData = { name, email, image: photoUrl || "", password, acceptedTermsAndConditions: agreeToTerms, subscribeNewsletter };
 
     const { data } = await axios.post(
       `${process.env.NEXT_PUBLIC_BASE_URL}/api/auth/register`,

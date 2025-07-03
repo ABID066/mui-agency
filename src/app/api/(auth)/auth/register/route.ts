@@ -10,7 +10,7 @@ export const POST = async (request: NextRequest) => {
 
     // Parse the request body
     const userInfo = await request.json();
-    const { name, email, password, image = "" } = userInfo;
+    const { name, email, password, image = "",  agreeToTerms, subscribeNewsletter } = userInfo;
 
     // Validate required fields
     if (!name || !email || !password) {
@@ -33,7 +33,7 @@ export const POST = async (request: NextRequest) => {
     const hashedPassword = await bcrypt.hash(password, 12);
 
     // Create and save the new user
-    const newUser = new User({ name, email, password: hashedPassword, image });
+    const newUser = new User({ name, email, password: hashedPassword, image, acceptedTermsAndConditions: agreeToTerms, subscribeNewsletter });
     await newUser.save();
 
     // Send verification email

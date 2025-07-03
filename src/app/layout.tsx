@@ -38,8 +38,10 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         suppressHydrationWarning={true}>
         <AppProvider>
-          <Suspense>{children}</Suspense>
-        </AppProvider>
+          <Suspense>
+          {children}
+          </Suspense>
+          </AppProvider>
         <Toaster />
       </body>
     </html>
