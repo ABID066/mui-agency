@@ -8,6 +8,8 @@ export interface IUser {
   role?: 'admin' | 'user';
   isVerified?: boolean;
   twoFactorEnabled?: boolean;
+  acceptedTermsAndConditions?: boolean;
+  subscribeNewsletter?: boolean;
   verifyToken?: string;
   verifyTokenExpire?: Date;
   resetToken?: string;

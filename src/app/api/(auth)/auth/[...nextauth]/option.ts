@@ -30,7 +30,7 @@ export const authOptions: NextAuthOptions = {
           if (!user?.isVerified) {
             throw new Error("Please verify your email!");
           }
-          const matchPassword = bcrypt.compare(password, user.password || '');
+          const matchPassword = await bcrypt.compare(password, user.password || '');
           if (!matchPassword) {
             throw new Error("Invalid Credentials!");
           }
@@ -60,13 +60,14 @@ export const authOptions: NextAuthOptions = {
   },
   callbacks: {
     async signIn({ user, account }) {
-      // console.log(user, account, profile);
+      // console.log(user, account, profile, "from line 63:");
       await connectDB();
       const userExist = await User.findOne({ email: user?.email });
       if (!userExist) {
         const newUser = new User({
           name: user?.name,
           email: user?.email,
+          image: user?.image || "",
           provider: account?.provider,
           isVerified: true,
         });
