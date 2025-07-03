@@ -104,7 +104,7 @@ const benefits = [
 export default function FeaturesPage() {
   return (
     <PageLayout>
-      <Box sx={{ py: 8 }}>
+      <Box sx={{ py: 8, pt: "180px" }}>
         <Container maxWidth="lg">
           {/* Header Section */}
           <Box sx={{ textAlign: 'center', mb: 8 }}>
