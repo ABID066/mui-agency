@@ -51,9 +51,10 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
           width: { md: `calc(100% - ${drawerWidth}px)` },
           backgroundColor: '#0f172a',
           minHeight: '100vh',
-          pt: { xs: 8, md: 8 }, // Add top padding for AppBar
+          pt: { xs: 8, md: 0 }, // Add top padding for AppBar
+          
           px: 3,
-          py: 3
+          //py: 3
         }}
       >
         {children}

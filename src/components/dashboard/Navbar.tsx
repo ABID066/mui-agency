@@ -36,7 +36,7 @@ interface NavbarProps {
   onMenuClick: () => void;
 }
 
-export default function Navbar({ drawerWidth, onMenuClick }: NavbarProps) {
+export default function Navbar({ onMenuClick }: NavbarProps) {
   const theme = useTheme();
   const pathname = usePathname();
 
@@ -49,8 +49,8 @@ export default function Navbar({ drawerWidth, onMenuClick }: NavbarProps) {
     <AppBar
       position="fixed"
       sx={{
-        width: { md: `calc(100% - ${drawerWidth}px)` },
-        ml: { md: `${drawerWidth}px` },
+        
+        display: { xs: 'block', md: 'none' },
         backgroundColor: '#0f172a',
         color: '#1f2937',
         boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',

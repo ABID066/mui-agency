@@ -118,7 +118,7 @@ export default function Sidebar({ drawerWidth, mobileOpen, onMobileClose, isMobi
     <Box 
       sx={{ 
         height: '100vh',
-        backgroundColor: '#2D3748',
+        backgroundColor: '#1E293B',
         color: '#ffffff',
         display: 'flex',
         flexDirection: 'column',
