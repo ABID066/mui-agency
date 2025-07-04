@@ -19,20 +19,20 @@ const transporter = nodemailer.createTransport({
 export const SendEmail = async (
   email: string,
   emailType: string
-): Promise<{ message: string; emailHash: string } | string> => {
+): Promise<{ success: boolean; message: string; emailHash: string } | string> => {
   try {
     let hashedToken = "";
     let subject = "";
     let htmlContent = "";
     const toEmail = email;
-    const emailHash = await hashEmail(email);
+    const emailHash = hashEmail(email);
 
     if (emailType === "verify-email" || emailType === "reset-password") {
       // 🔢 6-digit decimal random number generate
       const rawCode = Math.floor(100000 + Math.random() * 900000).toString();
 
       // 🔐 Hash the code
-      hashedToken = await bcrypt.hash(rawCode, 10);
+      hashedToken = await bcrypt.hash(rawCode, 12);
 
       await connectDB();
 
@@ -68,7 +68,7 @@ export const SendEmail = async (
       html: htmlContent,
     });
 
-    return { message: "Please check your email!!", emailHash: emailHash };
+    return { success: true, message: "Please check your email!!", emailHash: emailHash };
   } catch (error) {
     console.error("Email send error:", error);
     return error instanceof Error ? error.message : "Unknown error occurred";

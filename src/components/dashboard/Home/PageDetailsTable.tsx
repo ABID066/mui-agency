@@ -86,8 +86,15 @@ export default function PageDetailsTable({ pageDetails }: PageDetailsTableProps)
     }}>
       {/* Table Header */}
       <Box sx={{ p: 3, borderBottom: '1px solid #334155' }}>
-        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 2 }}>
-          <Typography variant="h6" fontWeight={600} sx={{ color: '#ffffff' }}>
+        <Box sx={{ 
+          display: 'flex', 
+          flexDirection: { xs: 'column', sm: 'row' },
+          alignItems: { xs: 'stretch', sm: 'center' }, 
+          justifyContent: 'space-between', 
+          gap: { xs: 2, sm: 0 },
+          mb: 2 
+        }}>
+          <Typography variant="h6" fontWeight={600} sx={{ color: '#ffffff', textAlign: { xs: 'center', sm: 'left' } }}>
             Details
           </Typography>
           <Button
@@ -96,6 +103,7 @@ export default function PageDetailsTable({ pageDetails }: PageDetailsTableProps)
             sx={{
               borderColor: '#475569',
               color: '#ffffff',
+              width: { xs: '100%', sm: 'auto' },
               '&:hover': {
                 borderColor: '#64748b',
                 backgroundColor: 'rgba(255, 255, 255, 0.04)'
@@ -111,6 +119,7 @@ export default function PageDetailsTable({ pageDetails }: PageDetailsTableProps)
           size="small"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
+          fullWidth
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
@@ -141,8 +150,8 @@ export default function PageDetailsTable({ pageDetails }: PageDetailsTableProps)
       </Box>
 
       {/* Table Content */}
-      <TableContainer>
-        <Table>
+      <TableContainer sx={{ overflowX: 'auto' }}>
+        <Table sx={{ minWidth: { xs: 700, md: 'auto' } }}>
           <TableHead>
             <TableRow sx={{ backgroundColor: '#334155' }}>
               <TableCell sx={{ fontWeight: 600, color: '#e2e8f0', borderBottom: '1px solid #475569' }}>Page Title</TableCell>

@@ -1,17 +1,19 @@
 import axios from "axios";
 import toast from "react-hot-toast";
 
-export async function verifyEmailAction(
-  verificationCode: string,
-  hashedEmail: string
+export async function verifyResetPasswordAction(
+  resetCode: string,
+  hashedEmail: string,
+  newPassword: string
 ) {
   try {
     const verifyData = {
-      verificationCode,
+      resetCode,
       hashedEmail,
+      newPassword
     };
     const { data } = await axios.post(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/api/auth/verify-email`,
+      `${process.env.NEXT_PUBLIC_BASE_URL}/api/auth/verify-reset-password`,
       verifyData
     );
 

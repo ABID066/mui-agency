@@ -232,17 +232,29 @@ export default function Orders() {
       }}>
         {/* Table Header */}
         <Box sx={{ p: 3, borderBottom: '1px solid #334155' }}>
-          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 3 }}>
-            <Typography variant="h6" fontWeight={600} sx={{ color: '#ffffff' }}>
+          <Box sx={{ 
+            display: 'flex', 
+            flexDirection: { xs: 'column', sm: 'row' },
+            alignItems: { xs: 'stretch', sm: 'center' }, 
+            justifyContent: 'space-between', 
+            gap: { xs: 2, sm: 0 },
+            mb: 3 
+          }}>
+            <Typography variant="h6" fontWeight={600} sx={{ color: '#ffffff', textAlign: { xs: 'center', sm: 'left' } }}>
               Order History
             </Typography>
-            <Box sx={{ display: 'flex', gap: 2 }}>
+            <Box sx={{ 
+              display: 'flex', 
+              flexDirection: { xs: 'column', sm: 'row' },
+              gap: 2 
+            }}>
               <Button
                 variant="outlined"
                 startIcon={<Download />}
                 sx={{
                   borderColor: '#d1d5db',
                   color: '#ffffff',
+                  width: { xs: '100%', sm: 'auto' },
                   '&:hover': {
                     borderColor: '#ffffff',
                     backgroundColor: 'rgba(0, 0, 0, 0.04)'
@@ -257,6 +269,7 @@ export default function Orders() {
                 sx={{
                   borderColor: '#d1d5db',
                   color: '#ffffff',
+                  width: { xs: '100%', sm: 'auto' },
                   '&:hover': {
                     borderColor: '#ffffff',
                     backgroundColor: 'rgba(0, 0, 0, 0.04)'
@@ -272,16 +285,24 @@ export default function Orders() {
           <Tabs
             value={tabValue}
             onChange={handleTabChange}
+            variant="scrollable"
+            scrollButtons="auto"
+            allowScrollButtonsMobile
             sx={{
               mb: 3,
               '& .MuiTab-root': {
                 color: '#94a3b8',
+                minWidth: { xs: 100, md: 'auto' },
+                fontSize: { xs: '0.75rem', md: '0.875rem' },
                 '&.Mui-selected': {
                   color: '#ffffff'
                 }
               },
               '& .MuiTabs-indicator': {
                 backgroundColor: '#1e293b'
+              },
+              '& .MuiTabs-scrollButtons': {
+                color: '#94a3b8'
               }
             }}
           >
@@ -293,7 +314,12 @@ export default function Orders() {
           </Tabs>
 
           {/* Search and Filters */}
-          <Box sx={{ display: 'flex', gap: 2, alignItems: 'center' }}>
+          <Box sx={{ 
+            display: 'flex', 
+            flexDirection: { xs: 'column', sm: 'row' },
+            gap: 2, 
+            alignItems: { xs: 'stretch', sm: 'center' }
+          }}>
             <TextField
                 placeholder="Search orders..."
                 variant="outlined"
@@ -324,7 +350,7 @@ export default function Orders() {
                   },
                 }}
             />
-            <FormControl size="small" sx={{ minWidth: 120 }}>
+            <FormControl size="small" sx={{ minWidth: { xs: '100%', sm: 120 } }}>
               <InputLabel>Status</InputLabel>
               <Select
                 value={statusFilter}
@@ -356,8 +382,8 @@ export default function Orders() {
         </Box>
 
         {/* Table Content */}
-        <TableContainer>
-          <Table>
+        <TableContainer sx={{ overflowX: 'auto' }}>
+          <Table sx={{ minWidth: { xs: 800, md: 'auto' } }}>
             <TableHead>
               <TableRow sx={{ backgroundColor: '#0f172a' }}>
                 <TableCell sx={{ fontWeight: 600, color: '#ffffff' }}>Order ID</TableCell>

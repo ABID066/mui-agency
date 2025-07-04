@@ -171,19 +171,38 @@ export default function TeamMembers() {
   );
 
   return (
-    <Box sx={{ p: 4, backgroundColor: '#0f172a', minHeight: '100vh', color: '#ffffff' }}>
+    <Box sx={{ p: { xs: 2, sm: 3, md: 4 }, backgroundColor: '#0f172a', minHeight: '100vh', color: '#ffffff' }}>
       {/* Header */}
-      <Box sx={{ mb: 4 }}>
-        <Typography variant="h4" fontWeight={700} sx={{ color: '#ffffff', mb: 1 }}>
+      <Box sx={{ mb: { xs: 2, md: 4 } }}>
+        <Typography 
+          variant="h4" 
+          fontWeight={700} 
+          sx={{ 
+            color: '#ffffff', 
+            mb: 1,
+            fontSize: { xs: '1.5rem', sm: '2rem', md: '2.125rem' }
+          }}
+        >
           Team Members
         </Typography>
-        <Typography variant="body1" sx={{ color: '#94a3b8' }}>
+        <Typography 
+          variant="body1" 
+          sx={{ 
+            color: '#94a3b8',
+            fontSize: { xs: '0.875rem', md: '1rem' }
+          }}
+        >
           Manage your organization&apos;s team members and their roles
         </Typography>
       </Box>
 
       {/* Stats Cards */}
-      <Box sx={{ display: 'flex', gap: 3, mb: 4 }}>
+      <Box sx={{ 
+        display: 'flex', 
+        flexDirection: { xs: 'column', sm: 'row' },
+        gap: { xs: 2, sm: 3 }, 
+        mb: { xs: 3, md: 4 } 
+      }}>
         <Card sx={{
           backgroundColor: '#1e293b',
           border: '1px solid #334155',
@@ -234,13 +253,21 @@ export default function TeamMembers() {
       </Box>
 
       {/* Actions and Search */}
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
+      <Box sx={{ 
+        display: 'flex', 
+        flexDirection: { xs: 'column', sm: 'row' },
+        justifyContent: 'space-between', 
+        alignItems: { xs: 'stretch', sm: 'center' },
+        gap: { xs: 2, sm: 0 },
+        mb: 3 
+      }}>
         <TextField
           placeholder="Search members..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
+          fullWidth
           sx={{
-            width: 300,
+            maxWidth: { sm: 300 },
             '& .MuiOutlinedInput-root': {
               backgroundColor: '#1e293b',
               borderColor: '#334155',
@@ -269,13 +296,18 @@ export default function TeamMembers() {
           }}
         />
         
-        <Box sx={{ display: 'flex', gap: 2 }}>
+        <Box sx={{ 
+          display: 'flex', 
+          flexDirection: { xs: 'column', sm: 'row' },
+          gap: 2 
+        }}>
           <Button
             variant="outlined"
             startIcon={<AssignmentInd />}
             sx={{
               borderColor: '#475569',
               color: '#ffffff',
+              width: { xs: '100%', sm: 'auto' },
               '&:hover': {
                 borderColor: '#94a3b8',
                 backgroundColor: 'rgba(255, 255, 255, 0.05)'
@@ -290,6 +322,7 @@ export default function TeamMembers() {
             startIcon={<PersonAdd />}
             sx={{
               backgroundColor: '#3b82f6',
+              width: { xs: '100%', sm: 'auto' },
               '&:hover': {
                 backgroundColor: '#2563eb'
               }
@@ -304,10 +337,14 @@ export default function TeamMembers() {
       <Tabs
         value={tabValue}
         onChange={(e, newValue) => setTabValue(newValue)}
+        variant="scrollable"
+        scrollButtons="auto"
         sx={{
           mb: 3,
           '& .MuiTab-root': {
             color: '#94a3b8',
+            minWidth: { xs: 'auto', sm: 160 },
+            fontSize: { xs: '0.875rem', sm: '1rem' },
             '&.Mui-selected': {
               color: '#ffffff'
             }
@@ -329,8 +366,8 @@ export default function TeamMembers() {
         border: '1px solid #334155',
         boxShadow: 'none'
       }}>
-        <TableContainer>
-          <Table>
+        <TableContainer sx={{ overflowX: 'auto' }}>
+          <Table sx={{ minWidth: { xs: 800, md: 'auto' } }}>
             <TableHead>
               <TableRow>
                 <TableCell sx={{ color: '#94a3b8', borderBottom: '1px solid #334155' }}>Member</TableCell>

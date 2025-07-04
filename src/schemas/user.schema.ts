@@ -1,6 +1,6 @@
-import { Schema } from "mongoose";
+import mongoose from "mongoose";
 
-const userSchema = new Schema(
+const userSchema = new mongoose.Schema(
   {
     id: {
       type: String,
@@ -34,9 +34,33 @@ const userSchema = new Schema(
       type: Boolean,
       default: false,
     },
+    organizationIds: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Organization'
+    }],
+    currentOrganizationId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Organization'
+    },
     twoFactorEnabled: {
       type: Boolean,
       default: false,
+    },
+    preferences: {
+        theme: {
+            type: String,
+            enum: ['light', 'dark', 'auto'],
+            default: 'light'
+        },
+        language: {
+            type: String,
+            enum: ['en', 'bn'],
+            default: 'en'
+        },
+        timezone: {
+            type: String,
+            default: 'UTC'
+        }
     },
     acceptedTermsAndConditions: {
       type: Boolean,

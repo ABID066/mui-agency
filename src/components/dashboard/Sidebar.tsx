@@ -13,7 +13,9 @@ import {
   Chip,
   IconButton,
   Drawer,
-  Collapse
+  Collapse,
+  Popover,
+  Paper,
 } from '@mui/material';
 import {
   Home,
@@ -27,14 +29,9 @@ import {
   KeyboardArrowDown,
   KeyboardArrowRight,
   Business,
-  GroupAdd,
-  SwapHoriz,
   Add,
-  PersonAdd,
-  AssignmentInd,
-  PersonRemove,
-  AdminPanelSettings,
-  Delete
+  AccountCircle,
+  Logout
 } from '@mui/icons-material';
 import { useRouter, usePathname } from 'next/navigation';
 
@@ -64,14 +61,7 @@ const navigationItems: NavigationItem[] = [
     hasSubmenu: true,
     submenuItems: [
       { name: 'My Organizations', icon: Business, path: '/dashboard/organization/my-organizations' },
-      { name: 'Switch Organization', icon: SwapHoriz, path: '/dashboard/organization/switch' },
       { name: 'Create New Organization', icon: Add, path: '/dashboard/organization/create' },
-      { name: 'Team Members', icon: GroupAdd, path: '/dashboard/organization/team-members' },
-      { name: 'Invite Member', icon: PersonAdd, path: '/dashboard/organization/invite-member' },
-      { name: 'Assign Role', icon: AssignmentInd, path: '/dashboard/organization/assign-role' },
-      { name: 'Remove Member', icon: PersonRemove, path: '/dashboard/organization/remove-member' },
-      { name: 'Org Settings', icon: AdminPanelSettings, path: '/dashboard/organization/settings' },
-      { name: 'Disable/Delete Org', icon: Delete, path: '/dashboard/organization/disable-delete' },
     ]
   },
   { name: 'Support', icon: Support, path: '/dashboard/support' },
@@ -89,6 +79,7 @@ export default function Sidebar({ drawerWidth, mobileOpen, onMobileClose, isMobi
   const router = useRouter();
   const pathname = usePathname();
   const [expandedMenus, setExpandedMenus] = useState<string[]>([]);
+  const [settingsAnchorEl, setSettingsAnchorEl] = useState<HTMLElement | null>(null);
 
   const handleNavigation = (path: string) => {
     router.push(path);
@@ -113,6 +104,31 @@ export default function Sidebar({ drawerWidth, mobileOpen, onMobileClose, isMobi
   const isSubmenuItemActive = (submenuItems: { name: string; icon: React.ElementType; path: string; }[]) => {
     return submenuItems?.some(subItem => pathname === subItem.path);
   };
+
+  const handleSettingsClick = (event: React.MouseEvent<HTMLElement>) => {
+    setSettingsAnchorEl(event.currentTarget);
+  };
+
+  const handleSettingsClose = () => {
+    setSettingsAnchorEl(null);
+  };
+
+  const handleProfileSettings = () => {
+    router.push('/dashboard/settings');
+    setSettingsAnchorEl(null);
+    if (isMobile) {
+      onMobileClose();
+    }
+  };
+
+  const handleLogout = () => {
+    // Add logout logic here
+    console.log('Logout clicked');
+    setSettingsAnchorEl(null);
+    // You can add actual logout functionality here
+  };
+
+  const isSettingsOpen = Boolean(settingsAnchorEl);
 
   const drawerContent = (
     <Box 
@@ -308,10 +324,119 @@ export default function Sidebar({ drawerWidth, mobileOpen, onMobileClose, isMobi
             siriwat@test.com
           </Typography>
         </Box>
-        <IconButton size="small" sx={{ color: '#A0AEC0', '&:hover': { color: '#ffffff', backgroundColor: '#4A5568' } }}>
+        <IconButton 
+          size="small" 
+          onClick={handleSettingsClick}
+          sx={{ color: '#A0AEC0', '&:hover': { color: '#ffffff', backgroundColor: '#4A5568' } }}
+        >
           <Settings fontSize="small" />
         </IconButton>
       </Box>
+
+      {/* Settings Popover */}
+      <Popover
+        open={isSettingsOpen}
+        anchorEl={settingsAnchorEl}
+        onClose={handleSettingsClose}
+        anchorOrigin={{
+          vertical: 'top',
+          horizontal: 'right',
+        }}
+        transformOrigin={{
+          vertical: 'bottom',
+          horizontal: 'left',
+        }}
+        sx={{
+          '& .MuiPopover-paper': {
+            backgroundColor: '#1E293B',
+            border: '1px solid #4A5568',
+            borderRadius: 2,
+            boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.3)',
+            mt: -1,
+            ml: 1
+          }
+        }}
+      >
+        <Paper
+          sx={{
+            backgroundColor: 'transparent',
+            boxShadow: 'none',
+            minWidth: 200,
+            maxWidth: 250
+          }}
+        >
+          <Box sx={{ p: 2 }}>
+            {/* User Info Header */}
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 2, pb: 2, borderBottom: '1px solid #4A5568' }}>
+              <Avatar sx={{ width: 36, height: 36, backgroundColor: '#718096', fontSize: '0.9rem', fontWeight: 600 }}>
+                S
+              </Avatar>
+              <Box>
+                <Typography variant="body2" fontWeight={600} sx={{ color: '#ffffff', lineHeight: 1.2 }}>
+                  Siriwat K.
+                </Typography>
+                <Typography variant="caption" sx={{ color: '#A0AEC0' }}>
+                  siriwat@test.com
+                </Typography>
+              </Box>
+            </Box>
+            
+            <List sx={{ p: 0 }}>
+              <ListItem disablePadding>
+                <ListItemButton
+                  onClick={handleProfileSettings}
+                  sx={{
+                    borderRadius: 1,
+                    '&:hover': {
+                      backgroundColor: '#4A5568'
+                    },
+                    py: 1,
+                    px: 1
+                  }}
+                >
+                  <ListItemIcon sx={{ color: '#A0AEC0', minWidth: 32 }}>
+                    <AccountCircle fontSize="small" />
+                  </ListItemIcon>
+                  <ListItemText 
+                    primary="Profile"
+                    primaryTypographyProps={{
+                      fontSize: '0.875rem',
+                      fontWeight: 500,
+                      color: '#E2E8F0'
+                    }}
+                  />
+                </ListItemButton>
+              </ListItem>
+              
+              <ListItem disablePadding>
+                <ListItemButton
+                  onClick={handleLogout}
+                  sx={{
+                    borderRadius: 1,
+                    '&:hover': {
+                      backgroundColor: '#4A5568'
+                    },
+                    py: 1,
+                    px: 1
+                  }}
+                >
+                  <ListItemIcon sx={{ color: '#A0AEC0', minWidth: 32 }}>
+                    <Logout fontSize="small" />
+                  </ListItemIcon>
+                  <ListItemText 
+                    primary="Logout"
+                    primaryTypographyProps={{
+                      fontSize: '0.875rem',
+                      fontWeight: 500,
+                      color: '#E2E8F0'
+                    }}
+                  />
+                </ListItemButton>
+              </ListItem>
+            </List>
+          </Box>
+        </Paper>
+      </Popover>
     </Box>
   );
 
