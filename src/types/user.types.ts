@@ -15,14 +15,14 @@ export interface IUser {
     | "LinkedIn";
   role?: "admin" | "user";
   isVerified?: boolean;
-  organizationIds?: mongoose.Schema.Types.ObjectId[];
-  currentOrganizationId?: mongoose.Schema.Types.ObjectId | null;
+  organizationIds?: mongoose.Schema.Types.ObjectId[] | string[];
+  currentOrganizationId?: mongoose.Schema.Types.ObjectId | null | string;
   twoFactorEnabled?: boolean;
   preferences: {
     theme: string;
     language: string;
     timezone: string;
-  };
+  } | undefined;
   acceptedTermsAndConditions?: boolean;
   subscribeNewsletter?: boolean;
   verifyToken?: string;
@@ -31,4 +31,5 @@ export interface IUser {
   resetTokenExpire?: Date;
   createdAt?: Date;
   updatedAt?: Date;
+  __v?: number;
 }

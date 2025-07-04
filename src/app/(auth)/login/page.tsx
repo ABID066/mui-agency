@@ -20,7 +20,7 @@ import {
 import { Visibility, VisibilityOff, Google, GitHub } from "@mui/icons-material";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
-import { signIn } from "next-auth/react";
+import { getSession, signIn } from "next-auth/react";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -54,11 +54,11 @@ export default function LoginPage() {
       toast.error("GitHub login failed");
     }
   };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
     setUserLoading(true);
+
     try {
       const res = await signIn("credentials", {
         redirect: false,
@@ -70,12 +70,20 @@ export default function LoginPage() {
         setError(res.error.replace("Error:", "").trim());
         toast.error(res.error.replace("Error:", "").trim());
       } else if (res?.ok) {
-        toast.success("Successfully logged in!");
-        resetForm();
-        router.push(from);
+        // Force session update before redirect
+        const session = await getSession();
+        if (session) {
+          router.push(from);
+          resetForm();
+          toast.success("Successfully logged in!");
+        } else {
+          setError("Login successful but session not detected");
+          toast.error("Login successful but session not detected");
+        }
       }
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : "An unexpected error occurred";
+      const errorMessage =
+        error instanceof Error ? error.message : "An unexpected error occurred";
       setError(errorMessage);
       toast.error(errorMessage);
     } finally {

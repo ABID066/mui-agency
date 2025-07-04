@@ -5,6 +5,7 @@ import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import User from "@/models/userModel";
 import { connectDB } from "@/database/dbConfig";
+import { User as AuthUser } from "next-auth";
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -16,12 +17,12 @@ export const authOptions: NextAuthOptions = {
       },
       async authorize(
         credentials: Credentials | undefined
-      ): Promise<IUser | null> {
+      ): Promise<AuthUser | null> {
         if (!credentials) {
           throw new Error("Credentials not found!");
         }
-        await connectDB();
         try {
+          await connectDB();
           const { email, password } = credentials;
           const user = await User.findOne({ email });
           if (!user) {
@@ -30,7 +31,10 @@ export const authOptions: NextAuthOptions = {
           if (!user?.isVerified) {
             throw new Error("Please verify your email!");
           }
-          const matchPassword = await bcrypt.compare(password, user.password || '');
+          const matchPassword = await bcrypt.compare(
+            password,
+            user.password || ""
+          );
           if (!matchPassword) {
             throw new Error("Invalid Credentials!");
           }
@@ -38,11 +42,16 @@ export const authOptions: NextAuthOptions = {
             id: user._id.toString(),
             name: user.name,
             email: user.email,
-            image: user.image || '',
-            role: user.role || 'user',
-          };
+            image: user.image || "",
+            role: user.role || "user",
+            isVerified: user.isVerified || false,
+            organizationIds: (user?.organizationIds || []).map(id => id.toString()),
+            currentOrganizationId: user?.currentOrganizationId?.toString() || null,
+            preferences: user?.preferences || {},
+          } as AuthUser;
         } catch (err: unknown) {
-          throw new Error(err as string);
+          console.error('Auth Error:', err);
+          throw new Error(err instanceof Error ? err.message : 'Authentication failed');
         }
       },
     }),
@@ -73,7 +82,7 @@ export const authOptions: NextAuthOptions = {
         });
         await newUser.save();
       }
-      user.role = userExist?.role || 'user';
+      user.role = userExist?.role || "user";
       return true;
     },
     async jwt({ user, token }) {
@@ -81,10 +90,15 @@ export const authOptions: NextAuthOptions = {
         token.name = user?.name;
         token.email = user?.email;
         token.role = user?.role;
+        token.image = user?.image;
+        token.organizationIds = user?.organizationIds;
+        token.currentOrganizationId = user?.currentOrganizationId;
+        token.isVerified = user?.isVerified;
+        token.preferences = user?.preferences;
       }
       return token;
     },
-    async session({ session, token }) {
+    async session({ session, token, user }) {
       if (token && session?.user) {
         session.user.name = token?.name;
         session.user.email = token?.email;
@@ -92,6 +106,10 @@ export const authOptions: NextAuthOptions = {
         if (typeof token?.image === "string") {
           session.user.image = token?.image;
         }
+        session.user.organizationIds = (token?.organizationIds as string[]) || [];
+        session.user.currentOrganizationId = token?.currentOrganizationId as string | undefined;
+        session.user.isVerified = token?.isVerified as boolean | undefined;
+        session.user.preferences = token?.preferences as { theme: string; language: string; timezone: string; } | undefined;
       }
       return session;
     },
@@ -106,12 +124,4 @@ export const authOptions: NextAuthOptions = {
 interface Credentials {
   email: string;
   password: string;
-}
-
-interface IUser {
-  id: string;
-  name: string;
-  email: string;
-  image: string;
-  role: string;
 }

@@ -2,8 +2,8 @@ import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema(
   {
-    id: {
-      type: String,
+    _id: {
+      type: mongoose.Schema.Types.ObjectId,
     },
     name: {
       type: String,
