@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation'; // For Next.js 13+ App Router
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation"; // For Next.js 13+ App Router
 // import { useNavigate } from 'react-router-dom'; // For React Router
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 import {
   AppBar,
   Toolbar,
@@ -20,47 +20,49 @@ import {
   Avatar,
   Popover,
   ListItemIcon,
-  ListItemText
-} from '@mui/material';
-import { Menu, Close, Dashboard, Logout } from '@mui/icons-material';
+  ListItemText,
+} from "@mui/material";
+import { Menu, Close, Dashboard, Logout } from "@mui/icons-material";
+import useAuth from "@/hooks/useAuth";
+import { signOut } from "next-auth/react";
 
 // Custom theme configuration
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#000000', // Black
-      light: '#333333',
-      dark: '#1f2937',
-      contrastText: '#ffffff',
+      main: "#000000", // Black
+      light: "#333333",
+      dark: "#1f2937",
+      contrastText: "#ffffff",
     },
     secondary: {
-      main: '#6b7280', // Gray
-      light: '#9ca3af',
-      dark: '#4b5563',
-      contrastText: '#ffffff',
+      main: "#6b7280", // Gray
+      light: "#9ca3af",
+      dark: "#4b5563",
+      contrastText: "#ffffff",
     },
     background: {
-      default: '#ffffff',
-      paper: '#ffffff',
+      default: "#ffffff",
+      paper: "#ffffff",
     },
     text: {
-      primary: '#000000',
-      secondary: '#6b7280',
+      primary: "#000000",
+      secondary: "#6b7280",
     },
     grey: {
-      300: '#d1d5db',
-      400: '#9ca3af',
-      500: '#6b7280',
-      600: '#4b5563',
+      300: "#d1d5db",
+      400: "#9ca3af",
+      500: "#6b7280",
+      600: "#4b5563",
     },
   },
   typography: {
     h5: {
       fontWeight: 900,
-      letterSpacing: '-0.025em',
+      letterSpacing: "-0.025em",
     },
     button: {
-      textTransform: 'none',
+      textTransform: "none",
       fontWeight: 500,
     },
   },
@@ -68,23 +70,23 @@ const theme = createTheme({
     MuiButton: {
       styleOverrides: {
         root: {
-          textTransform: 'none',
+          textTransform: "none",
         },
         outlined: {
-          borderColor: '#d1d5db',
-          color: '#000000',
+          borderColor: "#d1d5db",
+          color: "#000000",
           fontWeight: 600,
-          '&:hover': {
-            borderColor: '#000000',
-            backgroundColor: 'rgba(0, 0, 0, 0.04)',
+          "&:hover": {
+            borderColor: "#000000",
+            backgroundColor: "rgba(0, 0, 0, 0.04)",
           },
         },
         contained: {
-          backgroundColor: '#000000',
-          color: '#ffffff',
+          backgroundColor: "#000000",
+          color: "#ffffff",
           fontWeight: 600,
-          '&:hover': {
-            backgroundColor: '#1f2937',
+          "&:hover": {
+            backgroundColor: "#1f2937",
           },
         },
       },
@@ -92,9 +94,9 @@ const theme = createTheme({
     MuiAppBar: {
       styleOverrides: {
         root: {
-          backgroundColor: 'transparent',
-          color: '#000000',
-          boxShadow: 'none',
+          backgroundColor: "transparent",
+          color: "#000000",
+          boxShadow: "none",
         },
       },
     },
@@ -104,14 +106,16 @@ const theme = createTheme({
 function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [profileAnchorEl, setProfileAnchorEl] = useState<HTMLElement | null>(null);
+  const [profileAnchorEl, setProfileAnchorEl] = useState<HTMLElement | null>(
+    null
+  );
   const router = useRouter(); // For Next.js
   // const navigate = useNavigate(); // For React Router
 
   // Mock user data - replace with actual authentication logic
-  const [user, setUser] = useState<{ name: string; email: string; avatar?: string } | null>(null);
-  
-  const isAuthenticated = !user;
+  const { user, setUser } = useAuth();
+
+  const isAuthenticated = !!user;
 
   // Scroll detection effect
   useEffect(() => {
@@ -119,12 +123,12 @@ function Navbar() {
       const scrollPosition = window.scrollY;
       const windowHeight = window.innerHeight;
       const scrollThreshold = windowHeight * 0.1; // 10% of screen height
-      
+
       setIsScrolled(scrollPosition > scrollThreshold);
     };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const handleDrawerToggle = () => {
@@ -139,19 +143,24 @@ function Navbar() {
     setProfileAnchorEl(null);
   };
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    await signOut();
     setUser(null);
     handleProfileClose();
-    handleNavigate('/');
+    handleNavigate("/");
   };
 
   const handleDashboard = () => {
     handleProfileClose();
-    handleNavigate('/dashboard');
+    handleNavigate("/dashboard");
   };
 
   const getInitials = (name: string) => {
-    return name.split(' ').map(n => n[0]).join('').toUpperCase();
+    return name
+      .split(" ")
+      .map((n) => n[0])
+      .join("")
+      .toUpperCase();
   };
 
   // Navigation handler
@@ -163,24 +172,29 @@ function Navbar() {
 
   // Navigation items with their corresponding routes
   const navigationItems = [
-    { name: 'Dashboard', path: '/dashboard' },
-    { name: 'Features', path: '/features' },
-    { name: 'Pricing', path: '/pricing' },
-    { name: 'Resources', path: '/resources' }
+    { name: "Dashboard", path: "/dashboard" },
+    { name: "Features", path: "/features" },
+    { name: "Pricing", path: "/pricing" },
+    { name: "Resources", path: "/resources" },
   ];
 
   // Mobile drawer content
   const drawer = (
-    <Box sx={{ width: 250, height: '100%', bgcolor: 'white' }}>
-      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', p: 2 }}>
-        <Typography 
-          variant="h6" 
-          sx={{ 
+    <Box sx={{ width: 250, height: "100%", bgcolor: "white" }}>
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          p: 2,
+        }}>
+        <Typography
+          variant='h6'
+          sx={{
             fontWeight: 900,
-            cursor: 'pointer'
+            cursor: "pointer",
           }}
-          onClick={() => handleNavigate('/')}
-        >
+          onClick={() => handleNavigate("/")}>
           AgencyBoost
         </Typography>
         <IconButton onClick={handleDrawerToggle}>
@@ -191,16 +205,15 @@ function Navbar() {
       <List sx={{ pt: 2 }}>
         {navigationItems.map((item) => (
           <ListItem key={item.name} sx={{ px: 2, py: 1 }}>
-            <Button 
-              fullWidth 
+            <Button
+              fullWidth
               onClick={() => handleNavigate(item.path)}
-              sx={{ 
-                color: '#6b7280', 
-                justifyContent: 'flex-start',
+              sx={{
+                color: "#6b7280",
+                justifyContent: "flex-start",
                 py: 1.5,
-                fontSize: '1rem'
-              }}
-            >
+                fontSize: "1rem",
+              }}>
               {item.name}
             </Button>
           </ListItem>
@@ -208,27 +221,25 @@ function Navbar() {
         {!isAuthenticated ? (
           <>
             <ListItem sx={{ px: 2, py: 1 }}>
-              <Button 
-                variant="outlined" 
+              <Button
+                variant='outlined'
                 fullWidth
-                onClick={() => handleNavigate('/login')}
-                sx={{ 
+                onClick={() => handleNavigate("/login")}
+                sx={{
                   py: 1.5,
-                  mb: 1
-                }}
-              >
+                  mb: 1,
+                }}>
                 Sign In
               </Button>
             </ListItem>
             <ListItem sx={{ px: 2, py: 1 }}>
-              <Button 
-                variant="contained" 
+              <Button
+                variant='contained'
                 fullWidth
-                onClick={() => handleNavigate('/register')}
-                sx={{ 
-                  py: 1.5
-                }}
-              >
+                onClick={() => handleNavigate("/register")}
+                sx={{
+                  py: 1.5,
+                }}>
                 Get Started
               </Button>
             </ListItem>
@@ -236,32 +247,30 @@ function Navbar() {
         ) : (
           <>
             <ListItem sx={{ px: 2, py: 1 }}>
-              <Button 
+              <Button
                 fullWidth
                 startIcon={<Dashboard />}
                 onClick={handleDashboard}
-                sx={{ 
-                  color: '#6b7280', 
-                  justifyContent: 'flex-start',
+                sx={{
+                  color: "#6b7280",
+                  justifyContent: "flex-start",
                   py: 1.5,
-                  fontSize: '1rem'
-                }}
-              >
+                  fontSize: "1rem",
+                }}>
                 Dashboard
               </Button>
             </ListItem>
             <ListItem sx={{ px: 2, py: 1 }}>
-              <Button 
+              <Button
                 fullWidth
                 startIcon={<Logout />}
                 onClick={handleLogout}
-                sx={{ 
-                  color: '#6b7280', 
-                  justifyContent: 'flex-start',
+                sx={{
+                  color: "#6b7280",
+                  justifyContent: "flex-start",
                   py: 1.5,
-                  fontSize: '1rem'
-                }}
-              >
+                  fontSize: "1rem",
+                }}>
                 Logout
               </Button>
             </ListItem>
@@ -273,89 +282,90 @@ function Navbar() {
 
   return (
     <>
-      <AppBar 
-        position="fixed" 
+      <AppBar
+        position='fixed'
         elevation={0}
-        sx={{ 
+        sx={{
           py: 1,
-          backgroundColor: 'transparent',
-          transition: 'all 0.3s ease-in-out'
-        }}
-      >
-        <Container maxWidth="lg" sx={{ px: { xs: 2, sm: 3, md: 4 } }}>
+          backgroundColor: "transparent",
+          transition: "all 0.3s ease-in-out",
+        }}>
+        <Container maxWidth='lg' sx={{ px: { xs: 2, sm: 3, md: 4 } }}>
           <Box
             sx={{
-              backgroundColor: '#ffffff',
-              borderRadius: isScrolled ? '12px' : '0px',
-              border: isScrolled ? '1px solid #e5e7eb' : 'none',
-              boxShadow: isScrolled ? '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)' : 'none',
-              transition: 'all 0.3s ease-in-out',
-              mx:  2 ,
-              my:  1,
-            }}
-          >
-            <Toolbar sx={{ 
-              justifyContent: 'space-between',
-              minHeight: isScrolled ? '56px' : '64px',
-              transition: 'min-height 0.3s ease-in-out',
-              px: { xs: 2, sm: 3 }
+              backgroundColor: "#ffffff",
+              borderRadius: isScrolled ? "12px" : "0px",
+              border: isScrolled ? "1px solid #e5e7eb" : "none",
+              boxShadow: isScrolled
+                ? "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)"
+                : "none",
+              transition: "all 0.3s ease-in-out",
+              mx: 2,
+              my: 1,
             }}>
-              <Typography 
-                variant={isScrolled ? "h6" : "h5"} 
-                component="div"
-                sx={{ 
-                  cursor: 'pointer',
+            <Toolbar
+              sx={{
+                justifyContent: "space-between",
+                minHeight: isScrolled ? "56px" : "64px",
+                transition: "min-height 0.3s ease-in-out",
+                px: { xs: 2, sm: 3 },
+              }}>
+              <Typography
+                variant={isScrolled ? "h6" : "h5"}
+                component='div'
+                sx={{
+                  cursor: "pointer",
                   fontWeight: 900,
-                  fontSize: isScrolled ? '1.25rem' : '1.5rem',
-                  transition: 'font-size 0.3s ease-in-out',
-                  '&:hover': {
-                    opacity: 0.8
-                  }
+                  fontSize: isScrolled ? "1.25rem" : "1.5rem",
+                  transition: "font-size 0.3s ease-in-out",
+                  "&:hover": {
+                    opacity: 0.8,
+                  },
                 }}
-                onClick={() => handleNavigate('/')}
-              >
+                onClick={() => handleNavigate("/")}>
                 AgencyBoost
               </Typography>
-              
+
               {/* Desktop Navigation */}
-              <Stack direction="row" spacing={3} alignItems="center" sx={{ display: { xs: 'none', md: 'flex' } }}>
+              <Stack
+                direction='row'
+                spacing={3}
+                alignItems='center'
+                sx={{ display: { xs: "none", md: "flex" } }}>
                 {navigationItems.map((item) => (
-                  <Button 
+                  <Button
                     key={item.name}
-                    color="secondary"
+                    color='secondary'
                     onClick={() => handleNavigate(item.path)}
                     sx={{
-                      fontSize: '0.875rem',
+                      fontSize: "0.875rem",
                       fontWeight: 500,
                       px: 2,
-                      py: 1
-                    }}
-                  >
+                      py: 1,
+                    }}>
                     {item.name}
                   </Button>
                 ))}
                 {!isAuthenticated ? (
                   <>
-                    <Button 
-                      variant="outlined"
-                      onClick={() => handleNavigate('/login')}
+                    <Button
+                      variant='outlined'
+                      onClick={() => handleNavigate("/login")}
                       sx={{
-                        fontSize: '0.875rem',
-                        px: 2.5,
-                        py: 1
-                      }}
-                    >
-                      Sign In
-                    </Button>
-                    <Button 
-                      variant="contained" 
-                      sx={{ 
+                        fontSize: "0.875rem",
                         px: 2.5,
                         py: 1,
-                        fontSize: '0.875rem'
+                      }}>
+                      Sign In
+                    </Button>
+                    <Button
+                      variant='contained'
+                      sx={{
+                        px: 2.5,
+                        py: 1,
+                        fontSize: "0.875rem",
                       }}
-                      onClick={() => handleNavigate('/register')}
-                    >
+                      onClick={() => handleNavigate("/register")}>
                       Get Started
                     </Button>
                   </>
@@ -364,31 +374,28 @@ function Navbar() {
                     onClick={handleProfileClick}
                     sx={{
                       p: 0,
-                      ml: 2
-                    }}
-                  >
+                      ml: 2,
+                    }}>
                     <Avatar
-                      src={ 'https://via.placeholder.com/40'}//user?.avatar 
+                      src={user?.image}
                       sx={{
                         width: 40,
                         height: 40,
-                        bgcolor: '#000000',
-                        color: '#ffffff',
-                        fontSize: '1rem',
-                        fontWeight: 600
-                      }}
-                    >user
-                      {/*{!user?.avatar && user?.name && getInitials(user.name)}*/}
+                        bgcolor: "#000000",
+                        color: "#ffffff",
+                        fontSize: "1rem",
+                        fontWeight: 600,
+                      }}>
+                      {!user?.image && user?.name && getInitials(user.name)}
                     </Avatar>
                   </IconButton>
                 )}
               </Stack>
-              
+
               {/* Mobile Menu Button */}
-              <IconButton 
-                sx={{ display: { xs: 'flex', md: 'none' } }}
-                onClick={handleDrawerToggle}
-              >
+              <IconButton
+                sx={{ display: { xs: "flex", md: "none" } }}
+                onClick={handleDrawerToggle}>
                 <Menu />
               </IconButton>
             </Toolbar>
@@ -402,81 +409,77 @@ function Navbar() {
         anchorEl={profileAnchorEl}
         onClose={handleProfileClose}
         anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'right',
+          vertical: "bottom",
+          horizontal: "right",
         }}
         transformOrigin={{
-          vertical: 'top',
-          horizontal: 'right',
+          vertical: "top",
+          horizontal: "right",
         }}
         sx={{
-          mt: 1
-        }}
-      >
+          mt: 1,
+        }}>
         <Box sx={{ p: 2, minWidth: 200 }}>
-          <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+          <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
             <Avatar
-              src={user?.avatar}
+              src={user?.image}
               sx={{
                 width: 32,
                 height: 32,
-                bgcolor: '#000000',
-                color: '#ffffff',
-                fontSize: '0.875rem',
-                mr: 2
-              }}
-            >
-              {!user?.avatar && user?.name && getInitials(user.name)}
+                bgcolor: "#000000",
+                color: "#ffffff",
+                fontSize: "0.875rem",
+                mr: 2,
+              }}>
+              {!user?.image && user?.name && getInitials(user.name)}
             </Avatar>
             <Box>
-              <Typography variant="body2" sx={{ fontWeight: 600 }}>
+              <Typography variant='body2' sx={{ fontWeight: 600 }}>
                 {user?.name}
               </Typography>
-              <Typography variant="caption" color="text.secondary">
+              <Typography variant='caption' color='text.secondary'>
                 {user?.email}
               </Typography>
             </Box>
           </Box>
           <Divider sx={{ my: 1 }} />
           <List sx={{ p: 0 }}>
-            <ListItem 
-              component="button"
+            <ListItem
+              component='button'
               onClick={handleDashboard}
               sx={{
                 p: 1,
                 borderRadius: 1,
-                cursor: 'pointer',
-                '&:hover': {
-                  bgcolor: 'rgba(0, 0, 0, 0.04)'
-                }
-              }}
-            >
+                cursor: "pointer",
+                "&:hover": {
+                  bgcolor: "rgba(0, 0, 0, 0.04)",
+                },
+              }}>
               <ListItemIcon sx={{ minWidth: 36 }}>
-                <Dashboard fontSize="small" />
+                <Dashboard fontSize='small' />
               </ListItemIcon>
-              <ListItemText 
-                primary="Dashboard" 
-                primaryTypographyProps={{ fontSize: '0.875rem' }}
+              <ListItemText
+                primary='Dashboard'
+                primaryTypographyProps={{ fontSize: "0.875rem" }}
               />
             </ListItem>
-            <ListItem 
-              component="button"
+            <ListItem
+              component='button'
               onClick={handleLogout}
               sx={{
                 p: 1,
                 borderRadius: 1,
-                cursor: 'pointer',
-                '&:hover': {
-                  bgcolor: 'rgba(0, 0, 0, 0.04)'
-                }
-              }}
-            >
+                cursor: "pointer",
+                "&:hover": {
+                  bgcolor: "rgba(0, 0, 0, 0.04)",
+                },
+              }}>
               <ListItemIcon sx={{ minWidth: 36 }}>
-                <Logout fontSize="small" />
+                <Logout fontSize='small' />
               </ListItemIcon>
-              <ListItemText 
-                primary="Logout" 
-                primaryTypographyProps={{ fontSize: '0.875rem' }}
+              <ListItemText
+                primary='Logout'
+                primaryTypographyProps={{ fontSize: "0.875rem" }}
               />
             </ListItem>
           </List>
@@ -485,22 +488,21 @@ function Navbar() {
 
       {/* Mobile Navigation Drawer */}
       <Drawer
-        variant="temporary"
-        anchor="right"
+        variant='temporary'
+        anchor='right'
         open={mobileOpen}
         onClose={handleDrawerToggle}
         ModalProps={{
           keepMounted: true, // Better open performance on mobile
         }}
         sx={{
-          display: { xs: 'block', md: 'none' },
-          '& .MuiDrawer-paper': { 
-            boxSizing: 'border-box', 
+          display: { xs: "block", md: "none" },
+          "& .MuiDrawer-paper": {
+            boxSizing: "border-box",
             width: 250,
-            bgcolor: 'white'
+            bgcolor: "white",
           },
-        }}
-      >
+        }}>
         {drawer}
       </Drawer>
     </>

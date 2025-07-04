@@ -1,6 +1,5 @@
 import { connectDB } from "@/database/dbConfig";
 import { NextResponse, type NextRequest } from "next/server";
-import bcrypt from "bcryptjs";
 import User from "@/models/userModel";
 import { SendEmail } from "@/utils/SendEmail";
 
@@ -10,34 +9,26 @@ export const POST = async (request: NextRequest) => {
 
     // Parse the request body
     const userInfo = await request.json();
-    const { name, email, password, image = "",  agreeToTerms, subscribeNewsletter } = userInfo;
+    const { email } = userInfo;
 
     // Validate required fields
-    if (!name || !email || !password) {
+    if (!email) {
       return NextResponse.json({
-        message: "Missing required fields",
+        message: "Email is required!",
         status: 400,
       });
     }
 
     // Check if user already exists
-    const existingUser = await User.findOne({ email });
-    if (existingUser) {
+    const userIsExist = await User.findOne({ email });
+    if (!userIsExist) {
       return NextResponse.json({
-        message: "User already exists!",
+        message: "User does not exist!",
         status: 400,
       });
     }
-
-    // Hash the password
-    const hashedPassword = await bcrypt.hash(password, 12);
-
-    // Create and save the new user
-    const newUser = new User({ name, email, password: hashedPassword, image, acceptedTermsAndConditions: agreeToTerms, subscribeNewsletter });
-    await newUser.save();
-
     // Send verification email
-    const emailResponse = await SendEmail(email, "verify-email");
+    const emailResponse = await SendEmail(email, "reset-password");
     let emailHash = "";
     let responseMessage = "";
 
@@ -51,7 +42,6 @@ export const POST = async (request: NextRequest) => {
         message: responseMessage,
         emailHash: emailHash,
         status: 200,
-        user: { name, email },
       },
       { status: 201 }
     );

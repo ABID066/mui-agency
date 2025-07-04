@@ -1,11 +1,14 @@
 "use client";
-import MUIThemeProvider from "@/components/ThemeProvider";
+import MUIThemeProvider from "@/providers/ThemeProvider";
 import { SessionProvider } from "next-auth/react";
+import AuthProvider from "@/providers/AuthProvider";
 
 const AppProvider = ({ children }: { children: React.ReactNode }) => {
   return (
     <SessionProvider>
-      <MUIThemeProvider>{children}</MUIThemeProvider>
+      <MUIThemeProvider>
+        <AuthProvider>{children}</AuthProvider>
+      </MUIThemeProvider>
     </SessionProvider>
   );
 };

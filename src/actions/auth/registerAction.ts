@@ -28,12 +28,14 @@ export async function registerAction(
       toast.error(data.message);
       return { success: false, message: data.message };
     }
-  } catch (error) {
-    console.error("Registration Error:", error);
-    return {
-      success: false,
-      message: "Registration failed",
-      error: error instanceof Error ? error.message : "Unknown error",
-    };
+  } catch (error: unknown) {
+
+     if (axios.isAxiosError(error) && error.response?.data) {
+        const errorMessage = error.response.data.error || "Verification failed";
+        toast.error(errorMessage);
+        return { success: false, message: errorMessage };
+    }
+    toast.error("Verification failed");
+    return { success: false, message: "Verification failed" };
   }
 }

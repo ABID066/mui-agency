@@ -27,7 +27,7 @@ export const ResetPasswordEmailTemplate = (
       <p>You can also click this link to reset your password:</p>
       <p><a href=${
         process.env.NEXT_PUBLIC_BASE_URL as string
-      }/reset-password?email=${emailHash}>Reset Password</a></p>
+      }/verify-reset-password?email=${emailHash}>Reset Password</a></p>
       <p>If you did not request this, you can safely ignore it.</p>
     </div>
     <div class="footer">&copy; ${new Date().getFullYear()} Royalx. All rights reserved.</div>
