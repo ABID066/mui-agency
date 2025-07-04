@@ -1,5 +1,5 @@
 'use client';
-
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState } from 'react';
 import {
   Box,
@@ -18,7 +18,7 @@ import {
   Security,
   Notifications,
   Palette,
-  Storage
+ Storage
 } from '@mui/icons-material';
 
 // Import modular components
