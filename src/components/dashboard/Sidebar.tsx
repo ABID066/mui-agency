@@ -27,14 +27,7 @@ import {
   KeyboardArrowDown,
   KeyboardArrowRight,
   Business,
-  GroupAdd,
-  SwapHoriz,
-  Add,
-  PersonAdd,
-  AssignmentInd,
-  PersonRemove,
-  AdminPanelSettings,
-  Delete
+  Add
 } from '@mui/icons-material';
 import { useRouter, usePathname } from 'next/navigation';
 
@@ -64,14 +57,7 @@ const navigationItems: NavigationItem[] = [
     hasSubmenu: true,
     submenuItems: [
       { name: 'My Organizations', icon: Business, path: '/dashboard/organization/my-organizations' },
-      { name: 'Switch Organization', icon: SwapHoriz, path: '/dashboard/organization/switch' },
       { name: 'Create New Organization', icon: Add, path: '/dashboard/organization/create' },
-      { name: 'Team Members', icon: GroupAdd, path: '/dashboard/organization/team-members' },
-      { name: 'Invite Member', icon: PersonAdd, path: '/dashboard/organization/invite-member' },
-      { name: 'Assign Role', icon: AssignmentInd, path: '/dashboard/organization/assign-role' },
-      { name: 'Remove Member', icon: PersonRemove, path: '/dashboard/organization/remove-member' },
-      { name: 'Org Settings', icon: AdminPanelSettings, path: '/dashboard/organization/settings' },
-      { name: 'Disable/Delete Org', icon: Delete, path: '/dashboard/organization/disable-delete' },
     ]
   },
   { name: 'Support', icon: Support, path: '/dashboard/support' },

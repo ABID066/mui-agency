@@ -16,7 +16,7 @@ import {
 export default function DashboardHome() {
   return (
     <Box sx={{ 
-      p: 4, 
+      p: { xs: 2, sm: 3, md: 4 }, 
       backgroundColor: '#0f172a', 
       minHeight: '100vh',
       color: '#ffffff'

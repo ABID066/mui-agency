@@ -18,38 +18,52 @@ interface UserTableHeaderProps {
 export default function UserTableHeader({ onAddUser }: UserTableHeaderProps) {
   return (
     <Box sx={{ p: 3, borderBottom: '1px solid #334155' }}>
-      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 3 }}>
-        <Typography variant="h6" fontWeight={600} sx={{ color: '#ffffff' }}>
+      <Box sx={{ 
+        display: 'flex', 
+        flexDirection: { xs: 'column', sm: 'row' },
+        alignItems: { xs: 'stretch', sm: 'center' }, 
+        justifyContent: 'space-between', 
+        gap: { xs: 2, sm: 0 },
+        mb: 3 
+      }}>
+        <Typography variant="h6" fontWeight={600} sx={{ color: '#ffffff', textAlign: { xs: 'center', sm: 'left' } }}>
           All Users
         </Typography>
-        <Box sx={{ display: 'flex', gap: 2 }}>
+        <Box sx={{ 
+          display: 'flex', 
+          flexDirection: { xs: 'column', sm: 'row' },
+          gap: 2 
+        }}>
           <Button
-            variant="outlined"
-            startIcon={<FilterList />}
-            sx={{
-              borderColor: '#475569',
-              color: '#ffffff',
-              '&:hover': {
-                borderColor: '#94a3b8',
-                backgroundColor: 'rgba(255, 255, 255, 0.05)'
-              }
-            }}
-          >
-            Filter
-          </Button>
-          <Button
-            variant="contained"
-            startIcon={<PersonAdd />}
-            onClick={onAddUser}
-            sx={{
-              backgroundColor: '#3b82f6',
-              '&:hover': {
-                backgroundColor: '#2563eb'
-              }
-            }}
-          >
-            Add User
-          </Button>
+          variant="outlined"
+          startIcon={<FilterList />}
+          sx={{
+            borderColor: '#475569',
+            color: '#ffffff',
+            width: { xs: '100%', sm: 'auto' },
+            '&:hover': {
+              borderColor: '#64748b',
+              backgroundColor: 'rgba(255, 255, 255, 0.04)'
+            }
+          }}
+        >
+          Filter
+        </Button>
+        
+        <Button
+          variant="contained"
+          startIcon={<PersonAdd />}
+          onClick={onAddUser}
+          sx={{
+            backgroundColor: '#3b82f6',
+            width: { xs: '100%', sm: 'auto' },
+            '&:hover': {
+              backgroundColor: '#2563eb'
+            }
+          }}
+        >
+          Add User
+        </Button>
         </Box>
       </Box>
     </Box>

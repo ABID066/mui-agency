@@ -52,8 +52,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
           backgroundColor: '#0f172a',
           minHeight: '100vh',
           pt: { xs: 8, md: 0 }, // Add top padding for AppBar
-          
-          px: 3,
+          px: { xs: 2, sm: 3 }, // Responsive horizontal padding
           //py: 3
         }}
       >
