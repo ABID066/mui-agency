@@ -89,6 +89,7 @@ export default function MyOrganizations() {
   const [selectedOrg, setSelectedOrg] = useState<Organization | null>(null);
   const [activeTab, setActiveTab] = useState(0);
   const [view, setView] = useState<'list' | 'manage'>('list');
+  const [currentOrgId, setCurrentOrgId] = useState<string>('1'); // Default to first organization
 
   const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -112,6 +113,10 @@ export default function MyOrganizations() {
 
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
     setActiveTab(newValue);
+  };
+
+  const handleSwitchOrg = (orgId: string) => {
+    setCurrentOrgId(orgId);
   };
 
   const getRoleColor = (role: string) => {
@@ -428,16 +433,29 @@ export default function MyOrganizations() {
                   {org.description}
                 </Typography>
                 
-                <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 2 }}>
-                  <Chip
-                    label={org.role}
-                    size="small"
-                    sx={{
-                      backgroundColor: getRoleColor(org.role),
-                      color: '#ffffff',
-                      fontWeight: 500
-                    }}
-                  />
+                <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 2, flexWrap: 'wrap', gap: 1 }}>
+                  <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
+                    <Chip
+                      label={org.role}
+                      size="small"
+                      sx={{
+                        backgroundColor: getRoleColor(org.role),
+                        color: '#ffffff',
+                        fontWeight: 500
+                      }}
+                    />
+                    {currentOrgId === org.id && (
+                      <Chip
+                        label="Current"
+                        size="small"
+                        sx={{
+                          backgroundColor: '#10b981',
+                          color: '#ffffff',
+                          fontWeight: 600
+                        }}
+                      />
+                    )}
+                  </Box>
                   
                   <Chip
                     label={org.status}
@@ -459,16 +477,23 @@ export default function MyOrganizations() {
                     fullWidth
                     variant="outlined"
                     startIcon={<SwapHoriz />}
+                    onClick={() => handleSwitchOrg(org.id)}
+                    disabled={currentOrgId === org.id}
                     sx={{
-                      borderColor: '#475569',
-                      color: '#ffffff',
+                      borderColor: currentOrgId === org.id ? '#10b981' : '#475569',
+                      color: currentOrgId === org.id ? '#10b981' : '#ffffff',
                       '&:hover': {
-                        borderColor: '#94a3b8',
+                        borderColor: currentOrgId === org.id ? '#10b981' : '#94a3b8',
                         backgroundColor: 'rgba(255, 255, 255, 0.05)'
+                      },
+                      '&.Mui-disabled': {
+                        borderColor: '#10b981',
+                        color: '#10b981',
+                        opacity: 0.7
                       }
                     }}
                   >
-                    Switch to this org
+                    {currentOrgId === org.id ? 'Current Organization' : 'Switch to this org'}
                   </Button>
                   <Button
                     variant="contained"
