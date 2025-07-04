@@ -368,7 +368,7 @@ function Navbar() {
                     }}
                   >
                     <Avatar
-                      src={user?.avatar}
+                      src={ 'https://via.placeholder.com/40'}//user?.avatar 
                       sx={{
                         width: 40,
                         height: 40,
@@ -377,8 +377,8 @@ function Navbar() {
                         fontSize: '1rem',
                         fontWeight: 600
                       }}
-                    >
-                      {!user?.avatar && user?.name && getInitials(user.name)}
+                    >user
+                      {/*{!user?.avatar && user?.name && getInitials(user.name)}*/}
                     </Avatar>
                   </IconButton>
                 )}
