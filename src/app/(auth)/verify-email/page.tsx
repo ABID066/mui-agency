@@ -19,7 +19,6 @@ export default function VerifyEmailPage() {
       return;
     }
     const res = await verifyEmailAction(code, hashedEmail);
-    console.log(res)
     if (res.success) {
       setStatus(res.message);
       router.push("/login")
