@@ -102,7 +102,7 @@ export default function AppearanceSettings({
             </Grid>
           </Box>
 
-          {/* Color Scheme */}
+          {/* Color Scheme
           <Box sx={{ mb: 4 }}>
             <Typography variant="subtitle1" sx={{ color: '#ffffff', fontWeight: 600, mb: 2 }}>
               Color Scheme
@@ -131,7 +131,7 @@ export default function AppearanceSettings({
                 </Grid>
               ))}
             </Grid>
-          </Box>
+          </Box>*/}
         </Grid>
 
         {/* Display Settings */}
@@ -176,7 +176,7 @@ export default function AppearanceSettings({
             </FormControl>
           </Box>
 
-          {/* Font Size */}
+          {/* Font Size
           <Box sx={{ mb: 3 }}>
             <Typography variant="subtitle1" sx={{ color: '#ffffff', fontWeight: 600, mb: 1 }}>
               Font Size
@@ -207,11 +207,11 @@ export default function AppearanceSettings({
                 <MenuItem value="large">Large</MenuItem>
               </Select>
             </FormControl>
-          </Box>
+          </Box>*/}
 
-          {/* Display Options */}
+          {/* Display Options 
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-            {/* Compact Mode */}
+            {/* Compact Mode 
             <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
               <Box>
                 <Typography variant="subtitle1" sx={{ color: '#ffffff', fontWeight: 600 }}>
@@ -238,9 +238,9 @@ export default function AppearanceSettings({
                 }
                 label=""
               />
-            </Box>
+            </Box>*/}
 
-            {/* Animations */}
+            {/* Animations 
             <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
               <Box>
                 <Typography variant="subtitle1" sx={{ color: '#ffffff', fontWeight: 600 }}>
@@ -267,9 +267,9 @@ export default function AppearanceSettings({
                 }
                 label=""
               />
-            </Box>
+            </Box>*/}
 
-            {/* High Contrast */}
+            {/* High Contrast 
             <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
               <Box>
                 <Typography variant="subtitle1" sx={{ color: '#ffffff', fontWeight: 600 }}>
@@ -296,8 +296,8 @@ export default function AppearanceSettings({
                 }
                 label=""
               />
-            </Box>
-          </Box>
+            </Box>*/}
+          
         </Grid>
 
         {/* Actions */}
