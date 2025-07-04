@@ -1,5 +1,5 @@
 'use client';
-
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState } from 'react';
 import {
   Box,
@@ -18,7 +18,7 @@ import {
   Security,
   Notifications,
   Palette,
-  Storage
+ Storage
 } from '@mui/icons-material';
 
 // Import modular components
@@ -26,7 +26,7 @@ import ProfileSettings from './components/ProfileSettings';
 import SecuritySettings from './components/SecuritySettings';
 import NotificationSettings from './components/NotificationSettings';
 import AppearanceSettings from './components/AppearanceSettings';
-import DataStorageSettings from './components/DataStorageSettings';
+//import DataStorageSettings from './components/DataStorageSettings';
 
 // Initial state data
 const initialProfile = {
@@ -302,7 +302,7 @@ export default function Settings() {
             <Tab icon={<Security />} label="Security" />
             <Tab icon={<Notifications />} label="Notifications" />
             <Tab icon={<Palette />} label="Appearance" />
-            <Tab icon={<Storage />} label="Data & Storage" />
+            {/*<Tab icon={<Storage />} label="Data & Storage" />*/}
           </Tabs>
         </Box>
 
@@ -353,7 +353,7 @@ export default function Settings() {
           />
         )}
 
-        {/* Data & Storage Tab */}
+        {/* Data & Storage Tab 
         {activeTab === 4 && (
           <DataStorageSettings
             storage={storage}
@@ -365,7 +365,7 @@ export default function Settings() {
             onCreateBackup={handleCreateBackup}
             onRestoreBackup={handleRestoreBackup}
           />
-        )}
+        )}*/}
       </Paper>
 
       {/* Confirmation Dialog */}

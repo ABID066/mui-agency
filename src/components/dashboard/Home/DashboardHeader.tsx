@@ -16,11 +16,25 @@ export default function DashboardHeader({
   date = 'Apr 15, 2023' 
 }: DashboardHeaderProps) {
   return (
-    <Box sx={{ mb: 4 }}>
-      <Typography variant="h4" fontWeight={700} sx={{ color: '#ffffff', mb: 1 }}>
+    <Box sx={{ mb: { xs: 2, md: 4 } }}>
+      <Typography 
+        variant="h4" 
+        fontWeight={700} 
+        sx={{ 
+          color: '#ffffff', 
+          mb: 1,
+          fontSize: { xs: '1.5rem', sm: '2rem', md: '2.125rem' }
+        }}
+      >
         {title}
       </Typography>
-      <Typography variant="body1" sx={{ color: '#94a3b8' }}>
+      <Typography 
+        variant="body1" 
+        sx={{ 
+          color: '#94a3b8',
+          fontSize: { xs: '0.875rem', md: '1rem' }
+        }}
+      >
         {date}
       </Typography>
     </Box>

@@ -14,7 +14,11 @@ import {
   Menu,
   MenuItem,
   TextField,
-  InputAdornment
+  InputAdornment,
+  Tabs,
+  Tab,
+  Breadcrumbs,
+  Link
 } from '@mui/material';
 import {
   MoreVert,
@@ -22,8 +26,21 @@ import {
   Add,
   Settings,
   SwapHoriz,
-  Delete
+  Delete,
+  ArrowBack,
+  People,
+  PersonAdd,
+  PersonRemove,
+  AdminPanelSettings
 } from '@mui/icons-material';
+
+// Import sub-components
+import TeamMembers from './TeamMembers';
+import InviteMember from './InviteMember';
+import AssignRole from './AssignRole';
+import RemoveMember from './RemoveMember';
+import OrgSettings from './OrgSettings';
+import DisableDeleteOrg from './DisableDeleteOrg';
 
 interface Organization {
   id: string;
@@ -69,6 +86,9 @@ export default function MyOrganizations() {
   const [organizations] = useState<Organization[]>(mockOrganizations);
   const [searchTerm, setSearchTerm] = useState('');
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [selectedOrg, setSelectedOrg] = useState<Organization | null>(null);
+  const [activeTab, setActiveTab] = useState(0);
+  const [view, setView] = useState<'list' | 'manage'>('list');
 
   const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -76,6 +96,22 @@ export default function MyOrganizations() {
 
   const handleMenuClose = () => {
     setAnchorEl(null);
+  };
+
+  const handleOrgSelect = (org: Organization) => {
+    setSelectedOrg(org);
+    setView('manage');
+    setActiveTab(0);
+  };
+
+  const handleBackToList = () => {
+    setView('list');
+    setSelectedOrg(null);
+    setActiveTab(0);
+  };
+
+  const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
+    setActiveTab(newValue);
   };
 
   const getRoleColor = (role: string) => {
@@ -95,6 +131,191 @@ export default function MyOrganizations() {
     org.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  const renderTabContent = () => {
+    if (!selectedOrg) return null;
+
+    switch (activeTab) {
+      case 0:
+        return <TeamMembers />;
+      case 1:
+        return <InviteMember />;
+      case 2:
+        return <AssignRole />;
+      case 3:
+        return <RemoveMember />;
+      case 4:
+        return <OrgSettings />;
+      case 5:
+        return <DisableDeleteOrg />;
+      default:
+        return <TeamMembers />;
+    }
+  };
+
+  if (view === 'manage' && selectedOrg) {
+    return (
+      <Box sx={{ p: 4, backgroundColor: '#0f172a', minHeight: '100vh', color: '#ffffff' }}>
+        {/* Header with Breadcrumbs */}
+        <Box sx={{ mb: 4 }}>
+          <Breadcrumbs sx={{ mb: 2, color: '#94a3b8' }}>
+            <Link
+              component="button"
+              variant="body1"
+              onClick={handleBackToList}
+              sx={{ color: '#3b82f6', textDecoration: 'none', '&:hover': { textDecoration: 'underline' } }}
+            >
+              My Organizations
+            </Link>
+            <Typography color="#ffffff">{selectedOrg.name}</Typography>
+          </Breadcrumbs>
+          
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 2 }}>
+            <Button
+              startIcon={<ArrowBack />}
+              onClick={handleBackToList}
+              sx={{ color: '#94a3b8', '&:hover': { color: '#ffffff' } }}
+            >
+              Back to Organizations
+            </Button>
+          </Box>
+          
+          <Box sx={{ 
+            display: 'flex', 
+            flexDirection: { xs: 'column', sm: 'row' },
+            alignItems: { xs: 'center', sm: 'flex-start' }, 
+            gap: { xs: 2, sm: 3 },
+            textAlign: { xs: 'center', sm: 'left' }
+          }}>
+            <Avatar sx={{ 
+              width: { xs: 50, sm: 60 }, 
+              height: { xs: 50, sm: 60 }, 
+              backgroundColor: '#3b82f6',
+              fontSize: { xs: '1.25rem', sm: '1.5rem' },
+              fontWeight: 600
+            }}>
+              {selectedOrg.avatar}
+            </Avatar>
+            <Box>
+              <Typography 
+                variant="h4"
+                fontWeight={700} 
+                sx={{ 
+                  color: '#ffffff', 
+                  mb: 1,
+                  fontSize: { xs: '1.5rem', sm: '2rem', md: '2.125rem' },
+                  textAlign: { xs: 'center', sm: 'left' }
+                }}
+              >
+                {selectedOrg.name}
+              </Typography>
+              <Typography variant="body1" sx={{ color: '#94a3b8', mb: 1 }}>
+                {selectedOrg.description}
+              </Typography>
+              <Box sx={{ 
+                display: 'flex', 
+                flexDirection: { xs: 'column', sm: 'row' },
+                gap: { xs: 1, sm: 2 },
+                alignItems: { xs: 'center', sm: 'flex-start' }
+              }}>
+                <Chip
+                  label={selectedOrg.role}
+                  size="small"
+                  sx={{
+                    backgroundColor: getRoleColor(selectedOrg.role),
+                    color: '#ffffff',
+                    fontWeight: 500
+                  }}
+                />
+                <Chip
+                  label={`${selectedOrg.members} members`}
+                  size="small"
+                  variant="outlined"
+                  sx={{
+                    borderColor: '#475569',
+                    color: '#94a3b8'
+                  }}
+                />
+              </Box>
+            </Box>
+          </Box>
+        </Box>
+
+        {/* Management Tabs */}
+        <Card sx={{
+          backgroundColor: '#1e293b',
+          border: '1px solid #334155',
+          boxShadow: 'none'
+        }}>
+          <Tabs
+            value={activeTab}
+            onChange={handleTabChange}
+            variant="scrollable"
+            scrollButtons="auto"
+            allowScrollButtonsMobile
+            sx={{
+              borderBottom: '1px solid #334155',
+              '& .MuiTab-root': {
+                color: '#94a3b8',
+                minWidth: { xs: 120, md: 'auto' },
+                fontSize: { xs: '0.75rem', md: '0.875rem' },
+                '&.Mui-selected': {
+                  color: '#3b82f6'
+                }
+              },
+              '& .MuiTabs-indicator': {
+                backgroundColor: '#3b82f6'
+              },
+              '& .MuiTabs-scrollButtons': {
+                color: '#94a3b8'
+              }
+            }}
+          >
+            <Tab 
+              icon={<People sx={{ fontSize: { xs: '1rem', md: '1.25rem' } }} />} 
+              label="Team Members" 
+              iconPosition="start"
+              sx={{ flexDirection: { xs: 'column', sm: 'row' } }}
+            />
+            <Tab 
+              icon={<PersonAdd sx={{ fontSize: { xs: '1rem', md: '1.25rem' } }} />} 
+              label="Invite Members" 
+              iconPosition="start"
+              sx={{ flexDirection: { xs: 'column', sm: 'row' } }}
+            />
+            <Tab 
+              icon={<AdminPanelSettings sx={{ fontSize: { xs: '1rem', md: '1.25rem' } }} />} 
+              label="Assign Roles" 
+              iconPosition="start"
+              sx={{ flexDirection: { xs: 'column', sm: 'row' } }}
+            />
+            <Tab 
+              icon={<PersonRemove sx={{ fontSize: { xs: '1rem', md: '1.25rem' } }} />} 
+              label="Remove Members" 
+              iconPosition="start"
+              sx={{ flexDirection: { xs: 'column', sm: 'row' } }}
+            />
+            <Tab 
+              icon={<Settings sx={{ fontSize: { xs: '1rem', md: '1.25rem' } }} />} 
+              label="Organization Settings" 
+              iconPosition="start"
+              sx={{ flexDirection: { xs: 'column', sm: 'row' } }}
+            />
+            <Tab 
+              icon={<Delete sx={{ fontSize: { xs: '1rem', md: '1.25rem' } }} />} 
+              label="Disable/Delete" 
+              iconPosition="start"
+              sx={{ flexDirection: { xs: 'column', sm: 'row' } }}
+            />
+          </Tabs>
+          
+          <Box sx={{ p: 0 }}>
+            {renderTabContent()}
+          </Box>
+        </Card>
+      </Box>
+    );
+  }
+
   return (
     <Box sx={{ p: 4, backgroundColor: '#0f172a', minHeight: '100vh', color: '#ffffff' }}>
       {/* Header */}
@@ -108,13 +329,20 @@ export default function MyOrganizations() {
       </Box>
 
       {/* Search and Actions */}
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 4 }}>
+      <Box sx={{ 
+        display: 'flex', 
+        flexDirection: { xs: 'column', sm: 'row' },
+        justifyContent: 'space-between', 
+        alignItems: { xs: 'stretch', sm: 'center' }, 
+        gap: { xs: 2, sm: 0 },
+        mb: 4 
+      }}>
         <TextField
           placeholder="Search organizations..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           sx={{
-            width: 300,
+            width: { xs: '100%', sm: 300 },
             '& .MuiOutlinedInput-root': {
               backgroundColor: '#1e293b',
               borderColor: '#334155',
@@ -144,17 +372,18 @@ export default function MyOrganizations() {
         />
         
         <Button
-          variant="contained"
-          startIcon={<Add />}
-          sx={{
-            backgroundColor: '#3b82f6',
-            '&:hover': {
-              backgroundColor: '#2563eb'
-            }
-          }}
-        >
-          Create Organization
-        </Button>
+            variant="contained"
+            startIcon={<Add />}
+            sx={{
+              backgroundColor: '#3b82f6',
+              width: { xs: '100%', sm: 'auto' },
+              '&:hover': {
+                backgroundColor: '#2563eb'
+              }
+            }}
+          >
+             Create Organization
+           </Button>
       </Box>
 
       {/* Organizations Grid */}
@@ -225,21 +454,37 @@ export default function MyOrganizations() {
                   {org.members} members
                 </Typography>
                 
-                <Button
-                  fullWidth
-                  variant="outlined"
-                  startIcon={<SwapHoriz />}
-                  sx={{
-                    borderColor: '#475569',
-                    color: '#ffffff',
-                    '&:hover': {
-                      borderColor: '#94a3b8',
-                      backgroundColor: 'rgba(255, 255, 255, 0.05)'
-                    }
-                  }}
-                >
-                  Switch to this org
-                </Button>
+                <Box sx={{ display: 'flex', gap: 1 }}>
+                  <Button
+                    fullWidth
+                    variant="outlined"
+                    startIcon={<SwapHoriz />}
+                    sx={{
+                      borderColor: '#475569',
+                      color: '#ffffff',
+                      '&:hover': {
+                        borderColor: '#94a3b8',
+                        backgroundColor: 'rgba(255, 255, 255, 0.05)'
+                      }
+                    }}
+                  >
+                    Switch to this org
+                  </Button>
+                  <Button
+                    variant="contained"
+                    onClick={() => handleOrgSelect(org)}
+                    sx={{
+                      backgroundColor: '#3b82f6',
+                      '&:hover': {
+                        backgroundColor: '#2563eb'
+                      },
+                      minWidth: 'auto',
+                      px: 2
+                    }}
+                  >
+                    Manage
+                  </Button>
+                </Box>
               </CardContent>
             </Card>
           </Grid>
