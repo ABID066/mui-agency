@@ -1,18 +1,28 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import {
   AppBar,
   Toolbar,
   Typography,
   IconButton,
   Box,
-  useTheme
+  useTheme,
+  Popover,
+  Paper,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  Avatar
 } from '@mui/material';
 import {
   Menu,
   Notifications,
-  AccountCircle
+  AccountCircle,
+  Settings,
+  Logout
 } from '@mui/icons-material';
 import { usePathname } from 'next/navigation';
 
@@ -39,17 +49,40 @@ interface NavbarProps {
 export default function Navbar({ drawerWidth, onMenuClick }: NavbarProps) {
   const theme = useTheme();
   const pathname = usePathname();
+  const [profileAnchorEl, setProfileAnchorEl] = useState<HTMLElement | null>(null);
 
   const getCurrentPageName = () => {
     const currentItem = navigationItems.find(item => item.path === pathname);
     return currentItem?.name || 'Dashboard';
   };
 
+  const handleProfileClick = (event: React.MouseEvent<HTMLElement>) => {
+    setProfileAnchorEl(event.currentTarget);
+  };
+
+  const handleProfileClose = () => {
+    setProfileAnchorEl(null);
+  };
+
+  const handleProfileSettings = () => {
+    // Add navigation to profile settings
+    console.log('Navigate to profile settings');
+    setProfileAnchorEl(null);
+  };
+
+  const handleLogout = () => {
+    // Add logout logic here
+    console.log('Logout clicked');
+    setProfileAnchorEl(null);
+  };
+
+  const isProfileOpen = Boolean(profileAnchorEl);
+
   return (
     <AppBar
       position="fixed"
       sx={{
-        //display: { xs: 'block', md: 'none' },
+        display: { xs: 'block', md: 'none' },
         width: { md: `calc(100% - ${drawerWidth}px)` },
         ml: { md: `${drawerWidth}px` },
         backgroundColor: '#0f172a',
@@ -67,24 +100,132 @@ export default function Navbar({ drawerWidth, onMenuClick }: NavbarProps) {
           onClick={onMenuClick}
           sx={{ mr: 2, display: { md: 'none' } }}
         >
-          <Menu />
+          <Menu sx={{ color: "white", ml: "10px"}}/>
         </IconButton>
         
         {/* Page title */}
         <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1, color: '#ffffff' }}>
-          {getCurrentPageName()}
+          Dashboard
         </Typography>
         
         {/* Top navigation actions */}
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-          <IconButton color="inherit">
-            <Notifications />
+          <IconButton >
+            <Notifications sx={{ color: "white",}} />
           </IconButton>
-          <IconButton color="inherit">
-            <AccountCircle />
+          <IconButton 
+            color="inherit"
+            onClick={handleProfileClick}
+            sx={{ '&:hover': { backgroundColor: 'rgba(255, 255, 255, 0.1)' } }}
+          >
+            <AccountCircle sx={{ color: "white" }}/>
           </IconButton>
         </Box>
       </Toolbar>
+      
+      {/* Profile Popover */}
+      <Popover
+        open={isProfileOpen}
+        anchorEl={profileAnchorEl}
+        onClose={handleProfileClose}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'right',
+        }}
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'right',
+        }}
+        sx={{
+          mt: 1,
+          '& .MuiPopover-paper': {
+            backgroundColor: '#1E293B',
+            border: '1px solid #4A5568',
+            borderRadius: 2,
+            boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.3)'
+          }
+        }}
+      >
+        <Paper
+          sx={{
+            backgroundColor: 'transparent',
+            boxShadow: 'none',
+            minWidth: 200,
+            maxWidth: 250
+          }}
+        >
+          <Box sx={{ p: 2 }}>
+            {/* User Info Header */}
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 2, pb: 2, borderBottom: '1px solid #4A5568' }}>
+              <Avatar sx={{ width: 36, height: 36, backgroundColor: '#718096', fontSize: '0.9rem', fontWeight: 600 }}>
+                S
+              </Avatar>
+              <Box>
+                <Typography variant="body2" fontWeight={600} sx={{ color: '#ffffff', lineHeight: 1.2 }}>
+                  Siriwat K.
+                </Typography>
+                <Typography variant="caption" sx={{ color: '#A0AEC0' }}>
+                  siriwat@test.com
+                </Typography>
+              </Box>
+            </Box>
+            
+            <List sx={{ p: 0 }}>
+              <ListItem disablePadding>
+                <ListItemButton
+                  onClick={handleProfileSettings}
+                  sx={{
+                    borderRadius: 1,
+                    '&:hover': {
+                      backgroundColor: '#4A5568'
+                    },
+                    py: 1,
+                    px: 1
+                  }}
+                >
+                  <ListItemIcon sx={{ color: '#A0AEC0', minWidth: 32 }}>
+                    <AccountCircle fontSize="small" />
+                  </ListItemIcon>
+                  <ListItemText 
+                    primary="Profile"
+                    primaryTypographyProps={{
+                      fontSize: '0.875rem',
+                      fontWeight: 500,
+                      color: '#E2E8F0'
+                    }}
+                  />
+                </ListItemButton>
+              </ListItem>
+              
+              <ListItem disablePadding>
+                <ListItemButton
+                  onClick={handleLogout}
+                  sx={{
+                    borderRadius: 1,
+                    '&:hover': {
+                      backgroundColor: '#4A5568'
+                    },
+                    py: 1,
+                    px: 1
+                  }}
+                >
+                  <ListItemIcon sx={{ color: '#A0AEC0', minWidth: 32 }}>
+                    <Logout fontSize="small" />
+                  </ListItemIcon>
+                  <ListItemText 
+                    primary="Logout"
+                    primaryTypographyProps={{
+                      fontSize: '0.875rem',
+                      fontWeight: 500,
+                      color: '#E2E8F0'
+                    }}
+                  />
+                </ListItemButton>
+              </ListItem>
+            </List>
+          </Box>
+        </Paper>
+      </Popover>
     </AppBar>
   );
 }
