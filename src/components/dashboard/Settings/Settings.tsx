@@ -266,13 +266,14 @@ export default function Settings() {
 
   return (
     <Box sx={{ 
-      p: { xs: 2, sm: 3, md: 4 }, 
+      p: { xs: 0.5, sm: 2, md: 4 }, 
       backgroundColor: '#0f172a', 
       minHeight: '100vh', 
       color: '#ffffff',
       width: '100%',
-      maxWidth: '100%',
-      overflow: 'hidden'
+      maxWidth: { xs: 'calc(100vw - 8px)', sm: '100%' },
+      overflow: 'hidden',
+      boxSizing: 'border-box'
     }}>
       {/* Header */}
       <Box sx={{ mb: { xs: 3, md: 4 } }}>
@@ -305,8 +306,10 @@ export default function Settings() {
         boxShadow: 'none',
         borderRadius: 2,
         width: '100%',
-        maxWidth: '100%',
-        overflow: 'hidden'
+        maxWidth: { xs: 'calc(100vw - 8px)', sm: '100%' },
+        overflow: 'hidden',
+        boxSizing: 'border-box',
+        mx: { xs: 0, sm: 'auto' }
       }}>
         <Box sx={{ borderBottom: '1px solid #334155' }}>
           <Tabs
@@ -316,12 +319,12 @@ export default function Settings() {
             scrollButtons={isMobile ? 'auto' : false}
             allowScrollButtonsMobile
             sx={{
-              px: { xs: 1, sm: 2, md: 3 },
+              px: { xs: 0.5, sm: 2, md: 3 },
               '& .MuiTab-root': {
                 color: '#94a3b8',
                 minWidth: { xs: 'auto', md: 160 },
-                fontSize: { xs: '0.75rem', sm: '0.875rem', md: '1rem' },
-                padding: { xs: '6px 8px', sm: '12px 16px' },
+                fontSize: { xs: '0.7rem', sm: '0.875rem', md: '1rem' },
+                padding: { xs: '4px 6px', sm: '12px 16px' },
                 '&.Mui-selected': {
                   color: '#ffffff'
                 }

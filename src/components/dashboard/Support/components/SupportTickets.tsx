@@ -86,12 +86,13 @@ export default function SupportTickets({
             boxShadow: 'none',
             borderRadius: 2,
             width: '100%',
-            maxWidth: '100%',
-            overflow: 'hidden'
+            maxWidth: { xs: 'calc(100vw - 32px)', sm: '100%' },
+            overflow: 'hidden',
+            boxSizing: 'border-box'
           }}>
         {/* Header */}
         <Box sx={{ 
-          p: { xs: 2, md: 3 }, 
+          p: { xs: 1, sm: 2, md: 3 }, 
           borderBottom: '1px solid #334155',
           width: '100%',
           maxWidth: '100%',
