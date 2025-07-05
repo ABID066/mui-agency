@@ -4,8 +4,12 @@ import User from "@/models/userModel";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/(auth)/auth/[...nextauth]/options";
 
-export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
+export async function DELETE(
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
   try {
+    const resolvedParams = await params;
     await connectDB();
     
     // Get current user from session
@@ -20,7 +24,7 @@ export async function DELETE(request: NextRequest, { params }: { params: { id: s
       return NextResponse.json({ error: "Permission denied" }, { status: 403 });
     }
     
-    const targetUser = await User.findById(params.id);
+    const targetUser = await User.findById(resolvedParams.id);
     
     if (!targetUser) {
       return NextResponse.json({ error: "User not found" }, { status: 404 });
@@ -32,7 +36,7 @@ export async function DELETE(request: NextRequest, { params }: { params: { id: s
     }
     
     // Delete the user
-    await User.findByIdAndDelete(params.id);
+    await User.findByIdAndDelete(resolvedParams.id);
     
     return NextResponse.json({
       message: "User deleted successfully",

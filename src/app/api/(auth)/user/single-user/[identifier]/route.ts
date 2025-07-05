@@ -2,11 +2,14 @@ import { NextRequest, NextResponse } from "next/server";
 import { connectDB } from "@/database/dbConfig";
 import User from "@/models/userModel";
 
-export async function GET(request: NextRequest, { params }: { params: { identifier: string } }) {
+export async function GET(
+  request: NextRequest,
+  context: { params: Promise<{ identifier: string }> }
+) {
   try {
     await connectDB();
     
-    const identifier = params.identifier;
+    const { identifier } = await context.params;
     const user = await User.findOne({
       $or: [
         { _id: identifier },

@@ -5,7 +5,10 @@ import { authMiddleware } from "@/utils/auth-helpers";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/(auth)/auth/[...nextauth]/options";
 
-export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {
+export async function PUT(
+  request: NextRequest,
+  context: { params: Promise<{ identifier: string }> }
+) {
   try {
     await connectDB();
     
@@ -17,7 +20,8 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
     if (authError) return authError;
     
     const { role } = await request.json();
-    const targetUser = await User.findById(params.id);
+    const { identifier } = await context.params;
+    const targetUser = await User.findById(identifier);
     
     if (!targetUser) {
       return NextResponse.json({ error: "User not found" }, { status: 404 });

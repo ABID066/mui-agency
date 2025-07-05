@@ -4,20 +4,24 @@ import User from "@/models/userModel";
 import { authMiddleware } from "@/utils/auth-helpers";
 
 // Get single user
-export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
+export async function GET(
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
   try {
+    const resolvedParams = await params;
     await connectDB();
     
     const authError = await authMiddleware(
       request,
       undefined,
       true,
-      params.id
+      resolvedParams.id
     );
 
     if (authError) return authError;
     
-    const user = await User.findById(params.id)
+    const user = await User.findById(resolvedParams.id)
       .select("-password -verifyToken -verifyTokenExpire -resetToken -resetTokenExpire");
       
     if (!user) {
@@ -34,15 +38,19 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
 }
 
 // Update user
-export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {
+export async function PUT(
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
   try {
+    const resolvedParams = await params;
     await connectDB();
     
     const authError = await authMiddleware(
       request,
       undefined,
       true,
-      params.id
+      resolvedParams.id
     );
 
     if (authError) return authError;
@@ -55,7 +63,7 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
     delete updateData.role;
     
     const user = await User.findByIdAndUpdate(
-      params.id,
+      resolvedParams.id,
       { $set: updateData },
       { new: true }
     ).select("-password -verifyToken -verifyTokenExpire -resetToken -resetTokenExpire");
@@ -74,8 +82,12 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
 }
 
 // Delete user
-export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
+export async function DELETE(
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
   try {
+    const resolvedParams = await params;
     await connectDB();
     
     const authError = await authMiddleware(
@@ -85,7 +97,7 @@ export async function DELETE(request: NextRequest, { params }: { params: { id: s
 
     if (authError) return authError;
     
-    const targetUser = await User.findById(params.id);
+    const targetUser = await User.findById(resolvedParams.id);
     
     if (!targetUser) {
       return NextResponse.json({ error: "User not found" }, { status: 404 });
@@ -95,7 +107,7 @@ export async function DELETE(request: NextRequest, { params }: { params: { id: s
       return NextResponse.json({ error: "Cannot delete admin users" }, { status: 403 });
     }
     
-    await User.findByIdAndDelete(params.id);
+    await User.findByIdAndDelete(resolvedParams.id);
     
     return NextResponse.json({
       message: "User deleted successfully",

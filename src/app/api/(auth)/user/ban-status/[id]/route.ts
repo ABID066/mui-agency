@@ -3,8 +3,12 @@ import { connectDB } from "@/database/dbConfig";
 import User from "@/models/userModel";
 import { authMiddleware } from "@/utils/auth-helpers";
 
-export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {
+export async function PUT(
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
   try {
+    const resolvedParams = await params;
     await connectDB();
     
     const authError = await authMiddleware(
@@ -14,7 +18,7 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
 
     if (authError) return authError;
     
-    const targetUser = await User.findById(params.id);
+    const targetUser = await User.findById(resolvedParams.id);
     if (!targetUser) {
       return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
@@ -41,4 +45,4 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
     }
     return NextResponse.json({ error: "Internal server error" }, { status: 500 });
   }
-} 
+}
