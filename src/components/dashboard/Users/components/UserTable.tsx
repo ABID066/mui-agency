@@ -55,7 +55,9 @@ export default function UserTable({
       backgroundColor: '#1e293b',
       border: '1px solid #334155',
       boxShadow: 'none',
-      borderRadius: 2
+      borderRadius: 2,
+      overflow: 'hidden',
+      maxWidth: '100%'
     }}>
       {/* Desktop Table View */}
       {!isMobile ? (
@@ -161,12 +163,12 @@ export default function UserTable({
         </TableContainer>
       ) : (
         /* Mobile Card View */
-        <Box sx={{ p: 2 }}>
+        <Box sx={{ p: 2, overflow: 'hidden' }}>
           <Grid container spacing={2}>
             {users
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((user) => (
-              <Grid sx={{ xs:12 }} key={user.id}>
+              <Grid sx={{ xs: 12 }} key={user.id}>
                 <Card sx={{
                   backgroundColor: '#334155',
                   border: '1px solid #475569',
@@ -181,11 +183,11 @@ export default function UserTable({
                         <Avatar sx={{ width: 48, height: 48, mr: 2, backgroundColor: '#1e293b', color: '#94a3b8' }}>
                           {user.avatar}
                         </Avatar>
-                        <Box sx={{ flex: 1 }}>
-                          <Typography variant="h6" fontWeight={600} sx={{ color: '#ffffff', mb: 0.5 }}>
+                        <Box sx={{ flex: 1, overflow: 'hidden' }}>
+                          <Typography variant="h6" fontWeight={600} sx={{ color: '#ffffff', mb: 0.5, wordBreak: 'break-word' }}>
                             {user.name}
                           </Typography>
-                          <Typography variant="body2" sx={{ color: '#94a3b8' }}>
+                          <Typography variant="body2" sx={{ color: '#94a3b8', wordBreak: 'break-word' }}>
                             Joined {user.joinDate}
                           </Typography>
                         </Box>
@@ -205,22 +207,22 @@ export default function UserTable({
                     </Box>
                     
                     <Box sx={{ mb: 2 }}>
-                      <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
-                        <Email sx={{ fontSize: 16, color: '#94a3b8', mr: 1 }} />
-                        <Typography variant="body2" sx={{ color: '#94a3b8' }}>
+                      <Box sx={{ display: 'flex', alignItems: 'center', mb: 1, overflow: 'hidden' }}>
+                        <Email sx={{ fontSize: 16, color: '#94a3b8', mr: 1, flexShrink: 0 }} />
+                        <Typography variant="body2" sx={{ color: '#94a3b8', wordBreak: 'break-all', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                           {user.email}
                         </Typography>
                       </Box>
-                      <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                        <Phone sx={{ fontSize: 16, color: '#94a3b8', mr: 1 }} />
-                        <Typography variant="body2" sx={{ color: '#94a3b8' }}>
+                      <Box sx={{ display: 'flex', alignItems: 'center', overflow: 'hidden' }}>
+                        <Phone sx={{ fontSize: 16, color: '#94a3b8', mr: 1, flexShrink: 0 }} />
+                        <Typography variant="body2" sx={{ color: '#94a3b8', wordBreak: 'break-word' }}>
                           {user.phone}
                         </Typography>
                       </Box>
                     </Box>
                     
                     <Grid container spacing={2} sx={{ mb: 1 }}>
-                      <Grid sx={{ xs:6 }}>
+                      <Grid sx={{ xs: 6 }}>
                         <Typography variant="caption" sx={{ color: '#94a3b8', display: 'block' }}>
                           Role
                         </Typography>
@@ -235,7 +237,7 @@ export default function UserTable({
                           }}
                         />
                       </Grid>
-                      <Grid sx={{ xs:6 }}>
+                      <Grid sx={{ xs: 6 }}>
                         <Typography variant="caption" sx={{ color: '#94a3b8', display: 'block' }}>
                           Status
                         </Typography>
@@ -253,19 +255,19 @@ export default function UserTable({
                     </Grid>
                     
                     <Grid container spacing={2}>
-                      <Grid sx={{ xs:6 }}>
+                      <Grid sx={{ xs: 6 }}>
                         <Typography variant="caption" sx={{ color: '#94a3b8', display: 'block' }}>
                           Department
                         </Typography>
-                        <Typography variant="body2" fontWeight={500} sx={{ color: '#ffffff' }}>
+                        <Typography variant="body2" fontWeight={500} sx={{ color: '#ffffff', wordBreak: 'break-word' }}>
                           {user.department}
                         </Typography>
                       </Grid>
-                      <Grid sx={{ xs:6 }}>
+                      <Grid sx={{ xs: 6 }}>
                         <Typography variant="caption" sx={{ color: '#94a3b8', display: 'block' }}>
                           Last Login
                         </Typography>
-                        <Typography variant="body2" fontWeight={500} sx={{ color: '#ffffff' }}>
+                        <Typography variant="body2" fontWeight={500} sx={{ color: '#ffffff', wordBreak: 'break-word' }}>
                           {user.lastLogin}
                         </Typography>
                       </Grid>

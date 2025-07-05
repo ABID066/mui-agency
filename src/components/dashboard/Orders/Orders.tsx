@@ -27,10 +27,9 @@ import {
   FormControl,
   Select,
   InputLabel,
-  Tabs,
-  Tab,
   useMediaQuery,
-  useTheme
+  useTheme,
+  LinearProgress
 } from '@mui/material';
 import {
   Search,
@@ -38,62 +37,69 @@ import {
   MoreVert,
   TrendingUp,
   TrendingDown,
-  ShoppingCart,
-  LocalShipping,
+  Subscriptions,
+  Person,
   CheckCircle,
   Cancel,
   Download,
-  Visibility
+  Visibility,
+ 
 } from '@mui/icons-material';
 
-// Extended order data
-const allOrders = [
-  { id: 'ORD-2024-001', date: 'Feb 15, 2024', customer: 'Olivia Rhye', email: 'olivia@email.com', status: 'Delivered', amount: '$2,400', items: 3, shipping: 'Express' },
-  { id: 'ORD-2024-002', date: 'Feb 14, 2024', customer: 'Steve Hampton', email: 'steve.hamp@email.com', status: 'Processing', amount: '$1,800', items: 2, shipping: 'Standard' },
-  { id: 'ORD-2024-003', date: 'Feb 14, 2024', customer: 'Ciaran Murray', email: 'ciaran.murray@email.com', status: 'Shipped', amount: '$3,200', items: 5, shipping: 'Express' },
-  { id: 'ORD-2024-004', date: 'Feb 13, 2024', customer: 'Maria Macdonald', email: 'maria.mc@email.com', status: 'Cancelled', amount: '$1,600', items: 1, shipping: 'Standard' },
-  { id: 'ORD-2024-005', date: 'Feb 13, 2024', customer: 'Charles Fulton', email: 'fulton@email.com', status: 'Pending', amount: '$2,800', items: 4, shipping: 'Express' },
-  { id: 'ORD-2024-006', date: 'Feb 12, 2024', customer: 'Jay Hooper', email: 'hooper@email.com', status: 'Delivered', amount: '$1,200', items: 2, shipping: 'Standard' },
-  { id: 'ORD-2024-007', date: 'Feb 12, 2024', customer: 'Krystal Stevens', email: 'k.stevens@email.com', status: 'Processing', amount: '$2,000', items: 3, shipping: 'Express' },
-  { id: 'ORD-2024-008', date: 'Feb 11, 2024', customer: 'Sachin Flynn', email: 's.flyn@email.com', status: 'Shipped', amount: '$3,600', items: 6, shipping: 'Express' },
-  { id: 'ORD-2024-009', date: 'Feb 11, 2024', customer: 'Emma Wilson', email: 'emma.w@email.com', status: 'Delivered', amount: '$950', items: 1, shipping: 'Standard' },
-  { id: 'ORD-2024-010', date: 'Feb 10, 2024', customer: 'David Brown', email: 'd.brown@email.com', status: 'Pending', amount: '$4,200', items: 8, shipping: 'Express' },
+// Subscription data
+const allSubscriptions = [
+  { id: 'SUB-2024-001', startDate: 'Feb 15, 2024', customer: 'Olivia Rhye', email: 'olivia@email.com', status: 'Active', plan: 'Pro', amount: '$29/month', daysRemaining: 23, nextBilling: 'Mar 15, 2024', duration: '12 months' },
+  { id: 'SUB-2024-002', startDate: 'Feb 14, 2024', customer: 'Steve Hampton', email: 'steve.hamp@email.com', status: 'Active', plan: 'Basic', amount: '$9/month', daysRemaining: 22, nextBilling: 'Mar 14, 2024', duration: '6 months' },
+  { id: 'SUB-2024-003', startDate: 'Feb 14, 2024', customer: 'Ciaran Murray', email: 'ciaran.murray@email.com', status: 'Active', plan: 'Enterprise', amount: '$99/month', daysRemaining: 22, nextBilling: 'Mar 14, 2024', duration: '24 months' },
+  { id: 'SUB-2024-004', startDate: 'Feb 13, 2024', customer: 'Maria Macdonald', email: 'maria.mc@email.com', status: 'Cancelled', plan: 'Basic', amount: '$9/month', daysRemaining: 0, nextBilling: 'N/A', duration: '3 months' },
+  { id: 'SUB-2024-005', startDate: 'Feb 13, 2024', customer: 'Charles Fulton', email: 'fulton@email.com', status: 'Expiring', plan: 'Pro', amount: '$29/month', daysRemaining: 5, nextBilling: 'Mar 13, 2024', duration: '12 months' },
+  { id: 'SUB-2024-006', startDate: 'Feb 12, 2024', customer: 'Jay Hooper', email: 'hooper@email.com', status: 'Active', plan: 'Basic', amount: '$9/month', daysRemaining: 20, nextBilling: 'Mar 12, 2024', duration: '6 months' },
+  { id: 'SUB-2024-007', startDate: 'Feb 12, 2024', customer: 'Krystal Stevens', email: 'k.stevens@email.com', status: 'Active', plan: 'Pro', amount: '$29/month', daysRemaining: 20, nextBilling: 'Mar 12, 2024', duration: '12 months' },
+  { id: 'SUB-2024-008', startDate: 'Feb 11, 2024', customer: 'Sachin Flynn', email: 's.flyn@email.com', status: 'Active', plan: 'Enterprise', amount: '$99/month', daysRemaining: 19, nextBilling: 'Mar 11, 2024', duration: '24 months' },
+  { id: 'SUB-2024-009', startDate: 'Feb 11, 2024', customer: 'Emma Wilson', email: 'emma.w@email.com', status: 'Active', plan: 'Basic', amount: '$9/month', daysRemaining: 19, nextBilling: 'Mar 11, 2024', duration: '6 months' },
+  { id: 'SUB-2024-010', startDate: 'Feb 10, 2024', customer: 'David Brown', email: 'd.brown@email.com', status: 'Pending', plan: 'Enterprise', amount: '$99/month', daysRemaining: 30, nextBilling: 'Mar 10, 2024', duration: '24 months' },
 ];
 
-// Order stats
-const orderStats = [
-  { title: 'Total Orders', value: '2,847', change: '+12.5%', trend: 'up', icon: ShoppingCart },
-  { title: 'Pending Orders', value: '156', change: '+8.2%', trend: 'up', icon: LocalShipping },
-  { title: 'Completed', value: '2,234', change: '+15.3%', trend: 'up', icon: CheckCircle },
-  { title: 'Cancelled', value: '89', change: '-5.1%', trend: 'down', icon: Cancel },
+// Subscription stats
+const subscriptionStats = [
+  { title: 'Total Subscribers', value: '1,247', change: '+18.2%', trend: 'up', icon: Subscriptions },
+  { title: 'Active Plans', value: '1,156', change: '+15.3%', trend: 'up', icon: CheckCircle },
+  { title: 'New This Month', value: '89', change: '+22.1%', trend: 'up', icon: Person },
+  { title: 'Cancelled', value: '91', change: '-8.5%', trend: 'down', icon: Cancel },
 ];
 
 function getStatusColor(status: string) {
   switch (status.toLowerCase()) {
-    case 'delivered':
-      return { backgroundColor: '#1e293b', color: '#ffffff' };
-    case 'shipped':
-      return { backgroundColor: '#1e293b', color: '#ffffff' };
-    case 'processing':
-      return { backgroundColor: '#1e293b', color: '#ffffff' };
+    case 'active':
+      return { backgroundColor: '#059669', color: '#ffffff' };
     case 'pending':
-      return { backgroundColor: '#1e293b', color: '#ffffff' };
+      return { backgroundColor: '#f59e0b', color: '#ffffff' };
+    case 'expiring':
+      return { backgroundColor: '#dc2626', color: '#ffffff' };
     case 'cancelled':
-      return { backgroundColor: '#1e293b', color: '#ffffff' };
+      return { backgroundColor: '#6b7280', color: '#ffffff' };
     default:
       return { backgroundColor: '#1e293b', color: '#ffffff' };
   }
 }
 
-function getShippingColor(shipping: string) {
-  switch (shipping.toLowerCase()) {
-    case 'express':
-      return { backgroundColor: '#fef3c7', color: '#92400e' };
-    case 'standard':
+function getPlanColor(plan: string) {
+  switch (plan.toLowerCase()) {
+    case 'basic':
       return { backgroundColor: '#e0e7ff', color: '#3730a3' };
+    case 'pro':
+      return { backgroundColor: '#fef3c7', color: '#92400e' };
+    case 'enterprise':
+      return { backgroundColor: '#f3e8ff', color: '#7c3aed' };
     default:
       return { backgroundColor: '#f3f4f6', color: '#374151' };
   }
+}
+
+function getDaysRemainingColor(days: number) {
+  if (days <= 5) return '#dc2626'; // Red for urgent
+  if (days <= 15) return '#f59e0b'; // Orange for warning
+  return '#059669'; // Green for safe
 }
 
 export default function Orders() {
@@ -128,23 +134,23 @@ export default function Orders() {
     setPage(0);
   };
 
-  // Filter orders based on tab and search
-  const getFilteredOrders = () => {
-    let filtered = allOrders;
+  // Filter subscriptions based on tab and search
+  const getFilteredSubscriptions = () => {
+    let filtered = allSubscriptions;
 
     // Filter by tab
     switch (tabValue) {
-      case 1: // Pending
-        filtered = filtered.filter(order => order.status.toLowerCase() === 'pending');
+      case 1: // Active
+        filtered = filtered.filter(sub => sub.status.toLowerCase() === 'active');
         break;
-      case 2: // Processing
-        filtered = filtered.filter(order => order.status.toLowerCase() === 'processing');
+      case 2: // Pending
+        filtered = filtered.filter(sub => sub.status.toLowerCase() === 'pending');
         break;
-      case 3: // Shipped
-        filtered = filtered.filter(order => order.status.toLowerCase() === 'shipped');
+      case 3: // Expiring
+        filtered = filtered.filter(sub => sub.status.toLowerCase() === 'expiring');
         break;
-      case 4: // Delivered
-        filtered = filtered.filter(order => order.status.toLowerCase() === 'delivered');
+      case 4: // Cancelled
+        filtered = filtered.filter(sub => sub.status.toLowerCase() === 'cancelled');
         break;
       default: // All
         break;
@@ -152,38 +158,39 @@ export default function Orders() {
 
     // Filter by search term
     if (searchTerm) {
-      filtered = filtered.filter(order =>
-        order.customer.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        order.id.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        order.email.toLowerCase().includes(searchTerm.toLowerCase())
+      filtered = filtered.filter(sub =>
+        sub.customer.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        sub.id.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        sub.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        sub.plan.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }
 
     // Filter by status dropdown
     if (statusFilter !== 'all') {
-      filtered = filtered.filter(order => order.status.toLowerCase() === statusFilter);
+      filtered = filtered.filter(sub => sub.status.toLowerCase() === statusFilter);
     }
 
     return filtered;
   };
 
-  const filteredOrders = getFilteredOrders();
+  const filteredSubscriptions = getFilteredSubscriptions();
 
   return (
     <Box sx={{ p: { xs: 2, sm: 3, md: 4 }, backgroundColor: '#0f172a', minHeight: '100vh' }}>
       {/* Header */}
       <Box sx={{ mb: 4 }}>
         <Typography variant="h4" fontWeight={700} sx={{ color: '#ffffff', mb: 1 }}>
-          Orders Management
+          Subscription Management
         </Typography>
         <Typography variant="body1" sx={{ color: '#94a3b8' }}>
-          Track and manage customer orders and shipments
+          Track and manage customer subscriptions and billing
         </Typography>
       </Box>
 
       {/* Stats Cards */}
       <Grid container spacing={3} sx={{ mb: 4 }}>
-        {orderStats.map((stat, index) => {
+        {subscriptionStats.map((stat, index) => {
           const IconComponent = stat.icon;
           return (
             <Grid size={{ xs: 12, sm: 6, md: 3 }} key={index}>
@@ -245,7 +252,7 @@ export default function Orders() {
             mb: 3 
           }}>
             <Typography variant="h6" fontWeight={600} sx={{ color: '#ffffff', textAlign: { xs: 'center', sm: 'left' } }}>
-              Order History
+              Subscription History
             </Typography>
             <Box sx={{ 
               display: 'flex', 
@@ -285,37 +292,7 @@ export default function Orders() {
             </Box>
           </Box>
 
-          {/* Tabs */}
-          <Tabs
-            value={tabValue}
-            onChange={handleTabChange}
-            variant="scrollable"
-            scrollButtons="auto"
-            allowScrollButtonsMobile
-            sx={{
-              mb: 3,
-              '& .MuiTab-root': {
-                color: '#94a3b8',
-                minWidth: { xs: 100, md: 'auto' },
-                fontSize: { xs: '0.75rem', md: '0.875rem' },
-                '&.Mui-selected': {
-                  color: '#ffffff'
-                }
-              },
-              '& .MuiTabs-indicator': {
-                backgroundColor: '#1e293b'
-              },
-              '& .MuiTabs-scrollButtons': {
-                color: '#94a3b8'
-              }
-            }}
-          >
-            <Tab label="All Orders" />
-            <Tab label="Pending" />
-            <Tab label="Processing" />
-            <Tab label="Shipped" />
-            <Tab label="Delivered" />
-          </Tabs>
+          
 
           {/* Search and Filters */}
           <Box sx={{ 
@@ -325,7 +302,7 @@ export default function Orders() {
             alignItems: { xs: 'stretch', sm: 'center' }
           }}>
             <TextField
-                placeholder="Search orders..."
+                placeholder="Search subscriptions..."
                 variant="outlined"
                 size="small"
                 value={searchTerm}
@@ -375,10 +352,9 @@ export default function Orders() {
                 }}
               >
                 <MenuItem value="all">All Status</MenuItem>
+                <MenuItem value="active">Active</MenuItem>
                 <MenuItem value="pending">Pending</MenuItem>
-                <MenuItem value="processing">Processing</MenuItem>
-                <MenuItem value="shipped">Shipped</MenuItem>
-                <MenuItem value="delivered">Delivered</MenuItem>
+                <MenuItem value="expiring">Expiring</MenuItem>
                 <MenuItem value="cancelled">Cancelled</MenuItem>
               </Select>
             </FormControl>
@@ -388,92 +364,108 @@ export default function Orders() {
         {/* Table Content - Desktop View */}
         {!isMobile ? (
           <TableContainer sx={{ overflowX: 'auto' }}>
-            <Table sx={{ minWidth: 'auto' }}>
+            <Table sx={{ minWidth: 650 }}>
               <TableHead>
                 <TableRow sx={{ backgroundColor: '#0f172a' }}>
-                  <TableCell sx={{ fontWeight: 600, color: '#ffffff' }}>Order ID</TableCell>
-                  <TableCell sx={{ fontWeight: 600, color: '#ffffff' }}>Date</TableCell>
-                  <TableCell sx={{ fontWeight: 600, color: '#ffffff' }}>Customer</TableCell>
-                  <TableCell sx={{ fontWeight: 600, color: '#ffffff' }}>Items</TableCell>
-                  <TableCell sx={{ fontWeight: 600, color: '#ffffff' }}>Status</TableCell>
-                  <TableCell sx={{ fontWeight: 600, color: '#ffffff' }}>Shipping</TableCell>
-                  <TableCell sx={{ fontWeight: 600, color: '#ffffff' }}>Amount</TableCell>
-                  <TableCell sx={{ fontWeight: 600, color: '#ffffff' }}>Actions</TableCell>
+                  <TableCell sx={{ fontWeight: 600, color: '#ffffff', width: '120px' }}>Sub ID</TableCell>
+                  <TableCell sx={{ fontWeight: 600, color: '#ffffff', width: '100px', display: { xs: 'none', md: 'table-cell' } }}>Start Date</TableCell>
+                  <TableCell sx={{ fontWeight: 600, color: '#ffffff', minWidth: '180px' }}>Customer</TableCell>
+                  <TableCell sx={{ fontWeight: 600, color: '#ffffff', width: '80px' }}>Plan</TableCell>
+                  <TableCell sx={{ fontWeight: 600, color: '#ffffff', width: '90px' }}>Status</TableCell>
+                  <TableCell sx={{ fontWeight: 600, color: '#ffffff', width: '140px' }}>Days Left</TableCell>
+                  <TableCell sx={{ fontWeight: 600, color: '#ffffff', width: '80px' }}>Amount</TableCell>
+                  <TableCell sx={{ fontWeight: 600, color: '#ffffff', width: '80px' }}>Actions</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
-                {filteredOrders
+                {filteredSubscriptions
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((order) => (
-                  <TableRow key={order.id} sx={{ '&:hover': { backgroundColor: '#334155' } }}>
+                  .map((subscription) => (
+                  <TableRow key={subscription.id} sx={{ '&:hover': { backgroundColor: '#334155' } }}>
                     <TableCell>
-                      <Typography variant="body2" fontWeight={500} sx={{ color: '#ffffff' }}>
-                        {order.id}
+                      <Typography variant="body2" fontWeight={500} sx={{ color: '#ffffff', fontSize: '0.8rem' }}>
+                        {subscription.id}
                       </Typography>
                     </TableCell>
-                    <TableCell>
-                      <Typography variant="body2" sx={{ color: '#94a3b8' }}>
-                        {order.date}
+                    <TableCell sx={{ display: { xs: 'none', md: 'table-cell' } }}>
+                      <Typography variant="body2" sx={{ color: '#94a3b8', fontSize: '0.75rem' }}>
+                        {subscription.startDate}
                       </Typography>
                     </TableCell>
                     <TableCell>
                       <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                        <Avatar sx={{ width: 32, height: 32, mr: 2, backgroundColor: '#1e293b', color: '#94a3b8' }}>
-                          {order.customer.charAt(0)}
+                        <Avatar sx={{ width: 28, height: 28, mr: 1.5, backgroundColor: '#1e293b', color: '#94a3b8', fontSize: '0.75rem' }}>
+                          {subscription.customer.charAt(0)}
                         </Avatar>
-                        <Box>
-                          <Typography variant="body2" fontWeight={500} sx={{ color: '#ffffff' }}>
-                            {order.customer}
+                        <Box sx={{ minWidth: 0, flex: 1 }}>
+                          <Typography variant="body2" fontWeight={500} sx={{ color: '#ffffff', fontSize: '0.8rem', lineHeight: 1.2 }}>
+                            {subscription.customer}
                           </Typography>
-                          <Typography variant="caption" sx={{ color: '#94a3b8' }}>
-                            {order.email}
+                          <Typography variant="caption" sx={{ color: '#94a3b8', fontSize: '0.7rem', display: 'block', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                            {subscription.email}
                           </Typography>
                         </Box>
                       </Box>
                     </TableCell>
                     <TableCell>
-                      <Typography variant="body2" sx={{ color: '#94a3b8' }}>
-                        {order.items} items
-                      </Typography>
-                    </TableCell>
-                    <TableCell>
                       <Chip
-                        label={order.status}
+                        label={subscription.plan}
                         size="small"
                         sx={{
-                          ...getStatusColor(order.status),
+                          ...getPlanColor(subscription.plan),
                           fontWeight: 500,
-                          fontSize: '0.75rem'
+                          fontSize: '0.65rem',
+                          height: 20
                         }}
                       />
                     </TableCell>
                     <TableCell>
                       <Chip
-                        label={order.shipping}
+                        label={subscription.status}
                         size="small"
                         sx={{
-                          ...getShippingColor(order.shipping),
+                          ...getStatusColor(subscription.status),
                           fontWeight: 500,
-                          fontSize: '0.75rem'
+                          fontSize: '0.65rem',
+                          height: 20
                         }}
                       />
                     </TableCell>
                     <TableCell>
-                      <Typography variant="body2" fontWeight={500} sx={{ color: '#ffffff' }}>
-                        {order.amount}
+                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+                        <Typography variant="body2" sx={{ color: getDaysRemainingColor(subscription.daysRemaining), fontWeight: 600, fontSize: '0.75rem' }}>
+                          {subscription.daysRemaining}d
+                        </Typography>
+                        <LinearProgress
+                          variant="determinate"
+                          value={Math.max(0, Math.min(100, (subscription.daysRemaining / 30) * 100))}
+                          sx={{
+                            width: 50,
+                            height: 3,
+                            backgroundColor: '#334155',
+                            '& .MuiLinearProgress-bar': {
+                              backgroundColor: getDaysRemainingColor(subscription.daysRemaining)
+                            }
+                          }}
+                        />
+                      </Box>
+                    </TableCell>
+                    <TableCell>
+                      <Typography variant="body2" fontWeight={500} sx={{ color: '#ffffff', fontSize: '0.8rem' }}>
+                        {subscription.amount}
                       </Typography>
                     </TableCell>
                     <TableCell>
-                      <Box sx={{ display: 'flex', gap: 1 }}>
-                        <IconButton size="small" sx={{ color: '#94a3b8' }}>
-                          <Visibility />
+                      <Box sx={{ display: 'flex', gap: 0.25 }}>
+                        <IconButton size="small" sx={{ color: '#94a3b8', p: 0.25 }}>
+                          <Visibility sx={{ fontSize: 16 }} />
                         </IconButton>
                         <IconButton
                           size="small"
                           onClick={handleMenuClick}
-                          sx={{ color: '#94a3b8' }}
+                          sx={{ color: '#94a3b8', p: 0.25 }}
                         >
-                          <MoreVert />
+                          <MoreVert sx={{ fontSize: 16 }} />
                         </IconButton>
                       </Box>
                     </TableCell>
@@ -484,103 +476,119 @@ export default function Orders() {
           </TableContainer>
         ) : (
           /* Mobile Card View */
-          <Box sx={{ p: 2 }}>
-            <Grid container spacing={2}>
-              {filteredOrders
+          <Box sx={{ p: { xs: 0.5, sm: 1 }, maxWidth: '100vw', overflow: 'hidden' }}>
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1, maxWidth: '100%' }}>
+              {filteredSubscriptions
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((order) => (
-                <Grid sx={{ xs:12 }} key={order.id}>
-                  <Card sx={{
+                .map((subscription) => (
+                  <Card key={subscription.id} sx={{
                     backgroundColor: '#334155',
                     border: '1px solid #475569',
                     borderRadius: 2,
+                    width: '100%',
+                    maxWidth: { xs: '100%', sm: '400px' },
+                    mx: 'auto',
                     '&:hover': {
                       backgroundColor: '#475569'
                     }
                   }}>
-                    <CardContent sx={{ p: 2, '&:last-child': { pb: 2 } }}>
-                      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 2 }}>
-                        <Box sx={{ flex: 1 }}>
-                          <Typography variant="h6" fontWeight={600} sx={{ color: '#ffffff', mb: 0.5 }}>
-                            {order.id}
+                    <CardContent sx={{ p: { xs: 1, sm: 1.5 }, '&:last-child': { pb: { xs: 1, sm: 1.5 } } }}>
+                      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 1.5 }}>
+                        <Box sx={{ flex: 1, minWidth: 0 }}>
+                          <Typography variant="subtitle2" fontWeight={600} sx={{ color: '#ffffff', mb: 0.25, fontSize: '0.875rem' }}>
+                            {subscription.id}
                           </Typography>
-                          <Typography variant="body2" sx={{ color: '#94a3b8' }}>
-                            {order.date}
+                          <Typography variant="caption" sx={{ color: '#94a3b8', fontSize: '0.75rem' }}>
+                            {subscription.startDate}
                           </Typography>
                         </Box>
-                        <Box sx={{ display: 'flex', gap: 1, flexDirection: 'column', alignItems: 'flex-end' }}>
+                        <Box sx={{ display: 'flex', gap: 0.5, flexDirection: 'column', alignItems: 'flex-end', ml: 1 }}>
                           <Chip
-                            label={order.status}
+                            label={subscription.status}
                             size="small"
                             sx={{
-                              ...getStatusColor(order.status),
+                              ...getStatusColor(subscription.status),
                               fontWeight: 500,
-                              fontSize: '0.75rem'
+                              fontSize: '0.65rem',
+                              height: 20
                             }}
                           />
                           <Chip
-                            label={order.shipping}
+                            label={subscription.plan}
                             size="small"
                             sx={{
-                              ...getShippingColor(order.shipping),
+                              ...getPlanColor(subscription.plan),
                               fontWeight: 500,
-                              fontSize: '0.75rem'
+                              fontSize: '0.65rem',
+                              height: 20
                             }}
                           />
                         </Box>
                       </Box>
                       
-                      <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
-                        <Avatar sx={{ width: 40, height: 40, mr: 2, backgroundColor: '#1e293b', color: '#94a3b8' }}>
-                          {order.customer.charAt(0)}
+                      <Box sx={{ display: 'flex', alignItems: 'center', mb: 1.5 }}>
+                        <Avatar sx={{ width: 32, height: 32, mr: 1.5, backgroundColor: '#1e293b', color: '#94a3b8', fontSize: '0.875rem' }}>
+                          {subscription.customer.charAt(0)}
                         </Avatar>
-                        <Box sx={{ flex: 1 }}>
-                          <Typography variant="body2" fontWeight={500} sx={{ color: '#ffffff' }}>
-                            {order.customer}
+                        <Box sx={{ flex: 1, minWidth: 0 }}>
+                          <Typography variant="body2" fontWeight={500} sx={{ color: '#ffffff', fontSize: '0.8rem', lineHeight: 1.2 }}>
+                            {subscription.customer}
                           </Typography>
-                          <Typography variant="caption" sx={{ color: '#94a3b8' }}>
-                            {order.email}
+                          <Typography variant="caption" sx={{ color: '#94a3b8', fontSize: '0.7rem', display: 'block', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                            {subscription.email}
                           </Typography>
                         </Box>
                       </Box>
                       
-                      <Grid container spacing={2} sx={{ mb: 2 }}>
-                        <Grid sx={{ xs:4 }}>
-                          <Typography variant="caption" sx={{ color: '#94a3b8', display: 'block' }}>
-                            Items
+                      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1.5 }}>
+                        <Box sx={{ flex: 1, mr: 1 }}>
+                          <Typography variant="caption" sx={{ color: '#94a3b8', display: 'block', fontSize: '0.7rem' }}>
+                            Days Remaining
                           </Typography>
-                          <Typography variant="body2" fontWeight={500} sx={{ color: '#ffffff' }}>
-                            {order.items}
-                          </Typography>
-                        </Grid>
-                        <Grid sx={{ xs:4 }}>
-                          <Typography variant="caption" sx={{ color: '#94a3b8', display: 'block' }}>
-                            Amount
-                          </Typography>
-                          <Typography variant="body2" fontWeight={500} sx={{ color: '#ffffff' }}>
-                            {order.amount}
-                          </Typography>
-                        </Grid>
-                        <Grid sx={{ xs:4 }}>
-                          <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 1 }}>
-                            <IconButton size="small" sx={{ color: '#94a3b8' }}>
-                              <Visibility />
-                            </IconButton>
-                            <IconButton
-                              size="small"
-                              onClick={handleMenuClick}
-                              sx={{ color: '#94a3b8' }}
-                            >
-                              <MoreVert />
-                            </IconButton>
+                          <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, maxWidth: '100px' }}>
+                            <Typography variant="body2" sx={{ color: getDaysRemainingColor(subscription.daysRemaining), fontWeight: 600, fontSize: '0.7rem' }}>
+                              {subscription.daysRemaining}d
+                            </Typography>
+                            <LinearProgress
+                              variant="determinate"
+                              value={Math.max(0, Math.min(100, (subscription.daysRemaining / 30) * 100))}
+                              sx={{
+                                flex: 1,
+                                height: 2,
+                                backgroundColor: '#334155',
+                                '& .MuiLinearProgress-bar': {
+                                  backgroundColor: getDaysRemainingColor(subscription.daysRemaining)
+                                }
+                              }}
+                            />
                           </Box>
-                        </Grid>
-                      </Grid>
+                        </Box>
+                        <Box sx={{ display: 'flex', gap: 0.25 }}>
+                          <IconButton size="small" sx={{ color: '#94a3b8', p: 0.25 }}>
+                            <Visibility sx={{ fontSize: 16 }} />
+                          </IconButton>
+                          <IconButton
+                            size="small"
+                            onClick={handleMenuClick}
+                            sx={{ color: '#94a3b8', p: 0.25 }}
+                          >
+                            <MoreVert sx={{ fontSize: 16 }} />
+                          </IconButton>
+                        </Box>
+                      </Box>
+                      
+                      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <Typography variant="body2" fontWeight={600} sx={{ color: '#ffffff', fontSize: '0.875rem' }}>
+                          {subscription.amount}
+                        </Typography>
+                        <Typography variant="caption" sx={{ color: '#94a3b8', fontSize: '0.7rem' }}>
+                          Next: {subscription.nextBilling}
+                        </Typography>
+                      </Box>
                     </CardContent>
                   </Card>
-                </Grid>
               ))}
-            </Grid>
+            </Box>
           </Box>
         )}
 
@@ -589,13 +597,23 @@ export default function Orders() {
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
-          count={filteredOrders.length}
+          count={filteredSubscriptions.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
           sx={{
+            color: '#94a3b8',
             '& .MuiTablePagination-toolbar': {
+              backgroundColor: '#1e293b'
+            },
+            '& .MuiTablePagination-selectLabel, & .MuiTablePagination-displayedRows': {
+              color: '#94a3b8'
+            },
+            '& .MuiTablePagination-select': {
+              color: '#ffffff'
+            },
+            '& .MuiTablePagination-actions button': {
               color: '#94a3b8'
             }
           }}

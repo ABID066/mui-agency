@@ -30,7 +30,13 @@ export default function UserFilters({
   onRoleFilterChange
 }: UserFiltersProps) {
   return (
-    <Box sx={{ display: 'flex', gap: 2, alignItems: 'center' }}>
+    <Box sx={{ 
+      display: 'flex', 
+      flexDirection: { xs: 'column', md: 'row' },
+      gap: 2, 
+      alignItems: { xs: 'stretch', md: 'center' },
+      overflow: 'hidden'
+    }}>
       <TextField
         placeholder="Search users..."
         variant="outlined"
@@ -46,6 +52,7 @@ export default function UserFilters({
         }}
         sx={{
           flex: 1,
+          width: { xs: '100%', md: 'auto' },
           '& .MuiOutlinedInput-root': {
             backgroundColor: '#0f172a',
             color: '#ffffff',
@@ -70,7 +77,8 @@ export default function UserFilters({
       <FormControl 
         size="small" 
         sx={{ 
-          minWidth: 120, 
+          minWidth: { xs: '100%', md: 120 },
+          width: { xs: '100%', md: 'auto' },
           '& .MuiInputLabel-root': { color: '#94a3b8' }, 
           '& .MuiOutlinedInput-root': { 
             color: '#ffffff', 
@@ -97,7 +105,8 @@ export default function UserFilters({
       <FormControl 
         size="small" 
         sx={{ 
-          minWidth: 120, 
+          minWidth: { xs: '100%', md: 120 },
+          width: { xs: '100%', md: 'auto' },
           '& .MuiInputLabel-root': { color: '#94a3b8' }, 
           '& .MuiOutlinedInput-root': { 
             color: '#ffffff', 

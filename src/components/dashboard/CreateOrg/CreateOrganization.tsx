@@ -18,7 +18,9 @@ import {
   Stepper,
   Step,
   StepLabel,
-  Alert
+  Alert,
+  useMediaQuery,
+  useTheme
 } from '@mui/material';
 import {
   PhotoCamera,
@@ -76,6 +78,9 @@ export default function CreateOrganization() {
     logo: ''
   });
 
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
@@ -129,17 +134,23 @@ export default function CreateOrganization() {
             </Typography>
             
             {/* Logo Upload */}
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 3, mb: 4 }}>
+            <Box sx={{ 
+              display: 'flex', 
+              alignItems: 'center', 
+              gap: { xs: 2, md: 3 }, 
+              mb: 4,
+              flexDirection: { xs: 'column', sm: 'row' }
+            }}>
               <Avatar sx={{ 
-                width: 80, 
-                height: 80, 
+                width: { xs: 60, md: 80 }, 
+                height: { xs: 60, md: 80 }, 
                 backgroundColor: '#3b82f6',
-                fontSize: '2rem',
+                fontSize: { xs: '1.5rem', md: '2rem' },
                 fontWeight: 600
               }}>
                 {orgData.name ? orgData.name.charAt(0).toUpperCase() : <Business />}
               </Avatar>
-              <Box>
+              <Box sx={{ textAlign: { xs: 'center', sm: 'left' } }}>
                 <Typography variant="body2" sx={{ color: '#94a3b8', mb: 1 }}>
                   Organization Logo
                 </Typography>
@@ -161,7 +172,7 @@ export default function CreateOrganization() {
             </Box>
             
             <Grid container spacing={3}>
-              <Grid size={{ xs: 12 }}>
+              <Grid sx={{ xs: 12 }}>
                 <TextField
                   fullWidth
                   label="Organization Name"
@@ -189,7 +200,7 @@ export default function CreateOrganization() {
                 />
               </Grid>
               
-              <Grid size={{ xs: 12 }}>
+              <Grid sx={{ xs: 12 }}>
                 <TextField
                   fullWidth
                   label="Description"
@@ -230,7 +241,7 @@ export default function CreateOrganization() {
             </Typography>
             
             <Grid container spacing={3}>
-              <Grid size={{ xs: 12, md: 6 }}>
+              <Grid sx={{ xs: 12, md: 6 }}>
                 <FormControl fullWidth required>
                   <InputLabel sx={{ color: '#94a3b8' }}>Industry</InputLabel>
                   <Select
@@ -269,7 +280,7 @@ export default function CreateOrganization() {
                 </FormControl>
               </Grid>
               
-              <Grid size={{ xs: 12, md: 6 }}>
+              <Grid sx={{ xs: 12, md: 6 }}>
                 <FormControl fullWidth required>
                   <InputLabel sx={{ color: '#94a3b8' }}>Organization Size</InputLabel>
                   <Select
@@ -291,7 +302,7 @@ export default function CreateOrganization() {
                     }}
                     MenuProps={{
                       PaperProps: {
-                        sx: {
+                        sx: { 
                           backgroundColor: '#1e293b',
                           border: '1px solid #334155',
                           color: '#ffffff'
@@ -308,7 +319,7 @@ export default function CreateOrganization() {
                 </FormControl>
               </Grid>
               
-              <Grid size={{ xs: 12 }}>
+              <Grid sx={{ xs: 12 }}>
                 <TextField
                   fullWidth
                   label="Website (Optional)"
@@ -335,7 +346,7 @@ export default function CreateOrganization() {
                 />
               </Grid>
               
-              <Grid size={{ xs: 12 }}>
+              <Grid sx={{ xs: 12 }}>
                 <TextField
                   fullWidth
                   label="Address (Optional)"
@@ -362,7 +373,7 @@ export default function CreateOrganization() {
                 />
               </Grid>
               
-              <Grid size={{ xs: 12, md: 6 }}>
+              <Grid sx={{ xs: 12 }}>
                 <TextField
                   fullWidth
                   label="City (Optional)"
@@ -389,7 +400,7 @@ export default function CreateOrganization() {
                 />
               </Grid>
               
-              <Grid size={{ xs: 12, md: 6 }}>
+              <Grid sx={{ xs: 12 }}>
                 <TextField
                   fullWidth
                   label="Country (Optional)"
@@ -446,18 +457,24 @@ export default function CreateOrganization() {
               border: '1px solid #334155',
               boxShadow: 'none'
             }}>
-              <CardContent sx={{ p: 3 }}>
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: 3, mb: 3 }}>
+              <CardContent sx={{ p: { xs: 2, md: 3 } }}>
+                <Box sx={{ 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  gap: { xs: 2, md: 3 }, 
+                  mb: 3,
+                  flexDirection: { xs: 'column', sm: 'row' }
+                }}>
                   <Avatar sx={{ 
-                    width: 60, 
-                    height: 60, 
+                    width: { xs: 50, md: 60 }, 
+                    height: { xs: 50, md: 60 }, 
                     backgroundColor: '#3b82f6',
-                    fontSize: '1.5rem',
+                    fontSize: { xs: '1.2rem', md: '1.5rem' },
                     fontWeight: 600
                   }}>
                     {orgData.name.charAt(0).toUpperCase()}
                   </Avatar>
-                  <Box>
+                  <Box sx={{ textAlign: { xs: 'center', sm: 'left' } }}>
                     <Typography variant="h6" fontWeight={600} sx={{ color: '#ffffff' }}>
                       {orgData.name}
                     </Typography>
@@ -468,14 +485,14 @@ export default function CreateOrganization() {
                 </Box>
                 
                 <Grid container spacing={2}>
-                  <Grid size={{ xs: 12, md: 6 }}>
+                  <Grid sx={{ xs: 12, md: 6 }}>
                     <Typography variant="body2" sx={{ color: '#94a3b8' }}>Industry</Typography>
                     <Typography variant="body1" sx={{ color: '#ffffff', mb: 2 }}>
                       {orgData.industry}
                     </Typography>
                   </Grid>
                   
-                  <Grid size={{ xs: 12, md: 6 }}>
+                  <Grid sx={{ xs: 12, md: 6 }}>
                     <Typography variant="body2" sx={{ color: '#94a3b8' }}>Size</Typography>
                     <Typography variant="body1" sx={{ color: '#ffffff', mb: 2 }}>
                       {orgData.size}
@@ -483,18 +500,31 @@ export default function CreateOrganization() {
                   </Grid>
                   
                   {orgData.website && (
-                    <Grid size={{ xs: 12 }}>
+                    <Grid sx={{ xs: 12 }}>
                       <Typography variant="body2" sx={{ color: '#94a3b8' }}>Website</Typography>
-                      <Typography variant="body1" sx={{ color: '#ffffff', mb: 2 }}>
+                      <Typography 
+                        variant="body1" 
+                        sx={{ 
+                          color: '#ffffff', 
+                          mb: 2,
+                          wordBreak: 'break-all'
+                        }}
+                      >
                         {orgData.website}
                       </Typography>
                     </Grid>
                   )}
                   
                   {(orgData.address || orgData.city || orgData.country) && (
-                    <Grid size={{ xs: 12 }}>
+                    <Grid sx={{ xs: 12 }}>
                       <Typography variant="body2" sx={{ color: '#94a3b8' }}>Location</Typography>
-                      <Typography variant="body1" sx={{ color: '#ffffff' }}>
+                      <Typography 
+                        variant="body1" 
+                        sx={{ 
+                          color: '#ffffff',
+                          wordBreak: 'break-word'
+                        }}
+                      >
                         {[orgData.address, orgData.city, orgData.country].filter(Boolean).join(', ')}
                       </Typography>
                     </Grid>
@@ -511,10 +541,19 @@ export default function CreateOrganization() {
   };
 
   return (
-    <Box sx={{ p: 4, backgroundColor: '#0f172a', minHeight: '100vh', color: '#ffffff' }}>
+    <Box sx={{ 
+      p: { xs: 2, md: 4 }, 
+      backgroundColor: '#0f172a', 
+      minHeight: '100vh', 
+      color: '#ffffff' 
+    }}>
       {/* Header */}
       <Box sx={{ mb: 4 }}>
-        <Typography variant="h4" fontWeight={700} sx={{ color: '#ffffff', mb: 1 }}>
+        <Typography 
+          variant={isMobile ? "h5" : "h4"} 
+          fontWeight={700} 
+          sx={{ color: '#ffffff', mb: 1 }}
+        >
           Create New Organization
         </Typography>
         <Typography variant="body1" sx={{ color: '#94a3b8' }}>
@@ -523,13 +562,23 @@ export default function CreateOrganization() {
       </Box>
 
       {/* Stepper */}
-      <Stepper activeStep={activeStep} sx={{ mb: 4 }}>
+      <Stepper 
+        activeStep={activeStep} 
+        sx={{ 
+          mb: 4,
+          '& .MuiStepConnector-line': {
+            display: { xs: 'none', md: 'block' }
+          }
+        }}
+        orientation={isMobile ? 'vertical' : 'horizontal'}
+      >
         {steps.map((label) => (
           <Step key={label}>
             <StepLabel
               sx={{
                 '& .MuiStepLabel-label': {
                   color: '#94a3b8',
+                  fontSize: { xs: '0.875rem', md: '1rem' },
                   '&.Mui-active': {
                     color: '#ffffff'
                   },
@@ -561,19 +610,25 @@ export default function CreateOrganization() {
         boxShadow: 'none',
         mb: 4
       }}>
-        <CardContent sx={{ p: 4 }}>
+        <CardContent sx={{ p: { xs: 2, md: 4 } }}>
           {renderStepContent(activeStep)}
         </CardContent>
       </Card>
 
       {/* Navigation */}
-      <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+      <Box sx={{ 
+        display: 'flex', 
+        justifyContent: 'space-between',
+        flexDirection: { xs: 'column', sm: 'row' },
+        gap: { xs: 2, sm: 0 }
+      }}>
         <Button
           onClick={handleBack}
           disabled={activeStep === 0}
           startIcon={<ArrowBack />}
           sx={{
             color: '#94a3b8',
+            order: { xs: 2, sm: 1 },
             '&:disabled': {
               color: '#6b7280'
             }
@@ -582,12 +637,17 @@ export default function CreateOrganization() {
           Back
         </Button>
         
-        <Box sx={{ display: 'flex', gap: 2 }}>
+        <Box sx={{ 
+          display: 'flex', 
+          gap: 2,
+          order: { xs: 1, sm: 2 }
+        }}>
           {activeStep === steps.length - 1 ? (
             <Button
               variant="contained"
               onClick={handleCreate}
               disabled={creating || !isStepValid(activeStep)}
+              fullWidth={isMobile}
               sx={{
                 backgroundColor: '#3b82f6',
                 '&:hover': {
@@ -607,6 +667,7 @@ export default function CreateOrganization() {
               onClick={handleNext}
               disabled={!isStepValid(activeStep)}
               endIcon={<ArrowForward />}
+              fullWidth={isMobile}
               sx={{
                 backgroundColor: '#3b82f6',
                 '&:hover': {

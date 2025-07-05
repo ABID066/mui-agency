@@ -18,8 +18,11 @@ import {
   Paper,
   Chip,
   IconButton,
-  Tooltip
+  Tooltip,
+  useTheme,
+  useMediaQuery
 } from '@mui/material';
+//import Grid from '@mui/material/Grid2';
 import {
   Security,
   Smartphone,
@@ -71,13 +74,32 @@ export default function SecuritySettings({
   onEditApiKey,
   onDeleteApiKey
 }: SecuritySettingsProps) {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  
   return (
-    <Box sx={{p: 3 }}>
+    <Box sx={{
+      p: { xs: 2, sm: 3, md: 3 },
+      width: '100%',
+      maxWidth: '100%',
+      overflow: 'hidden'
+    }}>
       <Grid container spacing={4}>
         {/* Password Change */}
         <Grid size={{ xs: 12, md: 6 }}>
-          <Typography variant="h6" fontWeight={600} sx={{ color: '#ffffff', mb: 3, display: 'flex', alignItems: 'center', gap: 1 }}>
-            <VpnKey sx={{ color: '#3b82f6' }} />
+          <Typography 
+            variant="h6" 
+            fontWeight={600} 
+            sx={{ 
+              color: '#ffffff', 
+              mb: 3, 
+              display: 'flex', 
+              alignItems: 'center', 
+              gap: 1,
+              fontSize: { xs: '1rem', sm: '1.125rem', md: '1.25rem' }
+            }}
+          >
+            <VpnKey sx={{ color: '#3b82f6', fontSize: { xs: '1.25rem', md: '1.5rem' } }} />
             Change Password
           </Typography>
           <Grid container spacing={3}>
@@ -93,6 +115,7 @@ export default function SecuritySettings({
                   '& .MuiOutlinedInput-root': {
                     backgroundColor: '#0f172a',
                     color: '#ffffff',
+                    fontSize: { xs: '0.875rem', md: '1rem' },
                     '& fieldset': {
                       borderColor: '#475569',
                     },
@@ -104,7 +127,8 @@ export default function SecuritySettings({
                     },
                   },
                   '& .MuiInputLabel-root': {
-                    color: '#94a3b8'
+                    color: '#94a3b8',
+                    fontSize: { xs: '0.875rem', md: '1rem' }
                   }
                 }}
               />
@@ -173,7 +197,10 @@ export default function SecuritySettings({
                   backgroundColor: '#3b82f6',
                   '&:hover': {
                     backgroundColor: '#2563eb'
-                  }
+                  },
+                  fontSize: { xs: '0.875rem', md: '1rem' },
+                  padding: { xs: '8px 16px', md: '10px 20px' },
+                  width: { xs: '100%', sm: 'auto' }
                 }}
               >
                 Update Password
@@ -189,17 +216,42 @@ export default function SecuritySettings({
 
         {/* Security Settings */}
         <Grid size={{ xs: 12, md: 6 }}>
-          <Typography variant="h6" fontWeight={600} sx={{ color: '#ffffff', mb: 3, display: 'flex', alignItems: 'center', gap: 1 }}>
-            <Security sx={{ color: '#3b82f6' }} />
+          <Typography 
+            variant="h6" 
+            fontWeight={600} 
+            sx={{ 
+              color: '#ffffff', 
+              mb: 3, 
+              display: 'flex', 
+              alignItems: 'center', 
+              gap: 1,
+              fontSize: { xs: '1rem', sm: '1.125rem', md: '1.25rem' }
+            }}
+          >
+            <Security sx={{ color: '#3b82f6', fontSize: { xs: '1.25rem', md: '1.5rem' } }} />
             Security Preferences
           </Typography>
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
             {/* Two-Factor Authentication */}
-            <Box sx={{ p: 3, backgroundColor: '#0f172a', borderRadius: 2, border: '1px solid #475569' }}>
+            <Box sx={{ 
+              p: { xs: 2, sm: 3 }, 
+              backgroundColor: '#0f172a', 
+              borderRadius: 2, 
+              border: '1px solid #475569',
+              width: '100%',
+              maxWidth: '100%'
+            }}>
               <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 2 }}>
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                  <Smartphone sx={{ color: '#3b82f6' }} />
-                  <Typography variant="subtitle1" sx={{ color: '#ffffff', fontWeight: 600 }}>
+                  <Smartphone sx={{ color: '#3b82f6', fontSize: { xs: '1.125rem', md: '1.25rem' } }} />
+                  <Typography 
+                    variant="subtitle1" 
+                    sx={{ 
+                      color: '#ffffff', 
+                      fontWeight: 600,
+                      fontSize: { xs: '0.875rem', sm: '1rem', md: '1.125rem' }
+                    }}
+                  >
                     Two-Factor Authentication
                   </Typography>
                 </Box>
@@ -221,24 +273,42 @@ export default function SecuritySettings({
                   label=""
                 />
               </Box>
-              <Typography variant="body2" sx={{ color: '#94a3b8', mb: 2 }}>
+              <Typography 
+                variant="body2" 
+                sx={{ 
+                  color: '#94a3b8', 
+                  mb: 2,
+                  fontSize: { xs: '0.75rem', sm: '0.875rem' }
+                }}
+              >
                 Add an extra layer of security to your account with two-factor authentication.
               </Typography>
               {security.twoFactorEnabled ? (
                 <Button
                   variant="outlined"
-                  size="small"
                   onClick={onDisable2FA}
-                  sx={{ color: '#dc2626', borderColor: '#fca5a5' }}
+                  sx={{ 
+                    color: '#dc2626', 
+                    borderColor: '#fca5a5',
+                    fontSize: { xs: '0.75rem', sm: '0.875rem' },
+                    width: { xs: '100%', sm: 'auto' },
+                    padding: { xs: '8px 16px', sm: '6px 12px' }
+                  }}
                 >
                   Disable 2FA
                 </Button>
               ) : (
                 <Button
                   variant="outlined"
-                  size="small"
                   onClick={onEnable2FA}
-                  sx={{ color: '#94a3b8', borderColor: '#475569', '&:hover': { borderColor: '#64748b' } }}
+                  sx={{ 
+                    color: '#94a3b8', 
+                    borderColor: '#475569', 
+                    '&:hover': { borderColor: '#64748b' },
+                    fontSize: { xs: '0.75rem', sm: '0.875rem' },
+                    width: { xs: '100%', sm: 'auto' },
+                    padding: { xs: '8px 16px', sm: '6px 12px' }
+                  }}
                 >
                   Setup 2FA
                 </Button>
@@ -246,12 +316,32 @@ export default function SecuritySettings({
             </Box>
 
             {/* Login Alerts */}
-            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+            <Box sx={{ 
+              display: 'flex', 
+              alignItems: { xs: 'flex-start', sm: 'center' }, 
+              justifyContent: 'space-between',
+              flexDirection: { xs: 'column', sm: 'row' },
+              gap: { xs: 2, sm: 0 },
+              width: '100%'
+            }}>
               <Box>
-                <Typography variant="subtitle1" sx={{ color: '#ffffff', fontWeight: 600 }}>
+                <Typography 
+                  variant="subtitle1" 
+                  sx={{ 
+                    color: '#ffffff', 
+                    fontWeight: 600,
+                    fontSize: { xs: '0.875rem', sm: '1rem', md: '1.125rem' }
+                  }}
+                >
                   Login Alerts
                 </Typography>
-                <Typography variant="body2" sx={{ color: '#94a3b8' }}>
+                <Typography 
+                  variant="body2" 
+                  sx={{ 
+                    color: '#94a3b8',
+                    fontSize: { xs: '0.75rem', sm: '0.875rem' }
+                  }}
+                >
                   Get notified when someone logs into your account
                 </Typography>
               </Box>
@@ -275,12 +365,32 @@ export default function SecuritySettings({
             </Box>
 
             {/* Session Timeout */}
-            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+            <Box sx={{ 
+              display: 'flex', 
+              alignItems: { xs: 'flex-start', sm: 'center' }, 
+              justifyContent: 'space-between',
+              flexDirection: { xs: 'column', sm: 'row' },
+              gap: { xs: 2, sm: 0 },
+              width: '100%'
+            }}>
               <Box>
-                <Typography variant="subtitle1" sx={{ color: '#ffffff', fontWeight: 600 }}>
+                <Typography 
+                  variant="subtitle1" 
+                  sx={{ 
+                    color: '#ffffff', 
+                    fontWeight: 600,
+                    fontSize: { xs: '0.875rem', sm: '1rem', md: '1.125rem' }
+                  }}
+                >
                   Auto Session Timeout
                 </Typography>
-                <Typography variant="body2" sx={{ color: '#94a3b8' }}>
+                <Typography 
+                  variant="body2" 
+                  sx={{ 
+                    color: '#94a3b8',
+                    fontSize: { xs: '0.75rem', sm: '0.875rem' }
+                  }}
+                >
                   Automatically log out after 30 minutes of inactivity
                 </Typography>
               </Box>
@@ -307,8 +417,19 @@ export default function SecuritySettings({
         
         {/* API Keys Section */}
         <Grid size={{ xs: 12 }}>
-          <Typography variant="h6" fontWeight={600} sx={{ color: '#ffffff', mb: 3, display: 'flex', alignItems: 'center', gap: 1 }}>
-            <Key sx={{ color: '#3b82f6' }} />
+          <Typography 
+            variant="h6" 
+            fontWeight={600} 
+            sx={{ 
+              color: '#ffffff', 
+              mb: 3, 
+              display: 'flex', 
+              alignItems: 'center', 
+              gap: 1,
+              fontSize: { xs: '1rem', sm: '1.125rem', md: '1.25rem' }
+            }}
+          >
+            <Key sx={{ color: '#3b82f6', fontSize: { xs: '1.25rem', md: '1.5rem' } }} />
             API Keys
           </Typography>
           
@@ -317,55 +438,139 @@ export default function SecuritySettings({
             sx={{ 
               backgroundColor: '#0f172a', 
               border: '1px solid #475569',
-              borderRadius: 2
+              borderRadius: 2,
+              width: '100%',
+              maxWidth: '100%',
+              overflow: 'auto'
             }}
           >
             <Table>
               <TableHead>
                 <TableRow>
-                  <TableCell sx={{ color: '#94a3b8', borderBottom: '1px solid #475569' }}>Name</TableCell>
-                  <TableCell sx={{ color: '#94a3b8', borderBottom: '1px solid #475569' }}>Key</TableCell>
-                  <TableCell sx={{ color: '#94a3b8', borderBottom: '1px solid #475569' }}>Created</TableCell>
-                  <TableCell sx={{ color: '#94a3b8', borderBottom: '1px solid #475569' }}>Last Used</TableCell>
-                  <TableCell sx={{ color: '#94a3b8', borderBottom: '1px solid #475569' }}>Status</TableCell>
-                  <TableCell sx={{ color: '#94a3b8', borderBottom: '1px solid #475569' }}>Actions</TableCell>
+                  <TableCell sx={{ 
+                    color: '#94a3b8', 
+                    borderBottom: '1px solid #475569',
+                    fontSize: { xs: '0.75rem', sm: '0.875rem' },
+                    padding: { xs: '8px 4px', sm: '16px' }
+                  }}>Name</TableCell>
+                  <TableCell sx={{ 
+                    color: '#94a3b8', 
+                    borderBottom: '1px solid #475569',
+                    fontSize: { xs: '0.75rem', sm: '0.875rem' },
+                    padding: { xs: '8px 4px', sm: '16px' },
+                    display: { xs: 'none', sm: 'table-cell' }
+                  }}>Key</TableCell>
+                  <TableCell sx={{ 
+                    color: '#94a3b8', 
+                    borderBottom: '1px solid #475569',
+                    fontSize: { xs: '0.75rem', sm: '0.875rem' },
+                    padding: { xs: '8px 4px', sm: '16px' },
+                    display: { xs: 'none', md: 'table-cell' }
+                  }}>Created</TableCell>
+                  <TableCell sx={{ 
+                    color: '#94a3b8', 
+                    borderBottom: '1px solid #475569',
+                    fontSize: { xs: '0.75rem', sm: '0.875rem' },
+                    padding: { xs: '8px 4px', sm: '16px' },
+                    display: { xs: 'none', md: 'table-cell' }
+                  }}>Last Used</TableCell>
+                  <TableCell sx={{ 
+                    color: '#94a3b8', 
+                    borderBottom: '1px solid #475569',
+                    fontSize: { xs: '0.75rem', sm: '0.875rem' },
+                    padding: { xs: '8px 4px', sm: '16px' }
+                  }}>Status</TableCell>
+                  <TableCell sx={{ 
+                    color: '#94a3b8', 
+                    borderBottom: '1px solid #475569',
+                    fontSize: { xs: '0.75rem', sm: '0.875rem' },
+                    padding: { xs: '8px 4px', sm: '16px' }
+                  }}>Actions</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 {apiKeys.map((apiKey) => (
                   <TableRow key={apiKey.id}>
-                    <TableCell sx={{ color: '#ffffff', borderBottom: '1px solid #475569' }}>
-                      {apiKey.name}
+                    <TableCell sx={{ 
+                      color: '#ffffff', 
+                      borderBottom: '1px solid #475569',
+                      fontSize: { xs: '0.75rem', sm: '0.875rem' },
+                      padding: { xs: '8px 4px', sm: '16px' }
+                    }}>
+                      <Box>
+                        <Typography variant="body2" sx={{ fontWeight: 600, fontSize: { xs: '0.75rem', sm: '0.875rem' } }}>
+                          {apiKey.name}
+                        </Typography>
+                        <Typography 
+                          variant="caption" 
+                          sx={{ 
+                            fontFamily: 'monospace',
+                            color: '#94a3b8',
+                            display: { xs: 'block', sm: 'none' },
+                            fontSize: '0.625rem'
+                          }}
+                        >
+                          {apiKey.key}
+                        </Typography>
+                      </Box>
                     </TableCell>
-                    <TableCell sx={{ color: '#ffffff', borderBottom: '1px solid #475569' }}>
-                      <Typography variant="body2" sx={{ fontFamily: 'monospace' }}>
+                    <TableCell sx={{ 
+                      color: '#ffffff', 
+                      borderBottom: '1px solid #475569',
+                      fontSize: { xs: '0.75rem', sm: '0.875rem' },
+                      padding: { xs: '8px 4px', sm: '16px' },
+                      display: { xs: 'none', sm: 'table-cell' }
+                    }}>
+                      <Typography variant="body2" sx={{ fontFamily: 'monospace', fontSize: { sm: '0.75rem', md: '0.875rem' } }}>
                         {apiKey.key}
                       </Typography>
                     </TableCell>
-                    <TableCell sx={{ color: '#94a3b8', borderBottom: '1px solid #475569' }}>
+                    <TableCell sx={{ 
+                      color: '#94a3b8', 
+                      borderBottom: '1px solid #475569',
+                      fontSize: { xs: '0.75rem', sm: '0.875rem' },
+                      padding: { xs: '8px 4px', sm: '16px' },
+                      display: { xs: 'none', md: 'table-cell' }
+                    }}>
                       {apiKey.created}
                     </TableCell>
-                    <TableCell sx={{ color: '#94a3b8', borderBottom: '1px solid #475569' }}>
+                    <TableCell sx={{ 
+                      color: '#94a3b8', 
+                      borderBottom: '1px solid #475569',
+                      fontSize: { xs: '0.75rem', sm: '0.875rem' },
+                      padding: { xs: '8px 4px', sm: '16px' },
+                      display: { xs: 'none', md: 'table-cell' }
+                    }}>
                       {apiKey.lastUsed}
                     </TableCell>
-                    <TableCell sx={{ borderBottom: '1px solid #475569' }}>
+                    <TableCell sx={{ 
+                      borderBottom: '1px solid #475569',
+                      padding: { xs: '8px 4px', sm: '16px' }
+                    }}>
                       <Chip
                         label={apiKey.status}
                         size="small"
                         sx={{
                           backgroundColor: apiKey.status === 'active' ? '#16a34a' : '#6b7280',
                           color: '#ffffff',
-                          fontSize: '0.75rem'
+                          fontSize: { xs: '0.625rem', sm: '0.75rem' },
+                          height: { xs: '20px', sm: '24px' }
                         }}
                       />
                     </TableCell>
-                    <TableCell sx={{ borderBottom: '1px solid #475569' }}>
-                      <Box sx={{ display: 'flex', gap: 1 }}>
+                    <TableCell sx={{ 
+                      borderBottom: '1px solid #475569',
+                      padding: { xs: '8px 4px', sm: '16px' }
+                    }}>
+                      <Box sx={{ display: 'flex', gap: { xs: 0.5, sm: 1 } }}>
                         <Tooltip title="Edit">
                           <IconButton
                             size="small"
                             onClick={() => onEditApiKey(apiKey.id)}
-                            sx={{ color: '#3b82f6' }}
+                            sx={{ 
+                              color: '#3b82f6',
+                              padding: { xs: '4px', sm: '8px' }
+                            }}
                           >
                             <Edit fontSize="small" />
                           </IconButton>
@@ -374,7 +579,10 @@ export default function SecuritySettings({
                           <IconButton
                             size="small"
                             onClick={() => onDeleteApiKey(apiKey.id)}
-                            sx={{ color: '#dc2626' }}
+                            sx={{ 
+                              color: '#dc2626',
+                              padding: { xs: '4px', sm: '8px' }
+                            }}
                           >
                             <Delete fontSize="small" />
                           </IconButton>
@@ -398,7 +606,10 @@ export default function SecuritySettings({
               '&:hover': {
                 borderColor: '#64748b',
                 backgroundColor: 'rgba(59, 130, 246, 0.1)'
-              }
+              },
+              fontSize: { xs: '0.875rem', md: '1rem' },
+              padding: { xs: '8px 16px', md: '10px 20px' },
+              width: { xs: '100%', sm: 'auto' }
             }}
           >
             Generate New API Key

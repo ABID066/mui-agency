@@ -1,5 +1,4 @@
 'use client';
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
 import {
   Box,
@@ -12,7 +11,9 @@ import {
   Switch,
   Button,
   Card,
-  CardContent
+  CardContent,
+  useTheme,
+  useMediaQuery
 } from '@mui/material';
 import {
   Palette,
@@ -45,6 +46,8 @@ export default function AppearanceSettings({
   onSaveAppearance,
   onResetToDefaults
 }: AppearanceSettingsProps) {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const themeOptions = [
     { value: 'light', label: 'Light', icon: <LightMode /> },
     { value: 'dark', label: 'Dark', icon: <DarkMode /> },
@@ -59,21 +62,43 @@ export default function AppearanceSettings({
   ];
 
   return (
-    <Box sx={{p: 3 }}>
+    <Box sx={{ 
+      p: { xs: 2, sm: 3 },
+      width: '100%',
+      maxWidth: '100%',
+      overflow: 'hidden'
+    }}>
       <Grid container spacing={4}>
         {/* Theme Selection */}
         <Grid size={{ xs: 12, md: 6 }}>
-          <Typography variant="h6" fontWeight={600} sx={{ color: '#ffffff', mb: 3, display: 'flex', alignItems: 'center', gap: 1 }}>
+          <Typography 
+            variant="h6" 
+            fontWeight={600} 
+            sx={{ 
+              color: '#ffffff', 
+              mb: 3, 
+              display: 'flex', 
+              alignItems: 'center', 
+              gap: 1,
+              fontSize: { xs: '1rem', sm: '1.125rem', md: '1.25rem' }
+            }}>
             <Palette sx={{ color: '#3b82f6' }} />
             Theme & Colors
           </Typography>
           
           {/* Theme Mode */}
           <Box sx={{ mb: 4 }}>
-            <Typography variant="subtitle1" sx={{ color: '#ffffff', fontWeight: 600, mb: 2 }}>
+            <Typography 
+              variant="subtitle1" 
+              sx={{ 
+                color: '#ffffff', 
+                fontWeight: 600, 
+                mb: 2,
+                fontSize: { xs: '0.875rem', sm: '1rem' }
+              }}>
               Theme Mode
             </Typography>
-            <Grid container spacing={2}>
+            <Grid container spacing={{ xs: 1, sm: 2 }}>
               {themeOptions.map((option) => (
                 <Grid size={{ xs: 4 }} key={option.value}>
                   <Card
@@ -88,11 +113,20 @@ export default function AppearanceSettings({
                     }}
                     onClick={() => onAppearanceChange('theme', option.value)}
                   >
-                    <CardContent sx={{ textAlign: 'center', py: 2 }}>
+                    <CardContent sx={{ 
+                      textAlign: 'center', 
+                      py: { xs: 1, sm: 2 },
+                      px: { xs: 1, sm: 2 }
+                    }}>
                       <Box sx={{ color: '#ffffff', mb: 1 }}>
                         {option.icon}
                       </Box>
-                      <Typography variant="body2" sx={{ color: '#ffffff' }}>
+                      <Typography 
+                        variant="body2" 
+                        sx={{ 
+                          color: '#ffffff',
+                          fontSize: { xs: '0.75rem', sm: '0.875rem' }
+                        }}>
                         {option.label}
                       </Typography>
                     </CardContent>
@@ -136,14 +170,31 @@ export default function AppearanceSettings({
 
         {/* Display Settings */}
         <Grid size={{ xs: 12, md: 6 }}>
-          <Typography variant="h6" fontWeight={600} sx={{ color: '#ffffff', mb: 3, display: 'flex', alignItems: 'center', gap: 1 }}>
+          <Typography 
+            variant="h6" 
+            fontWeight={600} 
+            sx={{ 
+              color: '#ffffff', 
+              mb: 3, 
+              display: 'flex', 
+              alignItems: 'center', 
+              gap: 1,
+              fontSize: { xs: '1rem', sm: '1.125rem', md: '1.25rem' }
+            }}>
             <Visibility sx={{ color: '#3b82f6' }} />
             Display Settings
           </Typography>
           
           {/* Language */}
           <Box sx={{ mb: 3 }}>
-            <Typography variant="subtitle1" sx={{ color: '#ffffff', fontWeight: 600, mb: 1 }}>
+            <Typography 
+              variant="subtitle1" 
+              sx={{ 
+                color: '#ffffff', 
+                fontWeight: 600, 
+                mb: 1,
+                fontSize: { xs: '0.875rem', sm: '1rem' }
+              }}>
               Language
             </Typography>
             <FormControl fullWidth>
@@ -302,11 +353,24 @@ export default function AppearanceSettings({
 
         {/* Actions */}
         <Grid size={{ xs: 12 }}>
-          <Box sx={{ display: 'flex', gap: 2, justifyContent: 'flex-end', pt: 2, borderTop: '1px solid #475569' }}>
+          <Box sx={{ 
+            display: 'flex', 
+            gap: { xs: 1, sm: 2 }, 
+            justifyContent: { xs: 'stretch', sm: 'flex-end' }, 
+            pt: 2, 
+            borderTop: '1px solid #475569',
+            flexDirection: { xs: 'column', sm: 'row' }
+          }}>
             <Button
               variant="outlined"
               onClick={onResetToDefaults}
-              sx={{ color: '#94a3b8', borderColor: '#475569', '&:hover': { borderColor: '#64748b' } }}
+              sx={{ 
+                color: '#94a3b8', 
+                borderColor: '#475569', 
+                '&:hover': { borderColor: '#64748b' },
+                fontSize: { xs: '0.875rem', sm: '1rem' },
+                py: { xs: 1, sm: 1.5 }
+              }}
             >
               Reset to Defaults
             </Button>
@@ -317,7 +381,9 @@ export default function AppearanceSettings({
                 backgroundColor: '#3b82f6',
                 '&:hover': {
                   backgroundColor: '#2563eb'
-                }
+                },
+                fontSize: { xs: '0.875rem', sm: '1rem' },
+                py: { xs: 1, sm: 1.5 }
               }}
             >
               Save Changes

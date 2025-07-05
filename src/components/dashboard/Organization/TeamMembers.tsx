@@ -171,25 +171,33 @@ export default function TeamMembers() {
   );
 
   return (
-    <Box sx={{ p: { xs: 2, sm: 3, md: 4 }, backgroundColor: '#0f172a', minHeight: '100vh', color: '#ffffff' }}>
+    <Box sx={{ 
+      p: { xs: 2, sm: 3, md: 3 }, 
+      color: '#ffffff',
+      width: '100%',
+      maxWidth: '100%',
+      boxSizing: 'border-box',
+      overflow: 'hidden'
+    }}>
       {/* Header */}
-      <Box sx={{ mb: { xs: 2, md: 4 } }}>
+      <Box sx={{ mb: { xs: 2, md: 3 }, width: '100%', maxWidth: '100%' }}>
         <Typography 
-          variant="h4" 
-          fontWeight={700} 
+          variant="h5" 
+          fontWeight={600} 
           sx={{ 
             color: '#ffffff', 
             mb: 1,
-            fontSize: { xs: '1.5rem', sm: '2rem', md: '2.125rem' }
+            fontSize: { xs: '1.25rem', sm: '1.5rem', md: '1.75rem' },
+            wordBreak: 'break-word'
           }}
         >
           Team Members
         </Typography>
         <Typography 
-          variant="body1" 
+          variant="body2" 
           sx={{ 
             color: '#94a3b8',
-            fontSize: { xs: '0.875rem', md: '1rem' }
+            fontSize: { xs: '0.75rem', md: '0.875rem' }
           }}
         >
           Manage your organization&apos;s team members and their roles
@@ -200,20 +208,24 @@ export default function TeamMembers() {
       <Box sx={{ 
         display: 'flex', 
         flexDirection: { xs: 'column', sm: 'row' },
-        gap: { xs: 2, sm: 3 }, 
-        mb: { xs: 3, md: 4 } 
+        gap: { xs: 2, sm: 2 }, 
+        mb: { xs: 2, md: 3 },
+        width: '100%',
+        maxWidth: '100%'
       }}>
         <Card sx={{
           backgroundColor: '#1e293b',
           border: '1px solid #334155',
           boxShadow: 'none',
-          flex: 1
+          flex: 1,
+          width: '100%',
+          maxWidth: '100%'
         }}>
-          <CardContent>
-            <Typography variant="body2" sx={{ color: '#94a3b8', mb: 1 }}>
+          <CardContent sx={{ p: { xs: 1.5, md: 2 } }}>
+            <Typography variant="body2" sx={{ color: '#94a3b8', mb: 1, fontSize: { xs: '0.75rem', md: '0.875rem' } }}>
               Total Members
             </Typography>
-            <Typography variant="h4" fontWeight={700} sx={{ color: '#ffffff' }}>
+            <Typography variant="h5" fontWeight={700} sx={{ color: '#ffffff', fontSize: { xs: '1.5rem', md: '2rem' } }}>
               {members.length}
             </Typography>
           </CardContent>
@@ -223,13 +235,15 @@ export default function TeamMembers() {
           backgroundColor: '#1e293b',
           border: '1px solid #334155',
           boxShadow: 'none',
-          flex: 1
+          flex: 1,
+          width: '100%',
+          maxWidth: '100%'
         }}>
-          <CardContent>
-            <Typography variant="body2" sx={{ color: '#94a3b8', mb: 1 }}>
+          <CardContent sx={{ p: { xs: 1.5, md: 2 } }}>
+            <Typography variant="body2" sx={{ color: '#94a3b8', mb: 1, fontSize: { xs: '0.75rem', md: '0.875rem' } }}>
               Active Members
             </Typography>
-            <Typography variant="h4" fontWeight={700} sx={{ color: '#ffffff' }}>
+            <Typography variant="h5" fontWeight={700} sx={{ color: '#ffffff', fontSize: { xs: '1.5rem', md: '2rem' } }}>
               {members.filter(m => m.status === 'active').length}
             </Typography>
           </CardContent>
@@ -239,13 +253,15 @@ export default function TeamMembers() {
           backgroundColor: '#1e293b',
           border: '1px solid #334155',
           boxShadow: 'none',
-          flex: 1
+          flex: 1,
+          width: '100%',
+          maxWidth: '100%'
         }}>
-          <CardContent>
-            <Typography variant="body2" sx={{ color: '#94a3b8', mb: 1 }}>
+          <CardContent sx={{ p: { xs: 1.5, md: 2 } }}>
+            <Typography variant="body2" sx={{ color: '#94a3b8', mb: 1, fontSize: { xs: '0.75rem', md: '0.875rem' } }}>
               Pending Invites
             </Typography>
-            <Typography variant="h4" fontWeight={700} sx={{ color: '#ffffff' }}>
+            <Typography variant="h5" fontWeight={700} sx={{ color: '#ffffff', fontSize: { xs: '1.5rem', md: '2rem' } }}>
               {members.filter(m => m.status === 'pending').length}
             </Typography>
           </CardContent>
@@ -258,16 +274,19 @@ export default function TeamMembers() {
         flexDirection: { xs: 'column', sm: 'row' },
         justifyContent: 'space-between', 
         alignItems: { xs: 'stretch', sm: 'center' },
-        gap: { xs: 2, sm: 0 },
-        mb: 3 
+        gap: { xs: 2, sm: 2 },
+        mb: 3,
+        width: '100%',
+        maxWidth: '100%'
       }}>
         <TextField
           placeholder="Search members..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          fullWidth
           sx={{
-            maxWidth: { sm: 300 },
+            width: { xs: '100%', sm: 300 },
+            maxWidth: '100%',
+            fontSize: { xs: '0.875rem', md: '1rem' },
             '& .MuiOutlinedInput-root': {
               backgroundColor: '#1e293b',
               borderColor: '#334155',
@@ -299,7 +318,8 @@ export default function TeamMembers() {
         <Box sx={{ 
           display: 'flex', 
           flexDirection: { xs: 'column', sm: 'row' },
-          gap: 2 
+          gap: { xs: 1, sm: 2 },
+          width: { xs: '100%', sm: 'auto' }
         }}>
           <Button
             variant="outlined"
@@ -308,6 +328,9 @@ export default function TeamMembers() {
               borderColor: '#475569',
               color: '#ffffff',
               width: { xs: '100%', sm: 'auto' },
+              fontSize: { xs: '0.75rem', md: '0.875rem' },
+              minWidth: { xs: 'auto', sm: 'auto' },
+              px: { xs: 2, sm: 2 },
               '&:hover': {
                 borderColor: '#94a3b8',
                 backgroundColor: 'rgba(255, 255, 255, 0.05)'
@@ -323,6 +346,9 @@ export default function TeamMembers() {
             sx={{
               backgroundColor: '#3b82f6',
               width: { xs: '100%', sm: 'auto' },
+              fontSize: { xs: '0.75rem', md: '0.875rem' },
+              minWidth: { xs: 'auto', sm: 'auto' },
+              px: { xs: 2, sm: 2 },
               '&:hover': {
                 backgroundColor: '#2563eb'
               }
@@ -339,18 +365,24 @@ export default function TeamMembers() {
         onChange={(e, newValue) => setTabValue(newValue)}
         variant="scrollable"
         scrollButtons="auto"
+        allowScrollButtonsMobile
         sx={{
           mb: 3,
+          width: '100%',
+          maxWidth: '100%',
           '& .MuiTab-root': {
             color: '#94a3b8',
-            minWidth: { xs: 'auto', sm: 160 },
-            fontSize: { xs: '0.875rem', sm: '1rem' },
+            minWidth: { xs: 80, sm: 120 },
+            fontSize: { xs: '0.75rem', sm: '0.875rem' },
             '&.Mui-selected': {
               color: '#ffffff'
             }
           },
           '& .MuiTabs-indicator': {
             backgroundColor: '#3b82f6'
+          },
+          '& .MuiTabs-scrollButtons': {
+            color: '#94a3b8'
           }
         }}
       >
@@ -364,68 +396,157 @@ export default function TeamMembers() {
       <Card sx={{
         backgroundColor: '#1e293b',
         border: '1px solid #334155',
-        boxShadow: 'none'
+        boxShadow: 'none',
+        width: '100%',
+        maxWidth: '100%'
       }}>
-        <TableContainer sx={{ overflowX: 'auto' }}>
-          <Table sx={{ minWidth: { xs: 800, md: 'auto' } }}>
+        <TableContainer sx={{ 
+          overflowX: 'auto',
+          width: '100%',
+          maxWidth: '100%'
+        }}>
+          <Table sx={{ 
+            minWidth: { xs: 700, md: 800 },
+            width: '100%'
+          }}>
             <TableHead>
               <TableRow>
-                <TableCell sx={{ color: '#94a3b8', borderBottom: '1px solid #334155' }}>Member</TableCell>
-                <TableCell sx={{ color: '#94a3b8', borderBottom: '1px solid #334155' }}>Role</TableCell>
-                <TableCell sx={{ color: '#94a3b8', borderBottom: '1px solid #334155' }}>Department</TableCell>
-                <TableCell sx={{ color: '#94a3b8', borderBottom: '1px solid #334155' }}>Status</TableCell>
-                <TableCell sx={{ color: '#94a3b8', borderBottom: '1px solid #334155' }}>Join Date</TableCell>
-                <TableCell sx={{ color: '#94a3b8', borderBottom: '1px solid #334155' }}>Actions</TableCell>
+                <TableCell sx={{ 
+                  color: '#94a3b8', 
+                  borderBottom: '1px solid #334155',
+                  fontSize: { xs: '0.75rem', md: '0.875rem' },
+                  minWidth: { xs: 200, md: 250 }
+                }}>Member</TableCell>
+                <TableCell sx={{ 
+                  color: '#94a3b8', 
+                  borderBottom: '1px solid #334155',
+                  fontSize: { xs: '0.75rem', md: '0.875rem' },
+                  minWidth: { xs: 80, md: 100 }
+                }}>Role</TableCell>
+                <TableCell sx={{ 
+                  color: '#94a3b8', 
+                  borderBottom: '1px solid #334155',
+                  fontSize: { xs: '0.75rem', md: '0.875rem' },
+                  minWidth: { xs: 100, md: 120 }
+                }}>Department</TableCell>
+                <TableCell sx={{ 
+                  color: '#94a3b8', 
+                  borderBottom: '1px solid #334155',
+                  fontSize: { xs: '0.75rem', md: '0.875rem' },
+                  minWidth: { xs: 80, md: 100 }
+                }}>Status</TableCell>
+                <TableCell sx={{ 
+                  color: '#94a3b8', 
+                  borderBottom: '1px solid #334155',
+                  fontSize: { xs: '0.75rem', md: '0.875rem' },
+                  minWidth: { xs: 100, md: 120 }
+                }}>Join Date</TableCell>
+                <TableCell sx={{ 
+                  color: '#94a3b8', 
+                  borderBottom: '1px solid #334155',
+                  fontSize: { xs: '0.75rem', md: '0.875rem' },
+                  minWidth: { xs: 60, md: 80 }
+                }}>Actions</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {paginatedMembers.map((member) => (
                 <TableRow key={member.id} sx={{ '&:hover': { backgroundColor: '#334155' } }}>
-                  <TableCell sx={{ borderBottom: '1px solid #334155' }}>
-                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                  <TableCell sx={{ 
+                    borderBottom: '1px solid #334155',
+                    minWidth: { xs: 200, md: 250 },
+                    maxWidth: { xs: 250, md: 300 }
+                  }}>
+                    <Box sx={{ 
+                      display: 'flex', 
+                      flexDirection: { xs: 'column', sm: 'row' },
+                      alignItems: { xs: 'flex-start', sm: 'center' }, 
+                      gap: { xs: 1, sm: 2 }
+                    }}>
                       <Avatar sx={{ 
-                        width: 40, 
-                        height: 40, 
+                        width: { xs: 32, md: 40 }, 
+                        height: { xs: 32, md: 40 }, 
                         backgroundColor: '#3b82f6',
-                        fontSize: '0.9rem',
+                        fontSize: { xs: '0.75rem', md: '0.9rem' },
                         fontWeight: 600
                       }}>
                         {member.avatar}
                       </Avatar>
-                      <Box>
-                        <Typography variant="body2" fontWeight={600} sx={{ color: '#ffffff' }}>
+                      <Box sx={{ width: '100%', minWidth: 0 }}>
+                        <Typography 
+                          variant="body2" 
+                          fontWeight={600} 
+                          sx={{ 
+                            color: '#ffffff',
+                            fontSize: { xs: '0.75rem', md: '0.875rem' },
+                            wordBreak: 'break-word'
+                          }}
+                        >
                           {member.name}
                         </Typography>
-                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mt: 0.5 }}>
-                          <Email sx={{ fontSize: 14, color: '#94a3b8' }} />
-                          <Typography variant="caption" sx={{ color: '#94a3b8' }}>
-                            {member.email}
-                          </Typography>
-                        </Box>
-                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mt: 0.5 }}>
-                          <Phone sx={{ fontSize: 14, color: '#94a3b8' }} />
-                          <Typography variant="caption" sx={{ color: '#94a3b8' }}>
-                            {member.phone}
-                          </Typography>
+                        <Box sx={{ 
+                          display: 'flex', 
+                          flexDirection: 'column',
+                          gap: 0.5, 
+                          mt: 0.5 
+                        }}>
+                          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                            <Email sx={{ fontSize: { xs: 12, md: 14 }, color: '#94a3b8' }} />
+                            <Typography 
+                              variant="caption" 
+                              sx={{ 
+                                color: '#94a3b8',
+                                fontSize: { xs: '0.625rem', md: '0.75rem' },
+                                wordBreak: 'break-all'
+                              }}
+                            >
+                              {member.email}
+                            </Typography>
+                          </Box>
+                          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                            <Phone sx={{ fontSize: { xs: 12, md: 14 }, color: '#94a3b8' }} />
+                            <Typography 
+                              variant="caption" 
+                              sx={{ 
+                                color: '#94a3b8',
+                                fontSize: { xs: '0.625rem', md: '0.75rem' }
+                              }}
+                            >
+                              {member.phone}
+                            </Typography>
+                          </Box>
                         </Box>
                       </Box>
                     </Box>
                   </TableCell>
-                  <TableCell sx={{ borderBottom: '1px solid #334155' }}>
+                  <TableCell sx={{ 
+                    borderBottom: '1px solid #334155',
+                    minWidth: { xs: 80, md: 100 }
+                  }}>
                     <Chip
                       label={member.role}
                       size="small"
                       sx={{
                         backgroundColor: getRoleColor(member.role),
                         color: '#ffffff',
-                        fontWeight: 500
+                        fontWeight: 500,
+                        fontSize: { xs: '0.625rem', md: '0.75rem' }
                       }}
                     />
                   </TableCell>
-                  <TableCell sx={{ color: '#ffffff', borderBottom: '1px solid #334155' }}>
+                  <TableCell sx={{ 
+                    color: '#ffffff', 
+                    borderBottom: '1px solid #334155',
+                    fontSize: { xs: '0.75rem', md: '0.875rem' },
+                    minWidth: { xs: 100, md: 120 },
+                    wordBreak: 'break-word'
+                  }}>
                     {member.department}
                   </TableCell>
-                  <TableCell sx={{ borderBottom: '1px solid #334155' }}>
+                  <TableCell sx={{ 
+                    borderBottom: '1px solid #334155',
+                    minWidth: { xs: 80, md: 100 }
+                  }}>
                     <Chip
                       label={member.status}
                       size="small"
@@ -433,20 +554,34 @@ export default function TeamMembers() {
                       sx={{
                         borderColor: getStatusColor(member.status),
                         color: getStatusColor(member.status),
-                        textTransform: 'capitalize'
+                        textTransform: 'capitalize',
+                        fontSize: { xs: '0.625rem', md: '0.75rem' }
                       }}
                     />
                   </TableCell>
-                  <TableCell sx={{ color: '#ffffff', borderBottom: '1px solid #334155' }}>
+                  <TableCell sx={{ 
+                    color: '#ffffff', 
+                    borderBottom: '1px solid #334155',
+                    fontSize: { xs: '0.75rem', md: '0.875rem' },
+                    minWidth: { xs: 100, md: 120 },
+                    whiteSpace: 'nowrap'
+                  }}>
                     {new Date(member.joinDate).toLocaleDateString()}
                   </TableCell>
-                  <TableCell sx={{ borderBottom: '1px solid #334155' }}>
+                  <TableCell sx={{ 
+                    borderBottom: '1px solid #334155',
+                    minWidth: { xs: 60, md: 80 }
+                  }}>
                     <IconButton
                       size="small"
                       onClick={handleMenuOpen}
-                      sx={{ color: '#94a3b8' }}
+                      sx={{ 
+                        color: '#94a3b8',
+                        width: { xs: 32, md: 40 },
+                        height: { xs: 32, md: 40 }
+                      }}
                     >
-                      <MoreVert />
+                      <MoreVert sx={{ fontSize: { xs: '1rem', md: '1.25rem' } }} />
                     </IconButton>
                   </TableCell>
                 </TableRow>

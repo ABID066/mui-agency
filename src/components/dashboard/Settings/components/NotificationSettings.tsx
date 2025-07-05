@@ -8,7 +8,9 @@ import {
   FormControlLabel,
   Switch,
   Button,
-  Divider
+  Divider,
+  useTheme,
+  useMediaQuery
 } from '@mui/material';
 import {
   Notifications,
@@ -43,25 +45,59 @@ export default function NotificationSettings({
   onSaveNotifications,
   onTestNotification
 }: NotificationSettingsProps) {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   return (
-    <Box sx={{p: 3 }}>
+    <Box sx={{ 
+      p: { xs: 2, sm: 3 },
+      width: '100%',
+      maxWidth: '100%',
+      overflow: 'hidden'
+    }}>
       <Grid container spacing={4}>
         {/* General Notifications */}
-        <Grid size={{ xs: 12, md: 6 }}>
-          <Typography variant="h6" fontWeight={600} sx={{ color: '#ffffff', mb: 3, display: 'flex', alignItems: 'center', gap: 1 }}>
+        <Grid  sx={{  xs: 12, md:6 }} >
+          <Typography 
+            variant="h6" 
+            fontWeight={600} 
+            sx={{ 
+              color: '#ffffff', 
+              mb: 3, 
+              display: 'flex', 
+              alignItems: 'center', 
+              gap: 1,
+              fontSize: { xs: '1rem', sm: '1.125rem', md: '1.25rem' }
+            }}>
             <Notifications sx={{ color: '#3b82f6' }} />
             General Notifications
           </Typography>
-          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: { xs: 2, sm: 3 } }}>
             {/* Email Notifications */}
-            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+            <Box sx={{ 
+              display: 'flex', 
+              alignItems: { xs: 'flex-start', sm: 'center' }, 
+              justifyContent: 'space-between',
+              flexDirection: { xs: 'column', sm: 'row' },
+              gap: { xs: 1, sm: 0 }
+            }}>
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                <Email sx={{ color: '#94a3b8' }} />
+                <Email sx={{ color: '#94a3b8', fontSize: { xs: '1.25rem', md: '1.5rem' } }} />
                 <Box>
-                  <Typography variant="subtitle1" sx={{ color: '#ffffff', fontWeight: 600 }}>
+                  <Typography 
+                    variant="subtitle1" 
+                    sx={{ 
+                      color: '#ffffff', 
+                      fontWeight: 600,
+                      fontSize: { xs: '0.875rem', sm: '1rem' }
+                    }}>
                     Email Notifications
                   </Typography>
-                  <Typography variant="body2" sx={{ color: '#94a3b8' }}>
+                  <Typography 
+                    variant="body2" 
+                    sx={{ 
+                      color: '#94a3b8',
+                      fontSize: { xs: '0.75rem', sm: '0.875rem' }
+                    }}>
                     Receive notifications via email
                   </Typography>
                 </Box>
@@ -86,14 +122,31 @@ export default function NotificationSettings({
             </Box>
 
             {/* Push Notifications */}
-            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+            <Box sx={{ 
+              display: 'flex', 
+              alignItems: { xs: 'flex-start', sm: 'center' }, 
+              justifyContent: 'space-between',
+              flexDirection: { xs: 'column', sm: 'row' },
+              gap: { xs: 1, sm: 0 }
+            }}>
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                <PhoneIphone sx={{ color: '#94a3b8' }} />
+                <PhoneIphone sx={{ color: '#94a3b8', fontSize: { xs: '1.25rem', md: '1.5rem' } }} />
                 <Box>
-                  <Typography variant="subtitle1" sx={{ color: '#ffffff', fontWeight: 600 }}>
+                  <Typography 
+                    variant="subtitle1" 
+                    sx={{ 
+                      color: '#ffffff', 
+                      fontWeight: 600,
+                      fontSize: { xs: '0.875rem', sm: '1rem' }
+                    }}>
                     Push Notifications
                   </Typography>
-                  <Typography variant="body2" sx={{ color: '#94a3b8' }}>
+                  <Typography 
+                    variant="body2" 
+                    sx={{ 
+                      color: '#94a3b8',
+                      fontSize: { xs: '0.75rem', sm: '0.875rem' }
+                    }}>
                     Receive push notifications on your device
                   </Typography>
                 </Box>
@@ -118,14 +171,34 @@ export default function NotificationSettings({
             </Box>
 
             {/* SMS Notifications */}
-            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <Box>
-                <Typography variant="subtitle1" sx={{ color: '#ffffff', fontWeight: 600 }}>
-                  SMS Notifications
-                </Typography>
-                <Typography variant="body2" sx={{ color: '#94a3b8' }}>
-                  Receive important alerts via SMS
-                </Typography>
+            <Box sx={{ 
+              display: 'flex', 
+              alignItems: { xs: 'flex-start', sm: 'center' }, 
+              justifyContent: 'space-between',
+              flexDirection: { xs: 'column', sm: 'row' },
+              gap: { xs: 1, sm: 0 }
+            }}>
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                <PhoneIphone sx={{ color: '#94a3b8', fontSize: { xs: '1.25rem', md: '1.5rem' } }} />
+                <Box>
+                  <Typography 
+                    variant="subtitle1" 
+                    sx={{ 
+                      color: '#ffffff', 
+                      fontWeight: 600,
+                      fontSize: { xs: '0.875rem', sm: '1rem' }
+                    }}>
+                    SMS Notifications
+                  </Typography>
+                  <Typography 
+                    variant="body2" 
+                    sx={{ 
+                      color: '#94a3b8',
+                      fontSize: { xs: '0.75rem', sm: '0.875rem' }
+                    }}>
+                    Receive important alerts via SMS
+                  </Typography>
+                </Box>
               </Box>
               <FormControlLabel
                 control={
@@ -149,18 +222,42 @@ export default function NotificationSettings({
         </Grid>
 
         {/* Specific Notifications */}
-        <Grid size={{ xs: 12, md: 6 }}>
-          <Typography variant="h6" fontWeight={600} sx={{ color: '#ffffff', mb: 3 }}>
+        <Grid  sx={{  xs: 12, md:6 }} >
+          <Typography 
+            variant="h6" 
+            fontWeight={600} 
+            sx={{ 
+              color: '#ffffff', 
+              mb: 3,
+              fontSize: { xs: '1rem', sm: '1.125rem', md: '1.25rem' }
+            }}>
             Notification Types
           </Typography>
-          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: { xs: 2, sm: 3 } }}>
             {/* Security Alerts */}
-            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+            <Box sx={{ 
+              display: 'flex', 
+              alignItems: { xs: 'flex-start', sm: 'center' }, 
+              justifyContent: 'space-between',
+              flexDirection: { xs: 'column', sm: 'row' },
+              gap: { xs: 1, sm: 0 }
+            }}>
               <Box>
-                <Typography variant="subtitle1" sx={{ color: '#ffffff', fontWeight: 600 }}>
+                <Typography 
+                  variant="subtitle1" 
+                  sx={{ 
+                    color: '#ffffff', 
+                    fontWeight: 600,
+                    fontSize: { xs: '0.875rem', sm: '1rem' }
+                  }}>
                   Security Alerts
                 </Typography>
-                <Typography variant="body2" sx={{ color: '#94a3b8' }}>
+                <Typography 
+                  variant="body2" 
+                  sx={{ 
+                    color: '#94a3b8',
+                    fontSize: { xs: '0.75rem', sm: '0.875rem' }
+                  }}>
                   Important security-related notifications
                 </Typography>
               </Box>
@@ -184,12 +281,29 @@ export default function NotificationSettings({
             </Box>
 
             {/* Task Reminders */}
-            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+            <Box sx={{ 
+              display: 'flex', 
+              alignItems: { xs: 'flex-start', sm: 'center' }, 
+              justifyContent: 'space-between',
+              flexDirection: { xs: 'column', sm: 'row' },
+              gap: { xs: 1, sm: 0 }
+            }}>
               <Box>
-                <Typography variant="subtitle1" sx={{ color: '#ffffff', fontWeight: 600 }}>
+                <Typography 
+                  variant="subtitle1" 
+                  sx={{ 
+                    color: '#ffffff', 
+                    fontWeight: 600,
+                    fontSize: { xs: '0.875rem', sm: '1rem' }
+                  }}>
                   Task Reminders
                 </Typography>
-                <Typography variant="body2" sx={{ color: '#94a3b8' }}>
+                <Typography 
+                  variant="body2" 
+                  sx={{ 
+                    color: '#94a3b8',
+                    fontSize: { xs: '0.75rem', sm: '0.875rem' }
+                  }}>
                   Reminders for upcoming tasks and deadlines
                 </Typography>
               </Box>
@@ -213,12 +327,29 @@ export default function NotificationSettings({
             </Box>
 
             {/* Weekly Reports */}
-            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+            <Box sx={{ 
+              display: 'flex', 
+              alignItems: { xs: 'flex-start', sm: 'center' }, 
+              justifyContent: 'space-between',
+              flexDirection: { xs: 'column', sm: 'row' },
+              gap: { xs: 1, sm: 0 }
+            }}>
               <Box>
-                <Typography variant="subtitle1" sx={{ color: '#ffffff', fontWeight: 600 }}>
+                <Typography 
+                  variant="subtitle1" 
+                  sx={{ 
+                    color: '#ffffff', 
+                    fontWeight: 600,
+                    fontSize: { xs: '0.875rem', sm: '1rem' }
+                  }}>
                   Weekly Reports
                 </Typography>
-                <Typography variant="body2" sx={{ color: '#94a3b8' }}>
+                <Typography 
+                  variant="body2" 
+                  sx={{ 
+                    color: '#94a3b8',
+                    fontSize: { xs: '0.75rem', sm: '0.875rem' }
+                  }}>
                   Weekly summary of your activity
                 </Typography>
               </Box>
@@ -242,12 +373,29 @@ export default function NotificationSettings({
             </Box>
 
             {/* System Updates */}
-            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+            <Box sx={{ 
+              display: 'flex', 
+              alignItems: { xs: 'flex-start', sm: 'center' }, 
+              justifyContent: 'space-between',
+              flexDirection: { xs: 'column', sm: 'row' },
+              gap: { xs: 1, sm: 0 }
+            }}>
               <Box>
-                <Typography variant="subtitle1" sx={{ color: '#ffffff', fontWeight: 600 }}>
+                <Typography 
+                  variant="subtitle1" 
+                  sx={{ 
+                    color: '#ffffff', 
+                    fontWeight: 600,
+                    fontSize: { xs: '0.875rem', sm: '1rem' }
+                  }}>
                   System Updates
                 </Typography>
-                <Typography variant="body2" sx={{ color: '#94a3b8' }}>
+                <Typography 
+                  variant="body2" 
+                  sx={{ 
+                    color: '#94a3b8',
+                    fontSize: { xs: '0.75rem', sm: '0.875rem' }
+                  }}>
                   Notifications about system maintenance and updates
                 </Typography>
               </Box>
@@ -271,12 +419,29 @@ export default function NotificationSettings({
             </Box>
 
             {/* Marketing Emails */}
-            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+            <Box sx={{ 
+              display: 'flex', 
+              alignItems: { xs: 'flex-start', sm: 'center' }, 
+              justifyContent: 'space-between',
+              flexDirection: { xs: 'column', sm: 'row' },
+              gap: { xs: 1, sm: 0 }
+            }}>
               <Box>
-                <Typography variant="subtitle1" sx={{ color: '#ffffff', fontWeight: 600 }}>
+                <Typography 
+                  variant="subtitle1" 
+                  sx={{ 
+                    color: '#ffffff', 
+                    fontWeight: 600,
+                    fontSize: { xs: '0.875rem', sm: '1rem' }
+                  }}>
                   Marketing Emails
                 </Typography>
-                <Typography variant="body2" sx={{ color: '#94a3b8' }}>
+                <Typography 
+                  variant="body2" 
+                  sx={{ 
+                    color: '#94a3b8',
+                    fontSize: { xs: '0.75rem', sm: '0.875rem' }
+                  }}>
                   Promotional emails and product updates
                 </Typography>
               </Box>
@@ -302,13 +467,24 @@ export default function NotificationSettings({
         </Grid>
 
         {/* Actions */}
-        <Grid size={{ xs: 12 }}>
+        <Grid  sx={{  xs: 12 }} >
           <Divider sx={{ my: 2, borderColor: '#475569' }} />
-          <Box sx={{ display: 'flex', gap: 2, justifyContent: 'flex-end' }}>
+          <Box sx={{ 
+            display: 'flex', 
+            gap: { xs: 1, sm: 2 }, 
+            justifyContent: { xs: 'stretch', sm: 'flex-end' },
+            flexDirection: { xs: 'column', sm: 'row' }
+          }}>
             <Button
               variant="outlined"
               onClick={onTestNotification}
-              sx={{ color: '#94a3b8', borderColor: '#475569', '&:hover': { borderColor: '#64748b' } }}
+              sx={{ 
+                color: '#94a3b8', 
+                borderColor: '#475569', 
+                '&:hover': { borderColor: '#64748b' },
+                fontSize: { xs: '0.875rem', sm: '1rem' },
+                py: { xs: 1, sm: 1.5 }
+              }}
             >
               Send Test Notification
             </Button>
@@ -319,7 +495,9 @@ export default function NotificationSettings({
                 backgroundColor: '#3b82f6',
                 '&:hover': {
                   backgroundColor: '#2563eb'
-                }
+                },
+                fontSize: { xs: '0.875rem', sm: '1rem' },
+                py: { xs: 1, sm: 1.5 }
               }}
             >
               Save Preferences

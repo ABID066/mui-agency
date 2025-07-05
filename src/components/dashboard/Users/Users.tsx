@@ -52,7 +52,14 @@ export default function Users() {
   });
 
   return (
-    <Box sx={{ p: 4, backgroundColor: '#0f172a', minHeight: '100vh', color: '#ffffff' }}>
+    <Box sx={{ 
+      p: { xs: 2, md: 4 }, 
+      backgroundColor: '#0f172a', 
+      minHeight: '100vh', 
+      color: '#ffffff',
+      overflow: 'hidden',
+      maxWidth: '100%'
+    }}>
       {/* Header */}
       <Box sx={{ mb: 4 }}>
         <Typography variant="h4" fontWeight={700} sx={{ color: '#ffffff', mb: 1 }}>
@@ -71,13 +78,15 @@ export default function Users() {
         backgroundColor: '#1e293b',
         border: '1px solid #334155',
         boxShadow: 'none',
-        borderRadius: 2
+        borderRadius: 2,
+        overflow: 'hidden',
+        maxWidth: '100%'
       }}>
         {/* Table Header */}
         <UserTableHeader onAddUser={() => setOpenDialog(true)} />
         
         {/* Search and Filters */}
-        <Box sx={{ px: 3, pb: 3 }}>
+        <Box sx={{ px: { xs: 2, md: 3 }, pb: 3, overflow: 'hidden' }}>
           <UserFilters
             searchTerm={searchTerm}
             statusFilter={statusFilter}
@@ -90,7 +99,7 @@ export default function Users() {
       </Box>
 
       {/* User Table */}
-      <Box sx={{ mt: 2 }}>
+      <Box sx={{ mt: 2, overflow: 'hidden', maxWidth: '100%' }}>
         <UserTable
           users={filteredUsers}
           page={page}
