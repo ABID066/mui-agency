@@ -4,7 +4,7 @@ import toast from "react-hot-toast";
 export async function toggleTwoFactorAction() {
   try {
     const { data } = await axios.put(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/api/user/update-two-factor`
+      `${process.env.NEXT_PUBLIC_BASE_URL}/api/user/update-two-factor-status`
     );
 
     if (data.twoFactorEnabled !== undefined) {
