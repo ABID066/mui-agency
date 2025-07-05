@@ -31,7 +31,8 @@ import {
   Business,
   Add,
   AccountCircle,
-  Logout
+  Logout,
+  CreditCard
 } from '@mui/icons-material';
 import { useRouter, usePathname } from 'next/navigation';
 
@@ -64,6 +65,7 @@ const navigationItems: NavigationItem[] = [
       { name: 'Create New Organization', icon: Add, path: '/dashboard/organization/create' },
     ]
   },
+  { name: 'Billings & Plan', icon: CreditCard, path: '/dashboard/billing' },
   { name: 'Support', icon: Support, path: '/dashboard/support' },
   { name: 'Settings', icon: Settings, path: '/dashboard/settings' },
 ];
