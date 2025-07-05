@@ -15,7 +15,12 @@ import {
   Avatar,
   IconButton,
   Divider,
-  TablePagination
+  TablePagination,
+  Card,
+  CardContent,
+  Grid,
+  useMediaQuery,
+  useTheme
 } from '@mui/material';
 import {
   Email,
@@ -42,6 +47,9 @@ export default function UserTable({
   onRowsPerPageChange,
   onMenuClick
 }: UserTableProps) {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+
   return (
     <Paper sx={{ 
       backgroundColor: '#1e293b',
@@ -49,106 +57,226 @@ export default function UserTable({
       boxShadow: 'none',
       borderRadius: 2
     }}>
-      <TableContainer>
-        <Table>
-          <TableHead>
-            <TableRow sx={{ backgroundColor: '#334155' }}>
-              <TableCell sx={{ fontWeight: 600, color: '#ffffff' }}>User</TableCell>
-              <TableCell sx={{ fontWeight: 600, color: '#ffffff' }}>Contact</TableCell>
-              <TableCell sx={{ fontWeight: 600, color: '#ffffff' }}>Role</TableCell>
-              <TableCell sx={{ fontWeight: 600, color: '#ffffff' }}>Department</TableCell>
-              <TableCell sx={{ fontWeight: 600, color: '#ffffff' }}>Status</TableCell>
-              <TableCell sx={{ fontWeight: 600, color: '#ffffff' }}>Last Login</TableCell>
-              <TableCell sx={{ fontWeight: 600, color: '#ffffff' }}>Actions</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
+      {/* Desktop Table View */}
+      {!isMobile ? (
+        <TableContainer>
+          <Table>
+            <TableHead>
+              <TableRow sx={{ backgroundColor: '#334155' }}>
+                <TableCell sx={{ fontWeight: 600, color: '#ffffff' }}>User</TableCell>
+                <TableCell sx={{ fontWeight: 600, color: '#ffffff' }}>Contact</TableCell>
+                <TableCell sx={{ fontWeight: 600, color: '#ffffff' }}>Role</TableCell>
+                <TableCell sx={{ fontWeight: 600, color: '#ffffff' }}>Department</TableCell>
+                <TableCell sx={{ fontWeight: 600, color: '#ffffff' }}>Status</TableCell>
+                <TableCell sx={{ fontWeight: 600, color: '#ffffff' }}>Last Login</TableCell>
+                <TableCell sx={{ fontWeight: 600, color: '#ffffff' }}>Actions</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {users
+                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                .map((user) => (
+                <TableRow key={user.id} sx={{ '&:hover': { backgroundColor: '#334155' } }}>
+                  <TableCell>
+                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                      <Avatar sx={{ width: 40, height: 40, mr: 2, backgroundColor: '#334155', color: '#94a3b8' }}>
+                        {user.avatar}
+                      </Avatar>
+                      <Box>
+                        <Typography variant="body2" fontWeight={500} sx={{ color: '#ffffff' }}>
+                          {user.name}
+                        </Typography>
+                        <Typography variant="caption" sx={{ color: '#94a3b8' }}>
+                          Joined {user.joinDate}
+                        </Typography>
+                      </Box>
+                    </Box>
+                  </TableCell>
+                  <TableCell>
+                    <Box>
+                      <Box sx={{ display: 'flex', alignItems: 'center', mb: 0.5 }}>
+                        <Email sx={{ fontSize: 14, color: '#94a3b8', mr: 0.5 }} />
+                        <Typography variant="body2" sx={{ color: '#94a3b8' }}>
+                          {user.email}
+                        </Typography>
+                      </Box>
+                      <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                        <Phone sx={{ fontSize: 14, color: '#94a3b8', mr: 0.5 }} />
+                        <Typography variant="body2" sx={{ color: '#94a3b8' }}>
+                          {user.phone}
+                        </Typography>
+                      </Box>
+                    </Box>
+                  </TableCell>
+                  <TableCell>
+                    <Chip
+                      label={user.role}
+                      size="small"
+                      sx={{
+                        ...getRoleColor(user.role),
+                        fontWeight: 500,
+                        fontSize: '0.75rem'
+                      }}
+                    />
+                  </TableCell>
+                  <TableCell>
+                    <Typography variant="body2" sx={{ color: '#94a3b8' }}>
+                      {user.department}
+                    </Typography>
+                  </TableCell>
+                  <TableCell>
+                    <Chip
+                      label={user.status}
+                      size="small"
+                      sx={{
+                        ...getStatusColor(user.status),
+                        fontWeight: 500,
+                        fontSize: '0.75rem'
+                      }}
+                    />
+                  </TableCell>
+                  <TableCell>
+                    <Typography variant="body2" sx={{ color: '#94a3b8' }}>
+                      {user.lastLogin}
+                    </Typography>
+                  </TableCell>
+                  <TableCell>
+                    <Box sx={{ display: 'flex', gap: 1 }}>
+                      <IconButton size="small" sx={{ color: '#94a3b8' }}>
+                        <Edit />
+                      </IconButton>
+                      <IconButton
+                        size="small"
+                        onClick={(e) => onMenuClick(e, user.id)}
+                        sx={{ color: '#94a3b8' }}
+                      >
+                        <MoreVert />
+                      </IconButton>
+                    </Box>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      ) : (
+        /* Mobile Card View */
+        <Box sx={{ p: 2 }}>
+          <Grid container spacing={2}>
             {users
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((user) => (
-              <TableRow key={user.id} sx={{ '&:hover': { backgroundColor: '#334155' } }}>
-                <TableCell>
-                  <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                    <Avatar sx={{ width: 40, height: 40, mr: 2, backgroundColor: '#334155', color: '#94a3b8' }}>
-                      {user.avatar}
-                    </Avatar>
-                    <Box>
-                      <Typography variant="body2" fontWeight={500} sx={{ color: '#ffffff' }}>
-                        {user.name}
-                      </Typography>
-                      <Typography variant="caption" sx={{ color: '#94a3b8' }}>
-                        Joined {user.joinDate}
-                      </Typography>
+              <Grid sx={{ xs:12 }} key={user.id}>
+                <Card sx={{
+                  backgroundColor: '#334155',
+                  border: '1px solid #475569',
+                  borderRadius: 2,
+                  '&:hover': {
+                    backgroundColor: '#475569'
+                  }
+                }}>
+                  <CardContent sx={{ p: 2, '&:last-child': { pb: 2 } }}>
+                    <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 2 }}>
+                      <Box sx={{ display: 'flex', alignItems: 'center', flex: 1 }}>
+                        <Avatar sx={{ width: 48, height: 48, mr: 2, backgroundColor: '#1e293b', color: '#94a3b8' }}>
+                          {user.avatar}
+                        </Avatar>
+                        <Box sx={{ flex: 1 }}>
+                          <Typography variant="h6" fontWeight={600} sx={{ color: '#ffffff', mb: 0.5 }}>
+                            {user.name}
+                          </Typography>
+                          <Typography variant="body2" sx={{ color: '#94a3b8' }}>
+                            Joined {user.joinDate}
+                          </Typography>
+                        </Box>
+                      </Box>
+                      <Box sx={{ display: 'flex', gap: 1 }}>
+                        <IconButton size="small" sx={{ color: '#94a3b8' }}>
+                          <Edit />
+                        </IconButton>
+                        <IconButton
+                          size="small"
+                          onClick={(e) => onMenuClick(e, user.id)}
+                          sx={{ color: '#94a3b8' }}
+                        >
+                          <MoreVert />
+                        </IconButton>
+                      </Box>
                     </Box>
-                  </Box>
-                </TableCell>
-                <TableCell>
-                  <Box>
-                    <Box sx={{ display: 'flex', alignItems: 'center', mb: 0.5 }}>
-                      <Email sx={{ fontSize: 14, color: '#94a3b8', mr: 0.5 }} />
-                      <Typography variant="body2" sx={{ color: '#94a3b8' }}>
-                        {user.email}
-                      </Typography>
+                    
+                    <Box sx={{ mb: 2 }}>
+                      <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
+                        <Email sx={{ fontSize: 16, color: '#94a3b8', mr: 1 }} />
+                        <Typography variant="body2" sx={{ color: '#94a3b8' }}>
+                          {user.email}
+                        </Typography>
+                      </Box>
+                      <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                        <Phone sx={{ fontSize: 16, color: '#94a3b8', mr: 1 }} />
+                        <Typography variant="body2" sx={{ color: '#94a3b8' }}>
+                          {user.phone}
+                        </Typography>
+                      </Box>
                     </Box>
-                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                      <Phone sx={{ fontSize: 14, color: '#94a3b8', mr: 0.5 }} />
-                      <Typography variant="body2" sx={{ color: '#94a3b8' }}>
-                        {user.phone}
-                      </Typography>
-                    </Box>
-                  </Box>
-                </TableCell>
-                <TableCell>
-                  <Chip
-                    label={user.role}
-                    size="small"
-                    sx={{
-                      ...getRoleColor(user.role),
-                      fontWeight: 500,
-                      fontSize: '0.75rem'
-                    }}
-                  />
-                </TableCell>
-                <TableCell>
-                  <Typography variant="body2" sx={{ color: '#94a3b8' }}>
-                    {user.department}
-                  </Typography>
-                </TableCell>
-                <TableCell>
-                  <Chip
-                    label={user.status}
-                    size="small"
-                    sx={{
-                      ...getStatusColor(user.status),
-                      fontWeight: 500,
-                      fontSize: '0.75rem'
-                    }}
-                  />
-                </TableCell>
-                <TableCell>
-                  <Typography variant="body2" sx={{ color: '#94a3b8' }}>
-                    {user.lastLogin}
-                  </Typography>
-                </TableCell>
-                <TableCell>
-                  <Box sx={{ display: 'flex', gap: 1 }}>
-                    <IconButton size="small" sx={{ color: '#94a3b8' }}>
-                      <Edit />
-                    </IconButton>
-                    <IconButton
-                      size="small"
-                      onClick={(e) => onMenuClick(e, user.id)}
-                      sx={{ color: '#94a3b8' }}
-                    >
-                      <MoreVert />
-                    </IconButton>
-                  </Box>
-                </TableCell>
-              </TableRow>
+                    
+                    <Grid container spacing={2} sx={{ mb: 1 }}>
+                      <Grid sx={{ xs:6 }}>
+                        <Typography variant="caption" sx={{ color: '#94a3b8', display: 'block' }}>
+                          Role
+                        </Typography>
+                        <Chip
+                          label={user.role}
+                          size="small"
+                          sx={{
+                            ...getRoleColor(user.role),
+                            fontWeight: 500,
+                            fontSize: '0.75rem',
+                            mt: 0.5
+                          }}
+                        />
+                      </Grid>
+                      <Grid sx={{ xs:6 }}>
+                        <Typography variant="caption" sx={{ color: '#94a3b8', display: 'block' }}>
+                          Status
+                        </Typography>
+                        <Chip
+                          label={user.status}
+                          size="small"
+                          sx={{
+                            ...getStatusColor(user.status),
+                            fontWeight: 500,
+                            fontSize: '0.75rem',
+                            mt: 0.5
+                          }}
+                        />
+                      </Grid>
+                    </Grid>
+                    
+                    <Grid container spacing={2}>
+                      <Grid sx={{ xs:6 }}>
+                        <Typography variant="caption" sx={{ color: '#94a3b8', display: 'block' }}>
+                          Department
+                        </Typography>
+                        <Typography variant="body2" fontWeight={500} sx={{ color: '#ffffff' }}>
+                          {user.department}
+                        </Typography>
+                      </Grid>
+                      <Grid sx={{ xs:6 }}>
+                        <Typography variant="caption" sx={{ color: '#94a3b8', display: 'block' }}>
+                          Last Login
+                        </Typography>
+                        <Typography variant="body2" fontWeight={500} sx={{ color: '#ffffff' }}>
+                          {user.lastLogin}
+                        </Typography>
+                      </Grid>
+                    </Grid>
+                  </CardContent>
+                </Card>
+              </Grid>
             ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+          </Grid>
+        </Box>
+      )}
 
       {/* Table Pagination */}
       <Divider />

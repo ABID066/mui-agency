@@ -23,7 +23,9 @@ import {
   Select,
   InputLabel,
   Tabs,
-  Tab
+  Tab,
+  useMediaQuery,
+  useTheme
 } from '@mui/material';
 import {
   Search,
@@ -63,6 +65,8 @@ export default function SupportTickets({
   anchorEl,
   onMenuClose
 }: SupportTicketsProps) {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const filteredTickets = tickets.filter(ticket => {
     const matchesSearch = ticket.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          ticket.customer.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -83,8 +87,15 @@ export default function SupportTickets({
             borderRadius: 2
           }}>
         {/* Header */}
-        <Box sx={{ p: 3, borderBottom: '1px solid #334155' }}>
-          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 3 }}>
+        <Box sx={{ p: { xs: 2, md: 3 }, borderBottom: '1px solid #334155' }}>
+          <Box sx={{ 
+            display: 'flex', 
+            alignItems: { xs: 'flex-start', md: 'center' }, 
+            justifyContent: 'space-between', 
+            flexDirection: { xs: 'column', md: 'row' },
+            gap: { xs: 2, md: 0 },
+            mb: 3 
+          }}>
             <Typography variant="h6" fontWeight={600} sx={{ color: '#ffffff' }}>
               Support Tickets
             </Typography>
@@ -127,7 +138,13 @@ export default function SupportTickets({
           </Tabs>
 
           {/* Search and Filters */}
-          <Box sx={{ display: 'flex', gap: 2, alignItems: 'center' }}>
+          <Box sx={{ 
+            display: 'flex', 
+            gap: 2, 
+            alignItems: 'center',
+            flexDirection: { xs: 'column', sm: 'row' },
+            width: '100%'
+          }}>
             <TextField
               placeholder="Search tickets..."
               variant="outlined"
@@ -158,7 +175,7 @@ export default function SupportTickets({
                 },
               }}
             />
-            <FormControl size="small" sx={{ minWidth: 120 }}>
+            <FormControl size="small" sx={{ minWidth: { xs: '100%', sm: 120 } }}>
               <InputLabel>Status</InputLabel>
               <Select
                 sx={{ color: '#ffffff' }}
@@ -172,7 +189,7 @@ export default function SupportTickets({
                 <MenuItem value="resolved">Resolved</MenuItem>
               </Select>
             </FormControl>
-            <FormControl size="small" sx={{ minWidth: 120 }}>
+            <FormControl size="small" sx={{ minWidth: { xs: '100%', sm: 120 } }}>
               <InputLabel>Priority</InputLabel>
               <Select
                 sx={{ color: '#ffffff' }}
@@ -209,16 +226,32 @@ export default function SupportTickets({
                 </ListItemAvatar>
                 <ListItemText
                   primary={
-                    <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 1 }}>
-                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                        <Typography variant="body1" fontWeight={500} sx={{ color: '#ffffff' }}>
-                          {ticket.title}
-                        </Typography>
-                        <Typography variant="caption" sx={{ color: '#94a3b8' }}>
-                          #{ticket.id}
-                        </Typography>
+                    <Box>
+                      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 1 }}>
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, flex: 1 }}>
+                          <Typography variant="body1" fontWeight={500} sx={{ color: '#ffffff' }}>
+                            {ticket.title}
+                          </Typography>
+                          <Typography variant="caption" sx={{ color: '#94a3b8' }}>
+                            #{ticket.id}
+                          </Typography>
+                        </Box>
+                        <IconButton
+                          size="small"
+                          onClick={onMenuClick}
+                          sx={{ color: '#94a3b8' }}
+                        >
+                          <MoreVert />
+                        </IconButton>
                       </Box>
-                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                      {/* Mobile: Show chips below title */}
+                      <Box sx={{ 
+                        display: 'flex', 
+                        alignItems: 'center', 
+                        gap: 1,
+                        flexWrap: 'wrap',
+                        mb: { xs: 1, md: 0 }
+                      }}>
                         <Chip
                           label={ticket.priority}
                           size="small"
@@ -246,13 +279,6 @@ export default function SupportTickets({
                             height: 20
                           }}
                         />
-                        <IconButton
-                          size="small"
-                          onClick={onMenuClick}
-                          sx={{ color: '#94a3b8' }}
-                        >
-                          <MoreVert />
-                        </IconButton>
                       </Box>
                     </Box>
                   }
@@ -261,7 +287,13 @@ export default function SupportTickets({
                       <Typography variant="body2" sx={{ color: '#94a3b8', mb: 1 }}>
                         {ticket.description}
                       </Typography>
-                      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                      <Box sx={{ 
+                        display: 'flex', 
+                        alignItems: { xs: 'flex-start', md: 'center' }, 
+                        justifyContent: 'space-between',
+                        flexDirection: { xs: 'column', md: 'row' },
+                        gap: { xs: 1, md: 0 }
+                      }}>
                         <Typography variant="caption" sx={{ color: '#94a3b8' }}>
                           Customer: {ticket.customer} • Assigned to: {ticket.assignee}
                         </Typography>
