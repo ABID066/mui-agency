@@ -69,16 +69,21 @@ export default function Support() {
 
   return (
     <Box sx={{ 
-      p: { xs: 2, sm: 3, md: 4 }, 
+      p: { xs: .25, sm: 2, md: 4 }, 
       backgroundColor: '#0f172a', 
       minHeight: '100vh',
       width: '100%',
-      maxWidth: '100%',
+      maxWidth: { xs: '100vw', sm: '100%' },
       boxSizing: 'border-box',
       overflow: 'hidden'
     }}>
       {/* Header */}
-      <Box sx={{ mb: 4, width: '100%', maxWidth: '100%' }}>
+      <Box sx={{ 
+        mb: { xs: 2, sm: 3, md: 4 }, 
+        width: '100%', 
+        maxWidth: { xs: 'calc(100vw - 16px)', sm: '100%' },
+        boxSizing: 'border-box'
+      }}>
         <Typography 
           variant="h4" 
           fontWeight={700} 
@@ -108,11 +113,12 @@ export default function Support() {
       {/* Main Content */}
       <Grid 
         container 
-        spacing={{ xs: 2, md: 3 }}
+        spacing={{ xs: 1, sm: 2, md: 3 }}
         sx={{
           width: '100%',
-          maxWidth: '100%',
-          margin: 0
+          maxWidth: { xs: 'calc(100vw - 16px)', sm: '100%' },
+          margin: 0,
+          boxSizing: 'border-box'
         }}
       >
         <SupportTickets

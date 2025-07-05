@@ -47,9 +47,10 @@ export default function SupportResources({
       <Box sx={{ 
         display: 'flex', 
         flexDirection: 'column', 
-        gap: { xs: 2, md: 3 },
+        gap: { xs: 1, sm: 2, md: 3 },
         width: '100%',
-        maxWidth: '100%'
+        maxWidth: { xs: 'calc(100vw - 32px)', sm: '100%' },
+        boxSizing: 'border-box'
       }}>
         {/* Quick Actions */}
         <Paper sx={{ 
@@ -57,9 +58,10 @@ export default function SupportResources({
           border: '1px solid #334155',
           boxShadow: 'none',
           borderRadius: 2,
-          p: { xs: 2, sm: 3 },
+          p: { xs: 1, sm: 2, md: 3 },
           width: '100%',
-          maxWidth: '100%'
+          maxWidth: '100%',
+          boxSizing: 'border-box'
         }}>
           <Typography 
             variant="h6" 
@@ -164,9 +166,10 @@ export default function SupportResources({
           border: '1px solid #334155',
           boxShadow: 'none',
           borderRadius: 2,
-          p: { xs: 2, sm: 3 },
+          p: { xs: 1, sm: 2, md: 3 },
           width: '100%',
-          maxWidth: '100%'
+          maxWidth: '100%',
+          boxSizing: 'border-box'
         }}>
           <Typography 
             variant="h6" 
