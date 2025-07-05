@@ -34,7 +34,8 @@ import {
   Inbox,
   Drafts,
   Send as SendIcon,
-  Star
+  Star,
+  ArrowBack
 } from '@mui/icons-material';
 
 // Sample message data
@@ -121,6 +122,7 @@ export default function Messages() {
   const [selectedMessage, setSelectedMessage] = useState<number | null>(null);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [newMessage, setNewMessage] = useState('');
+  const [isMobile, setIsMobile] = useState(false);
 
   const handleMenuClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -134,6 +136,21 @@ export default function Messages() {
     setSelectedMessage(messageId);
   };
 
+  const handleBackToList = () => {
+    setSelectedMessage(null);
+  };
+
+  React.useEffect(() => {
+    const checkIsMobile = () => {
+      setIsMobile(window.innerWidth < 900);
+    };
+    
+    checkIsMobile();
+    window.addEventListener('resize', checkIsMobile);
+    
+    return () => window.removeEventListener('resize', checkIsMobile);
+  }, []);
+
   const filteredMessages = messages.filter(message =>
     message.sender.toLowerCase().includes(searchTerm.toLowerCase()) ||
     message.subject.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -143,7 +160,7 @@ export default function Messages() {
   const selectedMessageData = messages.find(msg => msg.id === selectedMessage);
 
   return (
-    <Box sx={{ p: 4, backgroundColor: '#0f172a', minHeight: '100vh' }}>
+    <Box sx={{ p: { xs: 2, md: 4 }, backgroundColor: '#0f172a', minHeight: '100vh', overflow: 'hidden' }}>
       {/* Header */}
       <Box sx={{ mb: 4 }}>
         <Typography variant="h4" fontWeight={700} sx={{ color: '#ffffff', mb: 1 }}>
@@ -191,7 +208,7 @@ export default function Messages() {
 
       <Grid container spacing={3}>
         {/* Messages List */}
-        <Grid size={{ xs: 12, md: 4 }}>
+        <Grid size={{ xs: 12, md: 4 }} sx={{ display: { xs: isMobile && selectedMessage ? 'none' : 'block', md: 'block' } }}>
           <Paper sx={{ 
             backgroundColor: '#1e293b',
             border: '1px solid #334155',
@@ -199,7 +216,9 @@ export default function Messages() {
             borderRadius: 2,
             height: '600px',
             display: 'flex',
-            flexDirection: 'column'
+            flexDirection: 'column',
+            overflow: 'hidden',
+            maxWidth: '100%'
           }}>
             {/* Search and Filter */}
             <Box sx={{ p: 3, borderBottom: '1px solid #334155' }}>
@@ -329,7 +348,7 @@ export default function Messages() {
         </Grid>
 
         {/* Message Detail/Compose */}
-        <Grid size={{ xs: 12, md: 8 }}>
+        <Grid size={{ xs: 12, md: 8 }} sx={{ display: { xs: isMobile && !selectedMessage ? 'none' : 'block', md: 'block' } }}>
           <Paper sx={{ 
             backgroundColor: '#1e293b',
             border: '1px solid #334155',
@@ -343,22 +362,46 @@ export default function Messages() {
               // Message Detail View
               <>
                 {/* Message Header */}
-                <Box sx={{ p: 3, borderBottom: '1px solid #334155' }}>
-                  <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 2 }}>
-                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                      <Avatar sx={{ backgroundColor: '#f3f4f6', color: '#6b7280', mr: 2 }}>
+                <Box sx={{ p: { xs: 2, md: 3 }, borderBottom: '1px solid #334155', overflow: 'hidden' }}>
+                  <Box sx={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', mb: 2, gap: 1 }}>
+                    <Box sx={{ display: 'flex', alignItems: 'flex-start', flex: 1, minWidth: 0 }}>
+                      {isMobile && (
+                        <IconButton 
+                          size="small" 
+                          onClick={handleBackToList}
+                          sx={{ mr: 1, color: '#94a3b8', flexShrink: 0 }}
+                        >
+                          <ArrowBack />
+                        </IconButton>
+                      )}
+                      <Avatar sx={{ backgroundColor: '#f3f4f6', color: '#6b7280', mr: 2, flexShrink: 0 }}>
                         {selectedMessageData.avatar}
                       </Avatar>
-                      <Box>
-                        <Typography variant="h6" fontWeight={600} sx={{ color: '#ffffff' }}>
+                      <Box sx={{ minWidth: 0, flex: 1 }}>
+                        <Typography 
+                          variant={isMobile ? 'body1' : 'h6'} 
+                          fontWeight={600} 
+                          sx={{ 
+                            color: '#ffffff',
+                            wordBreak: 'break-word',
+                            overflowWrap: 'break-word'
+                          }}
+                        >
                           {selectedMessageData.subject}
                         </Typography>
-                        <Typography variant="body2" sx={{ color: '#94a3b8' }}>
+                        <Typography 
+                          variant={isMobile ? 'caption' : 'body2'} 
+                          sx={{ 
+                            color: '#94a3b8',
+                            wordBreak: 'break-all',
+                            overflowWrap: 'break-word'
+                          }}
+                        >
                           From: {selectedMessageData.sender} &lt;{selectedMessageData.email}&gt;
                         </Typography>
                       </Box>
                     </Box>
-                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                    <Box sx={{ display: 'flex', alignItems: 'center', flexShrink: 0 }}>
                       <IconButton size="small">
                         <Star sx={{ color: '#94a3b8' }} />
                       </IconButton>
@@ -373,24 +416,50 @@ export default function Messages() {
                 </Box>
 
                 {/* Message Content */}
-                <Box sx={{ flex: 1, p: 3, overflow: 'auto' }}>
-                  <Typography variant="body1" sx={{ color: '#ffffff', lineHeight: 1.6 }}>
+                <Box sx={{ flex: 1, p: { xs: 2, md: 3 }, overflow: 'auto', overflowX: 'hidden' }}>
+                  <Typography 
+                    variant="body1" 
+                    sx={{ 
+                      color: '#ffffff', 
+                      lineHeight: 1.6,
+                      wordBreak: 'break-word',
+                      overflowWrap: 'break-word'
+                    }}
+                  >
                     {selectedMessageData.preview}
                   </Typography>
-                  <Typography variant="body1" sx={{ color: '#ffffff', lineHeight: 1.6, mt: 2 }}>
+                  <Typography 
+                    variant="body1" 
+                    sx={{ 
+                      color: '#ffffff', 
+                      lineHeight: 1.6, 
+                      mt: 2,
+                      wordBreak: 'break-word',
+                      overflowWrap: 'break-word'
+                    }}
+                  >
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
                   </Typography>
-                  <Typography variant="body1" sx={{ color: '#ffffff', lineHeight: 1.6, mt: 2 }}>
+                  <Typography 
+                    variant="body1" 
+                    sx={{ 
+                      color: '#ffffff', 
+                      lineHeight: 1.6, 
+                      mt: 2,
+                      wordBreak: 'break-word',
+                      overflowWrap: 'break-word'
+                    }}
+                  >
                     Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
                   </Typography>
                 </Box>
 
                 {/* Reply Section */}
-                <Box sx={{ p: 3, borderTop: '1px solid #334155' }}>
+                <Box sx={{ p: { xs: 2, md: 3 }, borderTop: '1px solid #334155' }}>
                   <TextField
                     placeholder="Type your reply..."
                     multiline
-                    rows={3}
+                    rows={isMobile ? 2 : 3}
                     fullWidth
                     value={newMessage}
                     onChange={(e) => setNewMessage(e.target.value)}
@@ -411,8 +480,14 @@ export default function Messages() {
                       },
                     }}
                   />
-                  <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                    <Box>
+                  <Box sx={{ 
+                    display: 'flex', 
+                    alignItems: 'center', 
+                    justifyContent: 'space-between',
+                    flexWrap: isMobile ? 'wrap' : 'nowrap',
+                    gap: 1
+                  }}>
+                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
                       <IconButton size="small">
                         <AttachFile sx={{ color: '#94a3b8' }} />
                       </IconButton>
@@ -423,14 +498,17 @@ export default function Messages() {
                     <Button
                       variant="contained"
                       startIcon={<Send />}
+                      size={isMobile ? 'small' : 'medium'}
                       sx={{
                         backgroundColor: '#3b82f6',
                         '&:hover': {
                           backgroundColor: '#2563eb'
-                        }
+                        },
+                        minWidth: isMobile ? 'auto' : 'inherit',
+                        px: isMobile ? 2 : 3
                       }}
                     >
-                      Send Reply
+                      {isMobile ? 'Send' : 'Send Reply'}
                     </Button>
                   </Box>
                 </Box>

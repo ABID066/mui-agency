@@ -12,7 +12,9 @@ import {
   FormControlLabel,
   Switch,
   Alert,
-  Divider
+  Divider,
+  useTheme,
+  useMediaQuery
 } from '@mui/material';
 import {
   Storage,
@@ -53,6 +55,8 @@ export default function DataStorageSettings({
   onCreateBackup,
   onRestoreBackup
 }: DataStorageSettingsProps) {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const storagePercentage = (storage.usedStorage / storage.totalStorage) * 100;
 
   const formatBytes = (bytes: number) => {
@@ -64,23 +68,65 @@ export default function DataStorageSettings({
   };
 
   return (
-    <Box sx={{p: 3 }}>
+    <Box sx={{ 
+      p: { xs: 2, sm: 3 },
+      width: '100%',
+      maxWidth: '100%',
+      overflow: 'hidden'
+    }}>
       <Grid container spacing={4}>
         {/* Storage Overview */}
         <Grid size={{ xs: 12, md: 6 }}>
-          <Typography variant="h6" fontWeight={600} sx={{ color: '#ffffff', mb: 3, display: 'flex', alignItems: 'center', gap: 1 }}>
-            <Storage sx={{ color: '#3b82f6' }} />
+          <Typography 
+            variant="h6" 
+            fontWeight={600} 
+            sx={{ 
+              color: '#ffffff', 
+              mb: 3, 
+              display: 'flex', 
+              alignItems: 'center', 
+              gap: 1,
+              fontSize: { xs: '1rem', sm: '1.125rem', md: '1.25rem' }
+            }}
+          >
+            <Storage sx={{ color: '#3b82f6', fontSize: { xs: '1.25rem', md: '1.5rem' } }} />
             Storage Overview
           </Typography>
           
           {/* Storage Usage */}
-          <Card sx={{ backgroundColor: '#0f172a', border: '1px solid #475569', mb: 3 }}>
-            <CardContent>
-              <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
-                <Typography variant="subtitle1" sx={{ color: '#ffffff', fontWeight: 600 }}>
+          <Card sx={{ 
+            backgroundColor: '#0f172a', 
+            border: '1px solid #475569', 
+            mb: 3,
+            width: '100%',
+            maxWidth: '100%'
+          }}>
+            <CardContent sx={{ p: { xs: 2, sm: 3 } }}>
+              <Box sx={{ 
+                display: 'flex', 
+                justifyContent: 'space-between', 
+                alignItems: { xs: 'flex-start', sm: 'center' }, 
+                mb: 2,
+                flexDirection: { xs: 'column', sm: 'row' },
+                gap: { xs: 1, sm: 0 }
+              }}>
+                <Typography 
+                  variant="subtitle1" 
+                  sx={{ 
+                    color: '#ffffff', 
+                    fontWeight: 600,
+                    fontSize: { xs: '0.875rem', sm: '1rem' }
+                  }}
+                >
                   Storage Usage
                 </Typography>
-                <Typography variant="body2" sx={{ color: '#94a3b8' }}>
+                <Typography 
+                  variant="body2" 
+                  sx={{ 
+                    color: '#94a3b8',
+                    fontSize: { xs: '0.75rem', sm: '0.875rem' }
+                  }}
+                >
                   {formatBytes(storage.usedStorage)} / {formatBytes(storage.totalStorage)}
                 </Typography>
               </Box>
@@ -97,23 +143,50 @@ export default function DataStorageSettings({
                   }
                 }}
               />
-              <Typography variant="caption" sx={{ color: '#94a3b8', mt: 1, display: 'block' }}>
+              <Typography 
+                variant="caption" 
+                sx={{ 
+                  color: '#94a3b8', 
+                  mt: 1, 
+                  display: 'block',
+                  fontSize: { xs: '0.625rem', sm: '0.75rem' }
+                }}
+              >
                 {storagePercentage.toFixed(1)}% used
               </Typography>
             </CardContent>
           </Card>
 
           {/* Storage Settings */}
-          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: { xs: 2, sm: 3 } }}>
             {/* Auto Backup */}
-            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+            <Box sx={{ 
+              display: 'flex', 
+              alignItems: { xs: 'flex-start', sm: 'center' }, 
+              justifyContent: 'space-between',
+              flexDirection: { xs: 'column', sm: 'row' },
+              gap: { xs: 1, sm: 0 }
+            }}>
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                <Backup sx={{ color: '#94a3b8' }} />
+                <Backup sx={{ color: '#94a3b8', fontSize: { xs: '1.25rem', md: '1.5rem' } }} />
                 <Box>
-                  <Typography variant="subtitle1" sx={{ color: '#ffffff', fontWeight: 600 }}>
+                  <Typography 
+                    variant="subtitle1" 
+                    sx={{ 
+                      color: '#ffffff', 
+                      fontWeight: 600,
+                      fontSize: { xs: '0.875rem', sm: '1rem' }
+                    }}
+                  >
                     Auto Backup
                   </Typography>
-                  <Typography variant="body2" sx={{ color: '#94a3b8' }}>
+                  <Typography 
+                    variant="body2" 
+                    sx={{ 
+                      color: '#94a3b8',
+                      fontSize: { xs: '0.75rem', sm: '0.875rem' }
+                    }}
+                  >
                     Automatically backup your data daily
                   </Typography>
                 </Box>
@@ -138,14 +211,33 @@ export default function DataStorageSettings({
             </Box>
 
             {/* Cloud Sync */}
-            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+            <Box sx={{ 
+              display: 'flex', 
+              alignItems: { xs: 'flex-start', sm: 'center' }, 
+              justifyContent: 'space-between',
+              flexDirection: { xs: 'column', sm: 'row' },
+              gap: { xs: 1, sm: 0 }
+            }}>
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                <CloudSync sx={{ color: '#94a3b8' }} />
+                <CloudSync sx={{ color: '#94a3b8', fontSize: { xs: '1.25rem', md: '1.5rem' } }} />
                 <Box>
-                  <Typography variant="subtitle1" sx={{ color: '#ffffff', fontWeight: 600 }}>
+                  <Typography 
+                    variant="subtitle1" 
+                    sx={{ 
+                      color: '#ffffff', 
+                      fontWeight: 600,
+                      fontSize: { xs: '0.875rem', sm: '1rem' }
+                    }}
+                  >
                     Cloud Synchronization
                   </Typography>
-                  <Typography variant="body2" sx={{ color: '#94a3b8' }}>
+                  <Typography 
+                    variant="body2" 
+                    sx={{ 
+                      color: '#94a3b8',
+                      fontSize: { xs: '0.75rem', sm: '0.875rem' }
+                    }}
+                  >
                     Sync your data across all devices
                   </Typography>
                 </Box>
@@ -170,12 +262,31 @@ export default function DataStorageSettings({
             </Box>
 
             {/* Data Compression */}
-            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+            <Box sx={{ 
+              display: 'flex', 
+              alignItems: { xs: 'flex-start', sm: 'center' }, 
+              justifyContent: 'space-between',
+              flexDirection: { xs: 'column', sm: 'row' },
+              gap: { xs: 1, sm: 0 }
+            }}>
               <Box>
-                <Typography variant="subtitle1" sx={{ color: '#ffffff', fontWeight: 600 }}>
+                <Typography 
+                  variant="subtitle1" 
+                  sx={{ 
+                    color: '#ffffff', 
+                    fontWeight: 600,
+                    fontSize: { xs: '0.875rem', sm: '1rem' }
+                  }}
+                >
                   Data Compression
                 </Typography>
-                <Typography variant="body2" sx={{ color: '#94a3b8' }}>
+                <Typography 
+                  variant="body2" 
+                  sx={{ 
+                    color: '#94a3b8',
+                    fontSize: { xs: '0.75rem', sm: '0.875rem' }
+                  }}
+                >
                   Compress data to save storage space
                 </Typography>
               </Box>
@@ -202,34 +313,62 @@ export default function DataStorageSettings({
 
         {/* Data Management */}
         <Grid size={{ xs: 12, md: 6 }}>
-          <Typography variant="h6" fontWeight={600} sx={{ color: '#ffffff', mb: 3 }}>
+          <Typography 
+            variant="h6" 
+            fontWeight={600} 
+            sx={{ 
+              color: '#ffffff', 
+              mb: 3,
+              fontSize: { xs: '1rem', sm: '1.125rem', md: '1.25rem' }
+            }}
+          >
             Data Management
           </Typography>
           
           {/* Export/Import */}
           <Box sx={{ mb: 4 }}>
-            <Typography variant="subtitle1" sx={{ color: '#ffffff', fontWeight: 600, mb: 2 }}>
+            <Typography 
+              variant="subtitle1" 
+              sx={{ 
+                color: '#ffffff', 
+                fontWeight: 600, 
+                mb: 2,
+                fontSize: { xs: '0.875rem', sm: '1rem' }
+              }}
+            >
               Export & Import
             </Typography>
             <Grid container spacing={2}>
-              <Grid size={{ xs: 6 }}>
+              <Grid size={{ xs: 12, sm: 6 }}>
                 <Button
                   variant="outlined"
                   fullWidth
                   startIcon={<Download />}
                   onClick={onExportData}
-                  sx={{ color: '#94a3b8', borderColor: '#475569', '&:hover': { borderColor: '#64748b' } }}
+                  sx={{ 
+                    color: '#94a3b8', 
+                    borderColor: '#475569', 
+                    '&:hover': { borderColor: '#64748b' },
+                    fontSize: { xs: '0.875rem', sm: '1rem' },
+                    py: { xs: 1, sm: 1.5 }
+                  }}
                 >
                   Export Data
                 </Button>
               </Grid>
-              <Grid size={{ xs: 6 }}>
+              <Grid size={{ xs: 12, sm: 6 }}>
                 <Button
                   variant="outlined"
                   fullWidth
                   startIcon={<CloudSync />}
                   onClick={onImportData}
-                  sx={{ color: '#94a3b8', borderColor: '#475569', '&:hover': { borderColor: '#64748b' } }}
+                  sx={{ 
+                    color: '#94a3b8', 
+                    borderColor: '#475569', 
+                    '&:hover': { borderColor: '#64748b' },
+                    fontSize: { xs: '0.875rem', sm: '1rem' },
+                    py: { xs: 1, sm: 1.5 }
+                  }}
                 >
                   Import Data
                 </Button>
@@ -239,11 +378,19 @@ export default function DataStorageSettings({
 
           {/* Backup & Restore */}
           <Box sx={{ mb: 4 }}>
-            <Typography variant="subtitle1" sx={{ color: '#ffffff', fontWeight: 600, mb: 2 }}>
+            <Typography 
+              variant="subtitle1" 
+              sx={{ 
+                color: '#ffffff', 
+                fontWeight: 600, 
+                mb: 2,
+                fontSize: { xs: '0.875rem', sm: '1rem' }
+              }}
+            >
               Backup & Restore
             </Typography>
             <Grid container spacing={2}>
-              <Grid size={{ xs: 6 }}>
+              <Grid size={{ xs: 12, sm: 6 }}>
                 <Button
                   variant="contained"
                   fullWidth
@@ -253,19 +400,27 @@ export default function DataStorageSettings({
                     backgroundColor: '#10b981',
                     '&:hover': {
                       backgroundColor: '#059669'
-                    }
+                    },
+                    fontSize: { xs: '0.875rem', sm: '1rem' },
+                    py: { xs: 1, sm: 1.5 }
                   }}
                 >
                   Create Backup
                 </Button>
               </Grid>
-              <Grid size={{ xs: 6 }}>
+              <Grid size={{ xs: 12, sm: 6 }}>
                 <Button
                   variant="outlined"
                   fullWidth
                   startIcon={<CloudSync />}
                   onClick={onRestoreBackup}
-                  sx={{ color: '#94a3b8', borderColor: '#475569', '&:hover': { borderColor: '#64748b' } }}
+                  sx={{ 
+                    color: '#94a3b8', 
+                    borderColor: '#475569', 
+                    '&:hover': { borderColor: '#64748b' },
+                    fontSize: { xs: '0.875rem', sm: '1rem' },
+                    py: { xs: 1, sm: 1.5 }
+                  }}
                 >
                   Restore Backup
                 </Button>
@@ -275,7 +430,15 @@ export default function DataStorageSettings({
 
           {/* Maintenance */}
           <Box>
-            <Typography variant="subtitle1" sx={{ color: '#ffffff', fontWeight: 600, mb: 2 }}>
+            <Typography 
+              variant="subtitle1" 
+              sx={{ 
+                color: '#ffffff', 
+                fontWeight: 600, 
+                mb: 2,
+                fontSize: { xs: '0.875rem', sm: '1rem' }
+              }}
+            >
               Maintenance
             </Typography>
             <Grid container spacing={2}>
@@ -285,7 +448,13 @@ export default function DataStorageSettings({
                   fullWidth
                   startIcon={<Delete />}
                   onClick={onClearCache}
-                  sx={{ color: '#f59e0b', borderColor: '#f59e0b', '&:hover': { borderColor: '#d97706' } }}
+                  sx={{ 
+                    color: '#f59e0b', 
+                    borderColor: '#f59e0b', 
+                    '&:hover': { borderColor: '#d97706' },
+                    fontSize: { xs: '0.875rem', sm: '1rem' },
+                    py: { xs: 1, sm: 1.5 }
+                  }}
                 >
                   Clear Cache
                 </Button>
@@ -310,15 +479,31 @@ export default function DataStorageSettings({
               }
             }}
           >
-            <Typography variant="h6" sx={{ fontWeight: 600, mb: 1 }}>
+            <Typography 
+              variant="h6" 
+              sx={{ 
+                fontWeight: 600, 
+                mb: 1,
+                fontSize: { xs: '1rem', sm: '1.125rem' }
+              }}
+            >
               Danger Zone
             </Typography>
-            <Typography variant="body2">
+            <Typography 
+              variant="body2"
+              sx={{
+                fontSize: { xs: '0.75rem', sm: '0.875rem' }
+              }}
+            >
               These actions are irreversible. Please proceed with caution.
             </Typography>
           </Alert>
           
-          <Box sx={{ display: 'flex', gap: 2 }}>
+          <Box sx={{ 
+            display: 'flex', 
+            gap: { xs: 1, sm: 2 },
+            flexDirection: { xs: 'column', sm: 'row' }
+          }}>
             <Button
               variant="contained"
               startIcon={<Delete />}
@@ -327,7 +512,10 @@ export default function DataStorageSettings({
                 backgroundColor: '#dc2626',
                 '&:hover': {
                   backgroundColor: '#b91c1c'
-                }
+                },
+                fontSize: { xs: '0.875rem', sm: '1rem' },
+                py: { xs: 1, sm: 1.5 },
+                width: { xs: '100%', sm: 'auto' }
               }}
             >
               Delete All Data

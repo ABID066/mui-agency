@@ -68,13 +68,36 @@ export default function Support() {
   };
 
   return (
-    <Box sx={{ p: { xs: 2, sm: 3, md: 4 }, backgroundColor: '#0f172a', minHeight: '100vh' }}>
+    <Box sx={{ 
+      p: { xs: 2, sm: 3, md: 4 }, 
+      backgroundColor: '#0f172a', 
+      minHeight: '100vh',
+      width: '100%',
+      maxWidth: '100%',
+      boxSizing: 'border-box',
+      overflow: 'hidden'
+    }}>
       {/* Header */}
-      <Box sx={{ mb: 4 }}>
-        <Typography variant="h4" fontWeight={700} sx={{ color: '#ffffff', mb: 1 }}>
+      <Box sx={{ mb: 4, width: '100%', maxWidth: '100%' }}>
+        <Typography 
+          variant="h4" 
+          fontWeight={700} 
+          sx={{ 
+            color: '#ffffff', 
+            mb: 1,
+            fontSize: { xs: '1.5rem', sm: '2rem', md: '2.125rem' },
+            wordBreak: 'break-word'
+          }}
+        >
           Support Center
         </Typography>
-        <Typography variant="body1" sx={{ color: '#94a3b8' }}>
+        <Typography 
+          variant="body1" 
+          sx={{ 
+            color: '#94a3b8',
+            fontSize: { xs: '0.875rem', sm: '1rem' }
+          }}
+        >
           Get help and support for your account and services
         </Typography>
       </Box>
@@ -83,7 +106,15 @@ export default function Support() {
       <SupportStats />
 
       {/* Main Content */}
-      <Grid container spacing={{ xs: 2, md: 3 }}>
+      <Grid 
+        container 
+        spacing={{ xs: 2, md: 3 }}
+        sx={{
+          width: '100%',
+          maxWidth: '100%',
+          margin: 0
+        }}
+      >
         <SupportTickets
           tickets={defaultSupportTickets}
           searchTerm={searchTerm}

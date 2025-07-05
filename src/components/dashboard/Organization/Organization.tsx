@@ -26,24 +26,50 @@ import {
 
 export default function Organization() {
   return (
-    <Box sx={{ p: 4, backgroundColor: '#0f172a', minHeight: '100vh', color: '#ffffff' }}>
+    <Box sx={{ 
+      p: { xs: 2, sm: 3, md: 4 }, 
+      backgroundColor: '#0f172a', 
+      minHeight: '100vh', 
+      color: '#ffffff',
+      width: '100%',
+      maxWidth: '100%',
+      boxSizing: 'border-box',
+      overflow: 'hidden'
+    }}>
       {/* Header */}
-      <Box sx={{ mb: 4 }}>
-        <Typography variant="h4" fontWeight={700} sx={{ color: '#ffffff', mb: 1 }}>
+      <Box sx={{ mb: { xs: 3, md: 4 }, width: '100%', maxWidth: '100%' }}>
+        <Typography 
+          variant="h4" 
+          fontWeight={700} 
+          sx={{ 
+            color: '#ffffff', 
+            mb: 1,
+            fontSize: { xs: '1.5rem', sm: '1.75rem', md: '2.125rem' },
+            wordBreak: 'break-word'
+          }}
+        >
           Organization Management
         </Typography>
-        <Typography variant="body1" sx={{ color: '#94a3b8' }}>
+        <Typography 
+          variant="body1" 
+          sx={{ 
+            color: '#94a3b8',
+            fontSize: { xs: '0.875rem', md: '1rem' }
+          }}
+        >
           Manage your organizations, teams, and settings
         </Typography>
       </Box>
 
       {/* Quick Actions */}
-      <Grid container spacing={3} sx={{ mb: 4 }}>
-        <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+      <Grid container spacing={{ xs: 2, md: 3 }} sx={{ mb: { xs: 3, md: 4 }, width: '100%', maxWidth: '100%' }}>
+        <Grid size={{ xs: 12, sm: 6, md: 3 }} sx={{ width: '100%', maxWidth: '100%' }}>
           <Card sx={{ 
             backgroundColor: '#1e293b',
             border: '1px solid #334155',
             boxShadow: 'none',
+            width: '100%',
+            maxWidth: '100%',
             '&:hover': {
               boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.3)'
             }
@@ -66,11 +92,13 @@ export default function Organization() {
           </Card>
         </Grid>
         
-        <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+        <Grid size={{ xs: 12, sm: 6, md: 3 }} sx={{ width: '100%', maxWidth: '100%' }}>
           <Card sx={{ 
             backgroundColor: '#1e293b',
             border: '1px solid #334155',
             boxShadow: 'none',
+            width: '100%',
+            maxWidth: '100%',
             '&:hover': {
               boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.3)'
             }
@@ -99,20 +127,43 @@ export default function Organization() {
         backgroundColor: '#1e293b',
         border: '1px solid #334155',
         boxShadow: 'none',
-        mb: 4
+        mb: { xs: 3, md: 4 },
+        width: '100%',
+        maxWidth: '100%'
       }}>
-        <CardContent sx={{ p: 3 }}>
-          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'between', mb: 3 }}>
-            <Typography variant="h6" fontWeight={600} sx={{ color: '#ffffff' }}>
+        <CardContent sx={{ p: { xs: 2, md: 3 } }}>
+          <Box sx={{ 
+            display: 'flex', 
+            flexDirection: { xs: 'column', sm: 'row' },
+            alignItems: { xs: 'flex-start', sm: 'center' }, 
+            justifyContent: 'space-between', 
+            mb: 3,
+            gap: { xs: 2, sm: 0 }
+          }}>
+            <Typography 
+              variant="h6" 
+              fontWeight={600} 
+              sx={{ 
+                color: '#ffffff',
+                fontSize: { xs: '1.125rem', md: '1.25rem' }
+              }}
+            >
               Current Organization
             </Typography>
-            <Box sx={{ display: 'flex', gap: 2 }}>
+            <Box sx={{ 
+              display: 'flex', 
+              flexDirection: { xs: 'column', sm: 'row' },
+              gap: { xs: 1, sm: 2 },
+              width: { xs: '100%', sm: 'auto' }
+            }}>
               <Button
                 variant="outlined"
                 startIcon={<SwapHoriz />}
                 sx={{
                   borderColor: '#475569',
                   color: '#ffffff',
+                  width: { xs: '100%', sm: 'auto' },
+                  fontSize: { xs: '0.875rem', md: '0.875rem' },
                   '&:hover': {
                     borderColor: '#94a3b8',
                     backgroundColor: 'rgba(255, 255, 255, 0.05)'
@@ -126,6 +177,8 @@ export default function Organization() {
                 startIcon={<Add />}
                 sx={{
                   backgroundColor: '#3b82f6',
+                  width: { xs: '100%', sm: 'auto' },
+                  fontSize: { xs: '0.875rem', md: '0.875rem' },
                   '&:hover': {
                     backgroundColor: '#2563eb'
                   }
@@ -136,15 +189,41 @@ export default function Organization() {
             </Box>
           </Box>
           
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 3 }}>
-            <Avatar sx={{ width: 60, height: 60, backgroundColor: '#3b82f6', fontSize: '1.5rem' }}>
+          <Box sx={{ 
+            display: 'flex', 
+            flexDirection: { xs: 'column', sm: 'row' },
+            alignItems: { xs: 'center', sm: 'flex-start' }, 
+            gap: { xs: 2, sm: 3 },
+            textAlign: { xs: 'center', sm: 'left' }
+          }}>
+            <Avatar sx={{ 
+              width: { xs: 50, sm: 60 }, 
+              height: { xs: 50, sm: 60 }, 
+              backgroundColor: '#3b82f6', 
+              fontSize: { xs: '1.25rem', sm: '1.5rem' }
+            }}>
               AB
             </Avatar>
-            <Box>
-              <Typography variant="h6" fontWeight={600} sx={{ color: '#ffffff' }}>
+            <Box sx={{ width: { xs: '100%', sm: 'auto' } }}>
+              <Typography 
+                variant="h6" 
+                fontWeight={600} 
+                sx={{ 
+                  color: '#ffffff',
+                  fontSize: { xs: '1.125rem', md: '1.25rem' },
+                  wordBreak: 'break-word'
+                }}
+              >
                 AgencyBoost Inc.
               </Typography>
-              <Typography variant="body2" sx={{ color: '#94a3b8', mb: 1 }}>
+              <Typography 
+                variant="body2" 
+                sx={{ 
+                  color: '#94a3b8', 
+                  mb: 1,
+                  fontSize: { xs: '0.75rem', md: '0.875rem' }
+                }}
+              >
                 Primary Organization
               </Typography>
               <Chip
@@ -153,7 +232,8 @@ export default function Organization() {
                 sx={{
                   backgroundColor: '#059669',
                   color: '#ffffff',
-                  fontWeight: 500
+                  fontWeight: 500,
+                  fontSize: { xs: '0.6875rem', md: '0.75rem' }
                 }}
               />
             </Box>
@@ -165,46 +245,106 @@ export default function Organization() {
       <Card sx={{ 
         backgroundColor: '#1e293b',
         border: '1px solid #334155',
-        boxShadow: 'none'
+        boxShadow: 'none',
+        width: '100%',
+        maxWidth: '100%'
       }}>
-        <CardContent sx={{ p: 3 }}>
-          <Typography variant="h6" fontWeight={600} sx={{ color: '#ffffff', mb: 3 }}>
+        <CardContent sx={{ p: { xs: 2, md: 3 } }}>
+          <Typography 
+            variant="h6" 
+            fontWeight={600} 
+            sx={{ 
+              color: '#ffffff', 
+              mb: 3,
+              fontSize: { xs: '1.125rem', md: '1.25rem' }
+            }}
+          >
             Recent Activity
           </Typography>
           
           <List>
-            <ListItem sx={{ px: 0 }}>
+            <ListItem sx={{ 
+              px: 0,
+              flexDirection: { xs: 'column', sm: 'row' },
+              alignItems: { xs: 'flex-start', sm: 'center' },
+              gap: { xs: 1, sm: 0 }
+            }}>
               <ListItemAvatar>
-                <Avatar sx={{ backgroundColor: '#334155', color: '#94a3b8' }}>
-                  <People />
+                <Avatar sx={{ 
+                  backgroundColor: '#334155', 
+                  color: '#94a3b8',
+                  width: { xs: 35, sm: 40 },
+                  height: { xs: 35, sm: 40 }
+                }}>
+                  <People sx={{ fontSize: { xs: '1rem', sm: '1.25rem' } }} />
                 </Avatar>
               </ListItemAvatar>
               <ListItemText
                 primary="New member added"
                 secondary="John Doe joined AgencyBoost Inc."
-                primaryTypographyProps={{ color: '#ffffff' }}
-                secondaryTypographyProps={{ color: '#94a3b8' }}
+                primaryTypographyProps={{ 
+                  color: '#ffffff',
+                  fontSize: { xs: '0.875rem', md: '1rem' }
+                }}
+                secondaryTypographyProps={{ 
+                  color: '#94a3b8',
+                  fontSize: { xs: '0.75rem', md: '0.875rem' }
+                }}
+                sx={{ flex: 1, minWidth: 0 }}
               />
-              <Typography variant="caption" sx={{ color: '#94a3b8' }}>
+              <Typography 
+                variant="caption" 
+                sx={{ 
+                  color: '#94a3b8',
+                  fontSize: { xs: '0.6875rem', md: '0.75rem' },
+                  whiteSpace: { xs: 'normal', sm: 'nowrap' },
+                  alignSelf: { xs: 'flex-end', sm: 'center' }
+                }}
+              >
                 2 hours ago
               </Typography>
             </ListItem>
             
             <Divider sx={{ backgroundColor: '#334155', my: 1 }} />
             
-            <ListItem sx={{ px: 0 }}>
+            <ListItem sx={{ 
+              px: 0,
+              flexDirection: { xs: 'column', sm: 'row' },
+              alignItems: { xs: 'flex-start', sm: 'center' },
+              gap: { xs: 1, sm: 0 }
+            }}>
               <ListItemAvatar>
-                <Avatar sx={{ backgroundColor: '#334155', color: '#94a3b8' }}>
-                  <Settings />
+                <Avatar sx={{ 
+                  backgroundColor: '#334155', 
+                  color: '#94a3b8',
+                  width: { xs: 35, sm: 40 },
+                  height: { xs: 35, sm: 40 }
+                }}>
+                  <Settings sx={{ fontSize: { xs: '1rem', sm: '1.25rem' } }} />
                 </Avatar>
               </ListItemAvatar>
               <ListItemText
                 primary="Organization settings updated"
                 secondary="Billing information was modified"
-                primaryTypographyProps={{ color: '#ffffff' }}
-                secondaryTypographyProps={{ color: '#94a3b8' }}
+                primaryTypographyProps={{ 
+                  color: '#ffffff',
+                  fontSize: { xs: '0.875rem', md: '1rem' }
+                }}
+                secondaryTypographyProps={{ 
+                  color: '#94a3b8',
+                  fontSize: { xs: '0.75rem', md: '0.875rem' }
+                }}
+                sx={{ flex: 1, minWidth: 0 }}
               />
-              <Typography variant="caption" sx={{ color: '#94a3b8' }}>
+              <Typography 
+                variant="caption" 
+                sx={{ 
+                  color: '#94a3b8',
+                  fontSize: { xs: '0.6875rem', md: '0.75rem' },
+                  whiteSpace: { xs: 'normal', sm: 'nowrap' },
+                  alignSelf: { xs: 'flex-end', sm: 'center' }
+                }}
+              >
                 1 day ago
               </Typography>
             </ListItem>

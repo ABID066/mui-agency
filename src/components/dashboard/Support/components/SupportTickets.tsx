@@ -84,19 +84,38 @@ export default function SupportTickets({
             backgroundColor: '#1e293b',
             border: '1px solid #334155',
             boxShadow: 'none',
-            borderRadius: 2
+            borderRadius: 2,
+            width: '100%',
+            maxWidth: '100%',
+            overflow: 'hidden'
           }}>
         {/* Header */}
-        <Box sx={{ p: { xs: 2, md: 3 }, borderBottom: '1px solid #334155' }}>
+        <Box sx={{ 
+          p: { xs: 2, md: 3 }, 
+          borderBottom: '1px solid #334155',
+          width: '100%',
+          maxWidth: '100%',
+          boxSizing: 'border-box'
+        }}>
           <Box sx={{ 
             display: 'flex', 
             alignItems: { xs: 'flex-start', md: 'center' }, 
             justifyContent: 'space-between', 
             flexDirection: { xs: 'column', md: 'row' },
             gap: { xs: 2, md: 0 },
-            mb: 3 
+            mb: 3,
+            width: '100%',
+            maxWidth: '100%'
           }}>
-            <Typography variant="h6" fontWeight={600} sx={{ color: '#ffffff' }}>
+            <Typography 
+              variant="h6" 
+              fontWeight={600} 
+              sx={{ 
+                color: '#ffffff',
+                fontSize: { xs: '1.125rem', sm: '1.25rem' },
+                wordBreak: 'break-word'
+              }}
+            >
               Support Tickets
             </Typography>
             <Button
@@ -105,6 +124,9 @@ export default function SupportTickets({
               onClick={onNewTicket}
               sx={{
                 backgroundColor: '#3b82f6',
+                fontSize: { xs: '0.75rem', sm: '0.875rem' },
+                padding: { xs: '6px 12px', sm: '8px 16px' },
+                minWidth: { xs: 'auto', sm: '64px' },
                 '&:hover': {
                   backgroundColor: '#2563eb'
                 }
@@ -114,36 +136,16 @@ export default function SupportTickets({
             </Button>
           </Box>
 
-          {/* Tabs */}
-          <Tabs
-            value={tabValue}
-            onChange={onTabChange}
-            sx={{
-              mb: 3,
-              '& .MuiTab-root': {
-                color: '#94a3b8',
-                '&.Mui-selected': {
-                  color: '#ffffff'
-                }
-              },
-              '& .MuiTabs-indicator': {
-                backgroundColor: '#3b82f6'
-              }
-            }}
-          >
-            <Tab label="All Tickets" />
-            <Tab label="Open" />
-            <Tab label="In Progress" />
-            <Tab label="Resolved" />
-          </Tabs>
+          
 
           {/* Search and Filters */}
           <Box sx={{ 
             display: 'flex', 
-            gap: 2, 
+            gap: { xs: 1, sm: 2 }, 
             alignItems: 'center',
             flexDirection: { xs: 'column', sm: 'row' },
-            width: '100%'
+            width: '100%',
+            maxWidth: '100%'
           }}>
             <TextField
               placeholder="Search tickets..."
@@ -160,9 +162,12 @@ export default function SupportTickets({
               }}
               sx={{
                 flex: 1,
+                width: { xs: '100%', sm: 'auto' },
+                maxWidth: '100%',
                 '& .MuiOutlinedInput-root': {
                   backgroundColor: '#0f172a',
                   color: '#ffffff',
+                  fontSize: { xs: '0.875rem', sm: '1rem' },
                   '& fieldset': {
                     borderColor: '#475569',
                   },
@@ -175,10 +180,29 @@ export default function SupportTickets({
                 },
               }}
             />
-            <FormControl size="small" sx={{ minWidth: { xs: '100%', sm: 120 } }}>
-              <InputLabel>Status</InputLabel>
+            <FormControl 
+              size="small" 
+              sx={{ 
+                minWidth: { xs: '100%', sm: 120 },
+                width: { xs: '100%', sm: 'auto' },
+                maxWidth: '100%'
+              }}
+            >
+              <InputLabel sx={{ fontSize: { xs: '0.875rem', sm: '1rem' } }}>Status</InputLabel>
               <Select
-                sx={{ color: '#ffffff' }}
+                sx={{ 
+                  color: '#ffffff',
+                  fontSize: { xs: '0.875rem', sm: '1rem' },
+                  '& .MuiOutlinedInput-notchedOutline': {
+                    borderColor: '#475569',
+                  },
+                  '&:hover .MuiOutlinedInput-notchedOutline': {
+                    borderColor: '#64748b',
+                  },
+                  '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                    borderColor: '#3b82f6',
+                  }
+                }}
                 value={statusFilter}
                 label="Status"
                 onChange={(e) => onStatusFilterChange(e.target.value)}
@@ -189,10 +213,29 @@ export default function SupportTickets({
                 <MenuItem value="resolved">Resolved</MenuItem>
               </Select>
             </FormControl>
-            <FormControl size="small" sx={{ minWidth: { xs: '100%', sm: 120 } }}>
-              <InputLabel>Priority</InputLabel>
+            <FormControl 
+              size="small" 
+              sx={{ 
+                minWidth: { xs: '100%', sm: 120 },
+                width: { xs: '100%', sm: 'auto' },
+                maxWidth: '100%'
+              }}
+            >
+              <InputLabel sx={{ fontSize: { xs: '0.875rem', sm: '1rem' } }}>Priority</InputLabel>
               <Select
-                sx={{ color: '#ffffff' }}
+                sx={{ 
+                  color: '#ffffff',
+                  fontSize: { xs: '0.875rem', sm: '1rem' },
+                  '& .MuiOutlinedInput-notchedOutline': {
+                    borderColor: '#475569',
+                  },
+                  '&:hover .MuiOutlinedInput-notchedOutline': {
+                    borderColor: '#64748b',
+                  },
+                  '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                    borderColor: '#3b82f6',
+                  }
+                }}
                 value={priorityFilter}
                 label="Priority"
                 onChange={(e) => onPriorityFilterChange(e.target.value)}
@@ -207,58 +250,118 @@ export default function SupportTickets({
         </Box>
 
         {/* Tickets List */}
-        <List sx={{ p: 0 }}>
+        <List sx={{ 
+          p: 0,
+          width: '100%',
+          maxWidth: '100%',
+          overflow: 'hidden'
+        }}>
           {filteredTickets.map((ticket, index) => (
             <React.Fragment key={ticket.id}>
               <ListItem
                 sx={{
                   py: 2,
-                  px: 3,
+                  px: { xs: 2, sm: 3 },
+                  width: '100%',
+                  maxWidth: '100%',
+                  boxSizing: 'border-box',
                   '&:hover': {
                     backgroundColor: '#334155'
                   }
                 }}
               >
                 <ListItemAvatar>
-                  <Avatar sx={{ backgroundColor: '#475569', color: '#94a3b8' }}>
+                  <Avatar sx={{ 
+                    backgroundColor: '#475569', 
+                    color: '#94a3b8',
+                    width: { xs: 32, sm: 40 },
+                    height: { xs: 32, sm: 40 },
+                    fontSize: { xs: '0.875rem', sm: '1rem' }
+                  }}>
                     {ticket.avatar}
                   </Avatar>
                 </ListItemAvatar>
                 <ListItemText
+                  sx={{
+                    width: '100%',
+                    maxWidth: '100%',
+                    overflow: 'hidden'
+                  }}
                   primary={
-                    <Box>
-                      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 1 }}>
-                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, flex: 1 }}>
-                          <Typography variant="body1" fontWeight={500} sx={{ color: '#ffffff' }}>
+                    <Box sx={{ width: '100%', maxWidth: '100%' }}>
+                      <Box sx={{ 
+                        display: 'flex', 
+                        alignItems: 'center', 
+                        justifyContent: 'space-between', 
+                        mb: 1,
+                        width: '100%',
+                        maxWidth: '100%'
+                      }}>
+                        <Box sx={{ 
+                          display: 'flex', 
+                          alignItems: 'center', 
+                          gap: 1, 
+                          flex: 1,
+                          minWidth: 0,
+                          overflow: 'hidden'
+                        }}>
+                          <Typography 
+                            variant="body1" 
+                            fontWeight={500} 
+                            sx={{ 
+                              color: '#ffffff',
+                              fontSize: { xs: '0.875rem', sm: '1rem' },
+                              overflow: 'hidden',
+                              textOverflow: 'ellipsis',
+                              whiteSpace: 'nowrap',
+                              flex: 1
+                            }}
+                          >
                             {ticket.title}
                           </Typography>
-                          <Typography variant="caption" sx={{ color: '#94a3b8' }}>
+                          <Typography 
+                            variant="caption" 
+                            sx={{ 
+                              color: '#94a3b8',
+                              fontSize: { xs: '0.7rem', sm: '0.75rem' },
+                              whiteSpace: 'nowrap'
+                            }}
+                          >
                             #{ticket.id}
                           </Typography>
                         </Box>
                         <IconButton
                           size="small"
                           onClick={onMenuClick}
-                          sx={{ color: '#94a3b8' }}
+                          sx={{ 
+                            color: '#94a3b8',
+                            width: { xs: 24, sm: 32 },
+                            height: { xs: 24, sm: 32 }
+                          }}
                         >
-                          <MoreVert />
+                          <MoreVert sx={{ fontSize: { xs: 16, sm: 20 } }} />
                         </IconButton>
                       </Box>
                       {/* Mobile: Show chips below title */}
                       <Box sx={{ 
                         display: 'flex', 
                         alignItems: 'center', 
-                        gap: 1,
+                        gap: { xs: 0.5, sm: 1 },
                         flexWrap: 'wrap',
-                        mb: { xs: 1, md: 0 }
+                        mb: { xs: 1, md: 0 },
+                        width: '100%',
+                        maxWidth: '100%'
                       }}>
                         <Chip
                           label={ticket.priority}
                           size="small"
                           sx={{
                             ...getPriorityColor(ticket.priority),
-                            fontSize: '0.7rem',
-                            height: 20
+                            fontSize: { xs: '0.65rem', sm: '0.7rem' },
+                            height: { xs: 18, sm: 20 },
+                            '& .MuiChip-label': {
+                              padding: { xs: '0 6px', sm: '0 8px' }
+                            }
                           }}
                         />
                         <Chip
@@ -266,8 +369,11 @@ export default function SupportTickets({
                           size="small"
                           sx={{
                             ...getStatusColor(ticket.status),
-                            fontSize: '0.7rem',
-                            height: 20
+                            fontSize: { xs: '0.65rem', sm: '0.7rem' },
+                            height: { xs: 18, sm: 20 },
+                            '& .MuiChip-label': {
+                              padding: { xs: '0 6px', sm: '0 8px' }
+                            }
                           }}
                         />
                         <Chip
@@ -275,16 +381,31 @@ export default function SupportTickets({
                           size="small"
                           sx={{
                             ...getCategoryColor(ticket.category),
-                            fontSize: '0.7rem',
-                            height: 20
+                            fontSize: { xs: '0.65rem', sm: '0.7rem' },
+                            height: { xs: 18, sm: 20 },
+                            '& .MuiChip-label': {
+                              padding: { xs: '0 6px', sm: '0 8px' }
+                            }
                           }}
                         />
                       </Box>
                     </Box>
                   }
                   secondary={
-                    <Box>
-                      <Typography variant="body2" sx={{ color: '#94a3b8', mb: 1 }}>
+                    <Box sx={{ width: '100%', maxWidth: '100%' }}>
+                      <Typography 
+                        variant="body2" 
+                        sx={{ 
+                          color: '#94a3b8', 
+                          mb: 1,
+                          fontSize: { xs: '0.75rem', sm: '0.875rem' },
+                          overflow: 'hidden',
+                          textOverflow: 'ellipsis',
+                          display: '-webkit-box',
+                          WebkitLineClamp: { xs: 2, sm: 3 },
+                          WebkitBoxOrient: 'vertical'
+                        }}
+                      >
                         {ticket.description}
                       </Typography>
                       <Box sx={{ 
@@ -292,12 +413,31 @@ export default function SupportTickets({
                         alignItems: { xs: 'flex-start', md: 'center' }, 
                         justifyContent: 'space-between',
                         flexDirection: { xs: 'column', md: 'row' },
-                        gap: { xs: 1, md: 0 }
+                        gap: { xs: 1, md: 0 },
+                        width: '100%',
+                        maxWidth: '100%'
                       }}>
-                        <Typography variant="caption" sx={{ color: '#94a3b8' }}>
+                        <Typography 
+                          variant="caption" 
+                          sx={{ 
+                            color: '#94a3b8',
+                            fontSize: { xs: '0.7rem', sm: '0.75rem' },
+                            overflow: 'hidden',
+                            textOverflow: 'ellipsis',
+                            whiteSpace: { xs: 'normal', sm: 'nowrap' },
+                            wordBreak: { xs: 'break-word', sm: 'normal' }
+                          }}
+                        >
                           Customer: {ticket.customer} • Assigned to: {ticket.assignee}
                         </Typography>
-                        <Typography variant="caption" sx={{ color: '#94a3b8' }}>
+                        <Typography 
+                          variant="caption" 
+                          sx={{ 
+                            color: '#94a3b8',
+                            fontSize: { xs: '0.7rem', sm: '0.75rem' },
+                            whiteSpace: 'nowrap'
+                          }}
+                        >
                           Last updated: {ticket.lastUpdate}
                         </Typography>
                       </Box>

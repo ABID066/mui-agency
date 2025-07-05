@@ -48,11 +48,88 @@ export default function ProfileSettings({
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   
   return (
-    <Box sx={{ p: isMobile ? 2 : 3 }}>
+    <Box sx={{ 
+      p: { xs: 2, sm: 3, md: 3 },
+      width: '100%',
+      maxWidth: '100%',
+      overflow: 'hidden'
+    }}>
       <Grid container spacing={4}>
-        {/* Profile Information */}
-        <Grid size={{ xs: 12, md: 8 }}>
-          <Typography variant="h6" fontWeight={600} sx={{ color: '#ffffff', mb: 3 }}>
+        {/* Profile Picture - First on mobile */}
+        <Grid size={{ xs: 12, md: 4 }} sx={{ order: { xs: 1, md: 2 } }}>
+          <Typography 
+            variant="h6" 
+            fontWeight={600} 
+            sx={{ 
+              color: '#ffffff', 
+              mb: 3,
+              fontSize: { xs: '1rem', sm: '1.125rem', md: '1.25rem' }
+            }}
+          >
+            Profile Picture
+          </Typography>
+          <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2 }}>
+            <Avatar
+              sx={{
+                width: { xs: 80, sm: 100, md: 120 },
+                height: { xs: 80, sm: 100, md: 120 },
+                backgroundColor: '#334155',
+                color: '#94a3b8',
+                fontSize: { xs: '1.5rem', sm: '1.75rem', md: '2rem' }
+              }}
+            >
+              {profile.avatar}
+            </Avatar>
+            <Box sx={{ 
+              display: 'flex', 
+              gap: 1,
+              flexDirection: { xs: 'column', sm: 'row' },
+              width: { xs: '100%', sm: 'auto' }
+            }}>
+              <Button
+                variant="outlined"
+                startIcon={<Upload />}
+                onClick={onUploadAvatar}
+                sx={{ 
+                  color: '#94a3b8', 
+                  borderColor: '#475569', 
+                  '&:hover': { borderColor: '#64748b' },
+                  width: { xs: '100%', sm: 'auto' },
+                  fontSize: { xs: '0.75rem', sm: '0.875rem' },
+                  padding: { xs: '8px 16px', sm: '6px 12px' }
+                }}
+              >
+                Upload
+              </Button>
+              <Button
+                variant="outlined"
+                startIcon={<Delete />}
+                onClick={onRemoveAvatar}
+                sx={{ 
+                  color: '#dc2626', 
+                  borderColor: '#fca5a5',
+                  width: { xs: '100%', sm: 'auto' },
+                  fontSize: { xs: '0.75rem', sm: '0.875rem' },
+                  padding: { xs: '8px 16px', sm: '6px 12px' }
+                }}
+              >
+                Remove
+              </Button>
+            </Box>
+          </Box>
+        </Grid>
+
+        {/* Profile Information - Second on mobile */}
+        <Grid size={{ xs: 12, md: 8 }} sx={{ order: { xs: 2, md: 1 } }}>
+          <Typography 
+            variant="h6" 
+            fontWeight={600} 
+            sx={{ 
+              color: '#ffffff', 
+              mb: 3,
+              fontSize: { xs: '1rem', sm: '1.125rem', md: '1.25rem' }
+            }}
+          >
             Profile Information
           </Typography>
           <Grid container spacing={3}>
@@ -67,6 +144,7 @@ export default function ProfileSettings({
                   '& .MuiOutlinedInput-root': {
                     backgroundColor: '#0f172a',
                     color: '#ffffff',
+                    fontSize: { xs: '0.875rem', md: '1rem' },
                     '& fieldset': {
                       borderColor: '#475569',
                     },
@@ -78,7 +156,8 @@ export default function ProfileSettings({
                     },
                   },
                   '& .MuiInputLabel-root': {
-                    color: '#94a3b8'
+                    color: '#94a3b8',
+                    fontSize: { xs: '0.875rem', md: '1rem' }
                   }
                 }}
               />
@@ -169,9 +248,12 @@ export default function ProfileSettings({
               <Box sx={{ 
                 display: 'flex', 
                 gap: 2,
-                flexDirection: isMobile ? 'column' : 'row',
+                flexDirection: { xs: 'column', sm: 'row' },
+                width: '100%',
                 '& .MuiButton-root': {
-                  width: isMobile ? '100%' : 'auto'
+                  width: { xs: '100%', sm: 'auto' },
+                  fontSize: { xs: '0.875rem', md: '1rem' },
+                  padding: { xs: '8px 16px', md: '10px 20px' }
                 }
               }}>
                 <Button
@@ -196,60 +278,6 @@ export default function ProfileSettings({
               </Box>
             </Grid>
           </Grid>
-        </Grid>
-
-        {/* Profile Picture */}
-        <Grid size={{ xs: 12, md: 4 }}>
-          <Typography variant="h6" fontWeight={600} sx={{ color: '#ffffff', mb: 3 }}>
-            Profile Picture
-          </Typography>
-          <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2 }}>
-            <Avatar
-              sx={{
-                width: 120,
-                height: 120,
-                backgroundColor: '#334155',
-                color: '#94a3b8',
-                fontSize: '2rem'
-              }}
-            >
-              {profile.avatar}
-            </Avatar>
-            <Box sx={{ 
-              display: 'flex', 
-              gap: 1,
-              flexDirection: isMobile ? 'column' : 'row',
-              width: isMobile ? '100%' : 'auto'
-            }}>
-              <Button
-                variant="outlined"
-                size={isMobile ? 'medium' : 'small'}
-                startIcon={<Upload />}
-                onClick={onUploadAvatar}
-                sx={{ 
-                  color: '#94a3b8', 
-                  borderColor: '#475569', 
-                  '&:hover': { borderColor: '#64748b' },
-                  width: isMobile ? '100%' : 'auto'
-                }}
-              >
-                Upload
-              </Button>
-              <Button
-                variant="outlined"
-                size={isMobile ? 'medium' : 'small'}
-                startIcon={<Delete />}
-                onClick={onRemoveAvatar}
-                sx={{ 
-                  color: '#dc2626', 
-                  borderColor: '#fca5a5',
-                  width: isMobile ? '100%' : 'auto'
-                }}
-              >
-                Remove
-              </Button>
-            </Box>
-          </Box>
         </Grid>
       </Grid>
     </Box>
