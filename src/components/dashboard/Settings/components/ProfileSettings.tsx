@@ -7,7 +7,9 @@ import {
   Grid,
   TextField,
   Button,
-  Avatar
+  Avatar,
+  useTheme,
+  useMediaQuery
 } from '@mui/material';
 import {
   Upload,
@@ -42,8 +44,11 @@ export default function ProfileSettings({
   onUploadAvatar,
   onRemoveAvatar
 }: ProfileSettingsProps) {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  
   return (
-    <Box sx={{p:3 }}>
+    <Box sx={{ p: isMobile ? 2 : 3 }}>
       <Grid container spacing={4}>
         {/* Profile Information */}
         <Grid size={{ xs: 12, md: 8 }}>
@@ -161,7 +166,14 @@ export default function ProfileSettings({
               />
             </Grid>
             <Grid size={{ xs: 12 }}>
-              <Box sx={{ display: 'flex', gap: 2 }}>
+              <Box sx={{ 
+                display: 'flex', 
+                gap: 2,
+                flexDirection: isMobile ? 'column' : 'row',
+                '& .MuiButton-root': {
+                  width: isMobile ? '100%' : 'auto'
+                }
+              }}>
                 <Button
                   variant="contained"
                   onClick={onSaveProfile}
@@ -203,22 +215,36 @@ export default function ProfileSettings({
             >
               {profile.avatar}
             </Avatar>
-            <Box sx={{ display: 'flex', gap: 1 }}>
+            <Box sx={{ 
+              display: 'flex', 
+              gap: 1,
+              flexDirection: isMobile ? 'column' : 'row',
+              width: isMobile ? '100%' : 'auto'
+            }}>
               <Button
                 variant="outlined"
-                size="small"
+                size={isMobile ? 'medium' : 'small'}
                 startIcon={<Upload />}
                 onClick={onUploadAvatar}
-                sx={{ color: '#94a3b8', borderColor: '#475569', '&:hover': { borderColor: '#64748b' } }}
+                sx={{ 
+                  color: '#94a3b8', 
+                  borderColor: '#475569', 
+                  '&:hover': { borderColor: '#64748b' },
+                  width: isMobile ? '100%' : 'auto'
+                }}
               >
                 Upload
               </Button>
               <Button
                 variant="outlined"
-                size="small"
+                size={isMobile ? 'medium' : 'small'}
                 startIcon={<Delete />}
                 onClick={onRemoveAvatar}
-                sx={{ color: '#dc2626', borderColor: '#fca5a5' }}
+                sx={{ 
+                  color: '#dc2626', 
+                  borderColor: '#fca5a5',
+                  width: isMobile ? '100%' : 'auto'
+                }}
               >
                 Remove
               </Button>

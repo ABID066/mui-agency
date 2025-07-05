@@ -28,7 +28,9 @@ import {
   Select,
   InputLabel,
   Tabs,
-  Tab
+  Tab,
+  useMediaQuery,
+  useTheme
 } from '@mui/material';
 import {
   Search,
@@ -101,6 +103,8 @@ export default function Orders() {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [statusFilter, setStatusFilter] = useState('all');
   const [tabValue, setTabValue] = useState(0);
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
@@ -166,7 +170,7 @@ export default function Orders() {
   const filteredOrders = getFilteredOrders();
 
   return (
-    <Box sx={{ p: 4, backgroundColor: '#0f172a', minHeight: '100vh' }}>
+    <Box sx={{ p: { xs: 2, sm: 3, md: 4 }, backgroundColor: '#0f172a', minHeight: '100vh' }}>
       {/* Header */}
       <Box sx={{ mb: 4 }}>
         <Typography variant="h4" fontWeight={700} sx={{ color: '#ffffff', mb: 1 }}>
@@ -381,102 +385,204 @@ export default function Orders() {
           </Box>
         </Box>
 
-        {/* Table Content */}
-        <TableContainer sx={{ overflowX: 'auto' }}>
-          <Table sx={{ minWidth: { xs: 800, md: 'auto' } }}>
-            <TableHead>
-              <TableRow sx={{ backgroundColor: '#0f172a' }}>
-                <TableCell sx={{ fontWeight: 600, color: '#ffffff' }}>Order ID</TableCell>
-                <TableCell sx={{ fontWeight: 600, color: '#ffffff' }}>Date</TableCell>
-                <TableCell sx={{ fontWeight: 600, color: '#ffffff' }}>Customer</TableCell>
-                <TableCell sx={{ fontWeight: 600, color: '#ffffff' }}>Items</TableCell>
-                <TableCell sx={{ fontWeight: 600, color: '#ffffff' }}>Status</TableCell>
-                <TableCell sx={{ fontWeight: 600, color: '#ffffff' }}>Shipping</TableCell>
-                <TableCell sx={{ fontWeight: 600, color: '#ffffff' }}>Amount</TableCell>
-                <TableCell sx={{ fontWeight: 600, color: '#ffffff' }}>Actions</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
+        {/* Table Content - Desktop View */}
+        {!isMobile ? (
+          <TableContainer sx={{ overflowX: 'auto' }}>
+            <Table sx={{ minWidth: 'auto' }}>
+              <TableHead>
+                <TableRow sx={{ backgroundColor: '#0f172a' }}>
+                  <TableCell sx={{ fontWeight: 600, color: '#ffffff' }}>Order ID</TableCell>
+                  <TableCell sx={{ fontWeight: 600, color: '#ffffff' }}>Date</TableCell>
+                  <TableCell sx={{ fontWeight: 600, color: '#ffffff' }}>Customer</TableCell>
+                  <TableCell sx={{ fontWeight: 600, color: '#ffffff' }}>Items</TableCell>
+                  <TableCell sx={{ fontWeight: 600, color: '#ffffff' }}>Status</TableCell>
+                  <TableCell sx={{ fontWeight: 600, color: '#ffffff' }}>Shipping</TableCell>
+                  <TableCell sx={{ fontWeight: 600, color: '#ffffff' }}>Amount</TableCell>
+                  <TableCell sx={{ fontWeight: 600, color: '#ffffff' }}>Actions</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {filteredOrders
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map((order) => (
+                  <TableRow key={order.id} sx={{ '&:hover': { backgroundColor: '#334155' } }}>
+                    <TableCell>
+                      <Typography variant="body2" fontWeight={500} sx={{ color: '#ffffff' }}>
+                        {order.id}
+                      </Typography>
+                    </TableCell>
+                    <TableCell>
+                      <Typography variant="body2" sx={{ color: '#94a3b8' }}>
+                        {order.date}
+                      </Typography>
+                    </TableCell>
+                    <TableCell>
+                      <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                        <Avatar sx={{ width: 32, height: 32, mr: 2, backgroundColor: '#1e293b', color: '#94a3b8' }}>
+                          {order.customer.charAt(0)}
+                        </Avatar>
+                        <Box>
+                          <Typography variant="body2" fontWeight={500} sx={{ color: '#ffffff' }}>
+                            {order.customer}
+                          </Typography>
+                          <Typography variant="caption" sx={{ color: '#94a3b8' }}>
+                            {order.email}
+                          </Typography>
+                        </Box>
+                      </Box>
+                    </TableCell>
+                    <TableCell>
+                      <Typography variant="body2" sx={{ color: '#94a3b8' }}>
+                        {order.items} items
+                      </Typography>
+                    </TableCell>
+                    <TableCell>
+                      <Chip
+                        label={order.status}
+                        size="small"
+                        sx={{
+                          ...getStatusColor(order.status),
+                          fontWeight: 500,
+                          fontSize: '0.75rem'
+                        }}
+                      />
+                    </TableCell>
+                    <TableCell>
+                      <Chip
+                        label={order.shipping}
+                        size="small"
+                        sx={{
+                          ...getShippingColor(order.shipping),
+                          fontWeight: 500,
+                          fontSize: '0.75rem'
+                        }}
+                      />
+                    </TableCell>
+                    <TableCell>
+                      <Typography variant="body2" fontWeight={500} sx={{ color: '#ffffff' }}>
+                        {order.amount}
+                      </Typography>
+                    </TableCell>
+                    <TableCell>
+                      <Box sx={{ display: 'flex', gap: 1 }}>
+                        <IconButton size="small" sx={{ color: '#94a3b8' }}>
+                          <Visibility />
+                        </IconButton>
+                        <IconButton
+                          size="small"
+                          onClick={handleMenuClick}
+                          sx={{ color: '#94a3b8' }}
+                        >
+                          <MoreVert />
+                        </IconButton>
+                      </Box>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        ) : (
+          /* Mobile Card View */
+          <Box sx={{ p: 2 }}>
+            <Grid container spacing={2}>
               {filteredOrders
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((order) => (
-                <TableRow key={order.id} sx={{ '&:hover': { backgroundColor: '#334155' } }}>
-                  <TableCell>
-                    <Typography variant="body2" fontWeight={500} sx={{ color: '#ffffff' }}>
-                      {order.id}
-                    </Typography>
-                  </TableCell>
-                  <TableCell>
-                    <Typography variant="body2" sx={{ color: '#94a3b8' }}>
-                      {order.date}
-                    </Typography>
-                  </TableCell>
-                  <TableCell>
-                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                      <Avatar sx={{ width: 32, height: 32, mr: 2, backgroundColor: '#1e293b', color: '#94a3b8' }}>
-                        {order.customer.charAt(0)}
-                      </Avatar>
-                      <Box>
-                        <Typography variant="body2" fontWeight={500} sx={{ color: '#ffffff' }}>
-                          {order.customer}
-                        </Typography>
-                        <Typography variant="caption" sx={{ color: '#94a3b8' }}>
-                          {order.email}
-                        </Typography>
+                <Grid sx={{ xs:12 }} key={order.id}>
+                  <Card sx={{
+                    backgroundColor: '#334155',
+                    border: '1px solid #475569',
+                    borderRadius: 2,
+                    '&:hover': {
+                      backgroundColor: '#475569'
+                    }
+                  }}>
+                    <CardContent sx={{ p: 2, '&:last-child': { pb: 2 } }}>
+                      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 2 }}>
+                        <Box sx={{ flex: 1 }}>
+                          <Typography variant="h6" fontWeight={600} sx={{ color: '#ffffff', mb: 0.5 }}>
+                            {order.id}
+                          </Typography>
+                          <Typography variant="body2" sx={{ color: '#94a3b8' }}>
+                            {order.date}
+                          </Typography>
+                        </Box>
+                        <Box sx={{ display: 'flex', gap: 1, flexDirection: 'column', alignItems: 'flex-end' }}>
+                          <Chip
+                            label={order.status}
+                            size="small"
+                            sx={{
+                              ...getStatusColor(order.status),
+                              fontWeight: 500,
+                              fontSize: '0.75rem'
+                            }}
+                          />
+                          <Chip
+                            label={order.shipping}
+                            size="small"
+                            sx={{
+                              ...getShippingColor(order.shipping),
+                              fontWeight: 500,
+                              fontSize: '0.75rem'
+                            }}
+                          />
+                        </Box>
                       </Box>
-                    </Box>
-                  </TableCell>
-                  <TableCell>
-                    <Typography variant="body2" sx={{ color: '#94a3b8' }}>
-                      {order.items} items
-                    </Typography>
-                  </TableCell>
-                  <TableCell>
-                    <Chip
-                      label={order.status}
-                      size="small"
-                      sx={{
-                        ...getStatusColor(order.status),
-                        fontWeight: 500,
-                        fontSize: '0.75rem'
-                      }}
-                    />
-                  </TableCell>
-                  <TableCell>
-                    <Chip
-                      label={order.shipping}
-                      size="small"
-                      sx={{
-                        ...getShippingColor(order.shipping),
-                        fontWeight: 500,
-                        fontSize: '0.75rem'
-                      }}
-                    />
-                  </TableCell>
-                  <TableCell>
-                    <Typography variant="body2" fontWeight={500} sx={{ color: '#ffffff' }}>
-                      {order.amount}
-                    </Typography>
-                  </TableCell>
-                  <TableCell>
-                    <Box sx={{ display: 'flex', gap: 1 }}>
-                      <IconButton size="small" sx={{ color: '#94a3b8' }}>
-                        <Visibility />
-                      </IconButton>
-                      <IconButton
-                        size="small"
-                        onClick={handleMenuClick}
-                        sx={{ color: '#94a3b8' }}
-                      >
-                        <MoreVert />
-                      </IconButton>
-                    </Box>
-                  </TableCell>
-                </TableRow>
+                      
+                      <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+                        <Avatar sx={{ width: 40, height: 40, mr: 2, backgroundColor: '#1e293b', color: '#94a3b8' }}>
+                          {order.customer.charAt(0)}
+                        </Avatar>
+                        <Box sx={{ flex: 1 }}>
+                          <Typography variant="body2" fontWeight={500} sx={{ color: '#ffffff' }}>
+                            {order.customer}
+                          </Typography>
+                          <Typography variant="caption" sx={{ color: '#94a3b8' }}>
+                            {order.email}
+                          </Typography>
+                        </Box>
+                      </Box>
+                      
+                      <Grid container spacing={2} sx={{ mb: 2 }}>
+                        <Grid sx={{ xs:4 }}>
+                          <Typography variant="caption" sx={{ color: '#94a3b8', display: 'block' }}>
+                            Items
+                          </Typography>
+                          <Typography variant="body2" fontWeight={500} sx={{ color: '#ffffff' }}>
+                            {order.items}
+                          </Typography>
+                        </Grid>
+                        <Grid sx={{ xs:4 }}>
+                          <Typography variant="caption" sx={{ color: '#94a3b8', display: 'block' }}>
+                            Amount
+                          </Typography>
+                          <Typography variant="body2" fontWeight={500} sx={{ color: '#ffffff' }}>
+                            {order.amount}
+                          </Typography>
+                        </Grid>
+                        <Grid sx={{ xs:4 }}>
+                          <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 1 }}>
+                            <IconButton size="small" sx={{ color: '#94a3b8' }}>
+                              <Visibility />
+                            </IconButton>
+                            <IconButton
+                              size="small"
+                              onClick={handleMenuClick}
+                              sx={{ color: '#94a3b8' }}
+                            >
+                              <MoreVert />
+                            </IconButton>
+                          </Box>
+                        </Grid>
+                      </Grid>
+                    </CardContent>
+                  </Card>
+                </Grid>
               ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
+            </Grid>
+          </Box>
+        )}
 
         {/* Table Pagination */}
         <Divider />

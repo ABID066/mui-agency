@@ -14,7 +14,9 @@ import {
   Select,
   InputLabel,
   MenuItem,
-  Button
+  Button,
+  useMediaQuery,
+  useTheme
 } from '@mui/material';
 import SupportStats from './components/SupportStats';
 import SupportTickets from './components/SupportTickets';
@@ -30,6 +32,8 @@ export default function Support() {
   const [tabValue, setTabValue] = useState(0);
   const [statusFilter, setStatusFilter] = useState('all');
   const [priorityFilter, setPriorityFilter] = useState('all');
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   const handleMenuClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -64,7 +68,7 @@ export default function Support() {
   };
 
   return (
-    <Box sx={{ p: 4, backgroundColor: '#0f172a', minHeight: '100vh' }}>
+    <Box sx={{ p: { xs: 2, sm: 3, md: 4 }, backgroundColor: '#0f172a', minHeight: '100vh' }}>
       {/* Header */}
       <Box sx={{ mb: 4 }}>
         <Typography variant="h4" fontWeight={700} sx={{ color: '#ffffff', mb: 1 }}>
@@ -79,7 +83,7 @@ export default function Support() {
       <SupportStats />
 
       {/* Main Content */}
-      <Grid container spacing={3}>
+      <Grid container spacing={{ xs: 2, md: 3 }}>
         <SupportTickets
           tickets={defaultSupportTickets}
           searchTerm={searchTerm}
