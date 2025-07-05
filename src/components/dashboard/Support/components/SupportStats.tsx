@@ -19,7 +19,16 @@ import {
 export default function SupportStats() {
   const stats = defaultSupportStats;
   return (
-    <Grid container spacing={3} sx={{ mb: 4 }}>
+    <Grid 
+      container 
+      spacing={{ xs: 2, sm: 3 }} 
+      sx={{ 
+        mb: { xs: 3, sm: 4 },
+        width: '100%',
+        maxWidth: '100%',
+        margin: 0
+      }}
+    >
       {stats.map((stat, index) => {
         const IconComponent = stat.icon;
         return (
@@ -28,22 +37,66 @@ export default function SupportStats() {
               backgroundColor: '#1e293b',
               border: '1px solid #334155',
               boxShadow: 'none',
+              width: '100%',
+              maxWidth: '100%',
               '&:hover': {
                 boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.3)'
               }
             }}>
-              <CardContent>
-                <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                  <Box>
-                    <Typography variant="body2" sx={{ color: '#94a3b8', mb: 1 }}>
+              <CardContent sx={{
+                padding: { xs: '12px', sm: '16px' },
+                '&:last-child': {
+                  paddingBottom: { xs: '12px', sm: '16px' }
+                }
+              }}>
+                <Box sx={{ 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  justifyContent: 'space-between',
+                  width: '100%',
+                  maxWidth: '100%'
+                }}>
+                  <Box sx={{
+                    flex: 1,
+                    minWidth: 0,
+                    overflow: 'hidden'
+                  }}>
+                    <Typography 
+                      variant="body2" 
+                      sx={{ 
+                        color: '#94a3b8', 
+                        mb: 1,
+                        fontSize: { xs: '0.75rem', sm: '0.875rem' },
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                        whiteSpace: 'nowrap'
+                      }}
+                    >
                       {stat.title}
                     </Typography>
-                    <Typography variant="h5" fontWeight={700} sx={{ color: '#ffffff' }}>
+                    <Typography 
+                      variant="h5" 
+                      fontWeight={700} 
+                      sx={{ 
+                        color: '#ffffff',
+                        fontSize: { xs: '1.25rem', sm: '1.5rem', md: '2rem' },
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                        whiteSpace: 'nowrap'
+                      }}
+                    >
                       {stat.value}
                     </Typography>
                   </Box>
-                  <Avatar sx={{ backgroundColor: '#475569', color: '#94a3b8' }}>
-                    <IconComponent />
+                  <Avatar sx={{ 
+                    backgroundColor: '#475569', 
+                    color: '#94a3b8',
+                    width: { xs: 36, sm: 40 },
+                    height: { xs: 36, sm: 40 },
+                    fontSize: { xs: '1rem', sm: '1.25rem' },
+                    ml: 1
+                  }}>
+                    <IconComponent sx={{ fontSize: 'inherit' }} />
                   </Avatar>
                 </Box>
               </CardContent>

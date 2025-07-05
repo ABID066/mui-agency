@@ -109,13 +109,37 @@ export default function SwitchOrganization() {
   const currentOrg = organizations.find(org => org.isCurrent);
 
   return (
-    <Box sx={{ p: 4, backgroundColor: '#0f172a', minHeight: '100vh', color: '#ffffff' }}>
+    <Box sx={{ 
+      p: { xs: 2, sm: 3, md: 4 }, 
+      backgroundColor: '#0f172a', 
+      minHeight: '100vh', 
+      color: '#ffffff',
+      width: '100%',
+      maxWidth: '100%',
+      boxSizing: 'border-box',
+      overflow: 'hidden'
+    }}>
       {/* Header */}
-      <Box sx={{ mb: 4 }}>
-        <Typography variant="h4" fontWeight={700} sx={{ color: '#ffffff', mb: 1 }}>
+      <Box sx={{ mb: { xs: 3, md: 4 }, width: '100%', maxWidth: '100%' }}>
+        <Typography 
+          variant="h4" 
+          fontWeight={700} 
+          sx={{ 
+            color: '#ffffff', 
+            mb: 1,
+            fontSize: { xs: '1.5rem', sm: '1.75rem', md: '2.125rem' },
+            wordBreak: 'break-word'
+          }}
+        >
           Switch Organization
         </Typography>
-        <Typography variant="body1" sx={{ color: '#94a3b8' }}>
+        <Typography 
+          variant="body1" 
+          sx={{ 
+            color: '#94a3b8',
+            fontSize: { xs: '0.875rem', md: '1rem' }
+          }}
+        >
           Select an organization to switch to
         </Typography>
       </Box>
@@ -138,9 +162,20 @@ export default function SwitchOrganization() {
         </Alert>
       )}
 
-      <Box sx={{ display: 'flex', gap: 4 }}>
+      <Box sx={{ 
+        display: 'flex', 
+        flexDirection: { xs: 'column', lg: 'row' },
+        gap: { xs: 3, lg: 4 },
+        width: '100%',
+        maxWidth: '100%'
+      }}>
         {/* Organization List */}
-        <Box sx={{ flex: 1 }}>
+        <Box sx={{ 
+          flex: 1,
+          width: '100%',
+          maxWidth: '100%',
+          minWidth: 0
+        }}>
           {/* Search */}
           <TextField
             placeholder="Search organizations..."
@@ -149,10 +184,13 @@ export default function SwitchOrganization() {
             fullWidth
             sx={{
               mb: 3,
+              width: '100%',
+              maxWidth: '100%',
               '& .MuiOutlinedInput-root': {
                 backgroundColor: '#1e293b',
                 borderColor: '#334155',
                 color: '#ffffff',
+                fontSize: { xs: '0.875rem', md: '1rem' },
                 '& fieldset': {
                   borderColor: '#334155'
                 },
@@ -189,11 +227,13 @@ export default function SwitchOrganization() {
                 boxShadow: 'none',
                 mb: 2,
                 cursor: 'pointer',
+                width: '100%',
+                maxWidth: '100%',
                 '&:hover': {
                   borderColor: '#475569'
                 }
               }}>
-                <CardContent sx={{ p: 3 }}>
+                <CardContent sx={{ p: { xs: 2, md: 3 } }}>
                   <FormControlLabel
                     value={org.id}
                     control={<Radio sx={{ color: '#94a3b8' }} />}

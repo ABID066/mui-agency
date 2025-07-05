@@ -1,5 +1,4 @@
 'use client';
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState } from 'react';
 import {
   Box,
@@ -267,17 +266,34 @@ export default function Settings() {
 
   return (
     <Box sx={{ 
-      p: isMobile ? 2 : 4, 
+      p: { xs: 2, sm: 3, md: 4 }, 
       backgroundColor: '#0f172a', 
       minHeight: '100vh', 
-      color: '#ffffff' 
+      color: '#ffffff',
+      width: '100%',
+      maxWidth: '100%',
+      overflow: 'hidden'
     }}>
       {/* Header */}
-      <Box sx={{ mb: 4 }}>
-        <Typography variant="h4" fontWeight={700} sx={{ color: '#ffffff', mb: 1 }}>
+      <Box sx={{ mb: { xs: 3, md: 4 } }}>
+        <Typography 
+          variant="h4" 
+          fontWeight={700} 
+          sx={{ 
+            color: '#ffffff', 
+            mb: 1,
+            fontSize: { xs: '1.75rem', sm: '2rem', md: '2.125rem' }
+          }}
+        >
           Settings
         </Typography>
-        <Typography variant="body1" sx={{ color: '#94a3b8' }}>
+        <Typography 
+          variant="body1" 
+          sx={{ 
+            color: '#94a3b8',
+            fontSize: { xs: '0.875rem', md: '1rem' }
+          }}
+        >
           Manage your account settings and preferences
         </Typography>
       </Box>
@@ -287,7 +303,10 @@ export default function Settings() {
         backgroundColor: '#1e293b',
         border: '1px solid #334155',
         boxShadow: 'none',
-        borderRadius: 2
+        borderRadius: 2,
+        width: '100%',
+        maxWidth: '100%',
+        overflow: 'hidden'
       }}>
         <Box sx={{ borderBottom: '1px solid #334155' }}>
           <Tabs
@@ -297,11 +316,12 @@ export default function Settings() {
             scrollButtons={isMobile ? 'auto' : false}
             allowScrollButtonsMobile
             sx={{
-              px: isMobile ? 1 : 3,
+              px: { xs: 1, sm: 2, md: 3 },
               '& .MuiTab-root': {
                 color: '#94a3b8',
-                minWidth: isMobile ? 'auto' : 160,
-                fontSize: isMobile ? '0.875rem' : '1rem',
+                minWidth: { xs: 'auto', md: 160 },
+                fontSize: { xs: '0.75rem', sm: '0.875rem', md: '1rem' },
+                padding: { xs: '6px 8px', sm: '12px 16px' },
                 '&.Mui-selected': {
                   color: '#ffffff'
                 }

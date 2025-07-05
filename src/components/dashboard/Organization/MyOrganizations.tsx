@@ -159,9 +159,18 @@ export default function MyOrganizations() {
 
   if (view === 'manage' && selectedOrg) {
     return (
-      <Box sx={{ p: 4, backgroundColor: '#0f172a', minHeight: '100vh', color: '#ffffff' }}>
+      <Box sx={{ 
+        p: { xs: 2, sm: 3, md: 4 }, 
+        backgroundColor: '#0f172a', 
+        minHeight: '100vh', 
+        color: '#ffffff',
+        width: '100%',
+        maxWidth: '100%',
+        boxSizing: 'border-box',
+        overflow: 'hidden'
+      }}>
         {/* Header with Breadcrumbs */}
-        <Box sx={{ mb: 4 }}>
+        <Box sx={{ mb: { xs: 3, md: 4 }, width: '100%', maxWidth: '100%' }}>
           <Breadcrumbs sx={{ mb: 2, color: '#94a3b8' }}>
             <Link
               component="button"
@@ -249,7 +258,9 @@ export default function MyOrganizations() {
         <Card sx={{
           backgroundColor: '#1e293b',
           border: '1px solid #334155',
-          boxShadow: 'none'
+          boxShadow: 'none',
+          width: '100%',
+          maxWidth: '100%'
         }}>
           <Tabs
             value={activeTab}
@@ -313,7 +324,12 @@ export default function MyOrganizations() {
             />
           </Tabs>
           
-          <Box sx={{ p: 0 }}>
+          <Box sx={{ 
+            p: 0,
+            width: '100%',
+            maxWidth: '100%',
+            overflow: 'hidden'
+          }}>
             {renderTabContent()}
           </Box>
         </Card>
@@ -322,13 +338,37 @@ export default function MyOrganizations() {
   }
 
   return (
-    <Box sx={{ p: 4, backgroundColor: '#0f172a', minHeight: '100vh', color: '#ffffff' }}>
+    <Box sx={{ 
+      p: { xs: 2, sm: 3, md: 4 }, 
+      backgroundColor: '#0f172a', 
+      minHeight: '100vh', 
+      color: '#ffffff',
+      width: '100%',
+      maxWidth: '100%',
+      boxSizing: 'border-box',
+      overflow: 'hidden'
+    }}>
       {/* Header */}
-      <Box sx={{ mb: 4 }}>
-        <Typography variant="h4" fontWeight={700} sx={{ color: '#ffffff', mb: 1 }}>
+      <Box sx={{ mb: { xs: 3, md: 4 }, width: '100%', maxWidth: '100%' }}>
+        <Typography 
+          variant="h4" 
+          fontWeight={700} 
+          sx={{ 
+            color: '#ffffff', 
+            mb: 1,
+            fontSize: { xs: '1.5rem', sm: '1.75rem', md: '2.125rem' },
+            wordBreak: 'break-word'
+          }}
+        >
           My Organizations
         </Typography>
-        <Typography variant="body1" sx={{ color: '#94a3b8' }}>
+        <Typography 
+          variant="body1" 
+          sx={{ 
+            color: '#94a3b8',
+            fontSize: { xs: '0.875rem', md: '1rem' }
+          }}
+        >
           Manage and switch between your organizations
         </Typography>
       </Box>
@@ -392,19 +432,21 @@ export default function MyOrganizations() {
       </Box>
 
       {/* Organizations Grid */}
-      <Grid container spacing={3}>
+      <Grid container spacing={{ xs: 2, md: 3 }} sx={{ width: '100%', maxWidth: '100%' }}>
         {filteredOrganizations.map((org) => (
-          <Grid key={org.id} size={{ xs: 12, sm: 6, md: 4 }}>
+          <Grid key={org.id} size={{ xs: 12, sm: 6, md: 4 }} sx={{ width: '100%', maxWidth: '100%' }}>
             <Card sx={{
               backgroundColor: '#1e293b',
               border: '1px solid #334155',
               boxShadow: 'none',
+              width: '100%',
+              maxWidth: '100%',
               '&:hover': {
                 boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.3)',
                 borderColor: '#475569'
               }
             }}>
-              <CardContent sx={{ p: 3 }}>
+              <CardContent sx={{ p: { xs: 2, md: 3 } }}>
                 <Box sx={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', mb: 2 }}>
                   <Avatar sx={{ 
                     width: 50, 
@@ -425,11 +467,28 @@ export default function MyOrganizations() {
                   </IconButton>
                 </Box>
                 
-                <Typography variant="h6" fontWeight={600} sx={{ color: '#ffffff', mb: 1 }}>
+                <Typography 
+                  variant="h6" 
+                  fontWeight={600} 
+                  sx={{ 
+                    color: '#ffffff', 
+                    mb: 1,
+                    fontSize: { xs: '1rem', md: '1.25rem' },
+                    wordBreak: 'break-word'
+                  }}
+                >
                   {org.name}
                 </Typography>
                 
-                <Typography variant="body2" sx={{ color: '#94a3b8', mb: 2 }}>
+                <Typography 
+                  variant="body2" 
+                  sx={{ 
+                    color: '#94a3b8', 
+                    mb: 2,
+                    fontSize: { xs: '0.75rem', md: '0.875rem' },
+                    wordBreak: 'break-word'
+                  }}
+                >
                   {org.description}
                 </Typography>
                 
@@ -468,11 +527,22 @@ export default function MyOrganizations() {
                   />
                 </Box>
                 
-                <Typography variant="body2" sx={{ color: '#94a3b8', mb: 3 }}>
+                <Typography 
+                  variant="body2" 
+                  sx={{ 
+                    color: '#94a3b8', 
+                    mb: 3,
+                    fontSize: { xs: '0.75rem', md: '0.875rem' }
+                  }}
+                >
                   {org.members} members
                 </Typography>
                 
-                <Box sx={{ display: 'flex', gap: 1 }}>
+                <Box sx={{ 
+                  display: 'flex', 
+                  flexDirection: { xs: 'column', sm: 'row' },
+                  gap: { xs: 1, sm: 1 }
+                }}>
                   <Button
                     fullWidth
                     variant="outlined"
@@ -482,6 +552,7 @@ export default function MyOrganizations() {
                     sx={{
                       borderColor: currentOrgId === org.id ? '#10b981' : '#475569',
                       color: currentOrgId === org.id ? '#10b981' : '#ffffff',
+                      fontSize: { xs: '0.75rem', md: '0.875rem' },
                       '&:hover': {
                         borderColor: currentOrgId === org.id ? '#10b981' : '#94a3b8',
                         backgroundColor: 'rgba(255, 255, 255, 0.05)'
@@ -500,11 +571,13 @@ export default function MyOrganizations() {
                     onClick={() => handleOrgSelect(org)}
                     sx={{
                       backgroundColor: '#3b82f6',
+                      fontSize: { xs: '0.75rem', md: '0.875rem' },
+                      width: { xs: '100%', sm: 'auto' },
                       '&:hover': {
                         backgroundColor: '#2563eb'
                       },
-                      minWidth: 'auto',
-                      px: 2
+                      minWidth: { xs: 'auto', sm: 'auto' },
+                      px: { xs: 2, sm: 2 }
                     }}
                   >
                     Manage

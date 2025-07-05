@@ -1,4 +1,4 @@
-import CreateOrganization from "../../../../components/dashboard/Organization/CreateOrganization";
+import CreateOrganization from "../../../../components/dashboard/CreateOrg/CreateOrganization";
 
 export default function CreateOrganizationPage() {
   return (
