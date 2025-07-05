@@ -27,10 +27,17 @@ const userSchema = new mongoose.Schema(
     },
     role: {
       type: String,
-      enum: ["admin", "user"],
+      enum: ["admin", "user", "super-admin"],
       default: "user",
     },
     isVerified: {
+      type: Boolean,
+      default: false,
+    },
+    phone: {
+      type: String,
+    },
+    isBanned: {
       type: Boolean,
       default: false,
     },
@@ -69,6 +76,10 @@ const userSchema = new mongoose.Schema(
     subscribeNewsletter: {
       type: Boolean,
       default: false,
+    },
+    lastLogin: {
+      type: Date,
+      default: null
     },
     verifyToken: String,
     verifyTokenExpire: Date,
