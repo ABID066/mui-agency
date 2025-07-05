@@ -63,10 +63,11 @@ export default function AppearanceSettings({
 
   return (
     <Box sx={{ 
-      p: { xs: 2, sm: 3 },
+      p: { xs: 0.5, sm: 2, md: 3 }, 
       width: '100%',
-      maxWidth: '100%',
-      overflow: 'hidden'
+      maxWidth: { xs: 'calc(100vw - 16px)', sm: '100%' },
+      overflow: 'hidden',
+      boxSizing: 'border-box'
     }}>
       <Grid container spacing={4}>
         {/* Theme Selection */}
