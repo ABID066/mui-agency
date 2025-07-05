@@ -1,6 +1,5 @@
 "use client"
 
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState, useEffect } from 'react';
 import { Box, Typography, Card, CardContent, TextField, Avatar, Select, MenuItem, FormControl, InputLabel, Switch } from '@mui/material';
 import { keyframes } from '@mui/system';

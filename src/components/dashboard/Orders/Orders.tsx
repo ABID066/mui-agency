@@ -481,7 +481,7 @@ export default function Orders() {
               {filteredSubscriptions
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((subscription) => (
-                  <Card sx={{
+                  <Card key={subscription.id} sx={{
                     backgroundColor: '#334155',
                     border: '1px solid #475569',
                     borderRadius: 2,
