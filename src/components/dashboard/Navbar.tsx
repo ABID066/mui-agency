@@ -21,25 +21,17 @@ import {
   Menu,
   Notifications,
   AccountCircle,
-  Settings,
+  
   Logout
 } from '@mui/icons-material';
-import { usePathname } from 'next/navigation';
+import { useRouter} from 'next/navigation';
 
 interface NavigationItem {
   name: string;
   path: string;
 }
 
-const navigationItems: NavigationItem[] = [
-  { name: 'Home', path: '/dashboard' },
-  { name: 'Orders', path: '/dashboard/orders' },
-  { name: 'Tasks', path: '/dashboard/tasks' },
-  { name: 'Messages', path: '/dashboard/messages' },
-  { name: 'Users', path: '/dashboard/users' },
-  { name: 'Support', path: '/dashboard/support' },
-  { name: 'Settings', path: '/dashboard/settings' },
-];
+
 
 interface NavbarProps {
   drawerWidth: number;
@@ -48,13 +40,11 @@ interface NavbarProps {
 
 export default function Navbar({ drawerWidth, onMenuClick }: NavbarProps) {
   const theme = useTheme();
-  const pathname = usePathname();
+  const router = useRouter();
+  
   const [profileAnchorEl, setProfileAnchorEl] = useState<HTMLElement | null>(null);
 
-  const getCurrentPageName = () => {
-    const currentItem = navigationItems.find(item => item.path === pathname);
-    return currentItem?.name || 'Dashboard';
-  };
+  
 
   const handleProfileClick = (event: React.MouseEvent<HTMLElement>) => {
     setProfileAnchorEl(event.currentTarget);
@@ -66,9 +56,11 @@ export default function Navbar({ drawerWidth, onMenuClick }: NavbarProps) {
 
   const handleProfileSettings = () => {
     // Add navigation to profile settings
-    console.log('Navigate to profile settings');
+    router.push('/dashboard/settings');
     setProfileAnchorEl(null);
   };
+
+  
 
   const handleLogout = () => {
     // Add logout logic here
