@@ -45,13 +45,18 @@ export const authOptions: NextAuthOptions = {
             image: user.image || "",
             role: user.role || "user",
             isVerified: user.isVerified || false,
-            organizationIds: (user?.organizationIds || []).map(id => id.toString()),
-            currentOrganizationId: user?.currentOrganizationId?.toString() || null,
+            organizationIds: (user?.organizationIds || []).map((id) =>
+              id.toString()
+            ),
+            currentOrganizationId:
+              user?.currentOrganizationId?.toString() || null,
             preferences: user?.preferences || {},
           } as AuthUser;
         } catch (err: unknown) {
-          console.error('Auth Error:', err);
-          throw new Error(err instanceof Error ? err.message : 'Authentication failed');
+          console.error("Auth Error:", err);
+          throw new Error(
+            err instanceof Error ? err.message : "Authentication failed"
+          );
         }
       },
     }),
@@ -69,7 +74,6 @@ export const authOptions: NextAuthOptions = {
   },
   callbacks: {
     async signIn({ user, account }) {
-      // console.log(user, account, profile, "from line 63:");
       await connectDB();
       const userExist = await User.findOne({ email: user?.email });
       if (!userExist) {
@@ -83,6 +87,10 @@ export const authOptions: NextAuthOptions = {
         await newUser.save();
       }
       user.role = userExist?.role || "user";
+      await User.findOneAndUpdate(
+        { email: user.email },
+        { lastLogin: new Date() }
+      );
       return true;
     },
     async jwt({ user, token }) {
@@ -108,10 +116,15 @@ export const authOptions: NextAuthOptions = {
         if (typeof token?.image === "string") {
           session.user.image = token?.image;
         }
-        session.user.organizationIds = (token?.organizationIds as string[]) || [];
-        session.user.currentOrganizationId = token?.currentOrganizationId as string | undefined;
+        session.user.organizationIds =
+          (token?.organizationIds as string[]) || [];
+        session.user.currentOrganizationId = token?.currentOrganizationId as
+          | string
+          | undefined;
         session.user.isVerified = token?.isVerified as boolean | undefined;
-        session.user.preferences = token?.preferences as { theme: string; language: string; timezone: string; } | undefined;
+        session.user.preferences = token?.preferences as
+          | { theme: string; language: string; timezone: string }
+          | undefined;
       }
       return session;
     },
