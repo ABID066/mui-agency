@@ -12,6 +12,8 @@ import {
   DialogContent,
   DialogActions,
   Button,
+  useTheme,
+  useMediaQuery,
 } from '@mui/material';
 import {
   Person,
@@ -114,6 +116,8 @@ const apiKeys = [
 
 
 export default function Settings() {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const [activeTab, setActiveTab] = useState(0);
   const [openDialog, setOpenDialog] = useState(false);
   
@@ -262,7 +266,12 @@ export default function Settings() {
 
 
   return (
-    <Box sx={{ p: 4, backgroundColor: '#0f172a', minHeight: '100vh', color: '#ffffff' }}>
+    <Box sx={{ 
+      p: isMobile ? 2 : 4, 
+      backgroundColor: '#0f172a', 
+      minHeight: '100vh', 
+      color: '#ffffff' 
+    }}>
       {/* Header */}
       <Box sx={{ mb: 4 }}>
         <Typography variant="h4" fontWeight={700} sx={{ color: '#ffffff', mb: 1 }}>
@@ -284,17 +293,24 @@ export default function Settings() {
           <Tabs
             value={activeTab}
             onChange={handleTabChange}
+            variant={isMobile ? 'scrollable' : 'standard'}
+            scrollButtons={isMobile ? 'auto' : false}
+            allowScrollButtonsMobile
             sx={{
-              
-              px: 3,
+              px: isMobile ? 1 : 3,
               '& .MuiTab-root': {
                 color: '#94a3b8',
+                minWidth: isMobile ? 'auto' : 160,
+                fontSize: isMobile ? '0.875rem' : '1rem',
                 '&.Mui-selected': {
                   color: '#ffffff'
                 }
               },
               '& .MuiTabs-indicator': {
                 backgroundColor: '#3b82f6'
+              },
+              '& .MuiTabs-scrollButtons': {
+                color: '#94a3b8'
               }
             }}
           >

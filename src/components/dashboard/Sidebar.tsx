@@ -153,7 +153,7 @@ export default function Sidebar({ drawerWidth, mobileOpen, onMobileClose, isMobi
               right: 8,
               color: '#A0AEC0',
               '&:hover': {
-                backgroundColor: '#4A5568',
+                backgroundColor: 'rgba(255, 255, 255, 0.1)',
                 color: '#ffffff'
               }
             }}
@@ -448,6 +448,7 @@ export default function Sidebar({ drawerWidth, mobileOpen, onMobileClose, isMobi
       {/* Mobile drawer */}
       <Drawer
         variant="temporary"
+        anchor="left"
         open={mobileOpen}
         onClose={onMobileClose}
         ModalProps={{
@@ -455,11 +456,18 @@ export default function Sidebar({ drawerWidth, mobileOpen, onMobileClose, isMobi
         }}
         sx={{
           display: { xs: 'block', md: 'none' },
+          zIndex: (theme) => theme.zIndex.drawer + 2,
           '& .MuiDrawer-paper': {
             boxSizing: 'border-box',
             width: drawerWidth,
-            border: 'none'
+            border: 'none',
+            height: '100vh',
+            top: 0,
+            zIndex: (theme) => theme.zIndex.drawer + 2
           },
+          '& .MuiBackdrop-root': {
+            zIndex: (theme) => theme.zIndex.drawer + 1
+          }
         }}
       >
         {drawerContent}

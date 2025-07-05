@@ -277,34 +277,38 @@ export default function AnalyticsCharts({ sessionsData, pageViewsData }: Analyti
   return (
     <Grid container spacing={3} sx={{ mb: 4 }}>
       {/* Sessions Chart */}
-      <Grid size={{ xs: 12, md: 6 }}>
+      <Grid size={{ xs: 12, lg: 6 }}>
         <Card sx={{ 
           backgroundColor: '#1e293b',
           border: '1px solid #334155',
           boxShadow: 'none',
-          height: '300px'
+          height: { xs: '280px', md: '300px' },
+          '&:hover': {
+            backgroundColor: '#334155',
+            borderColor: '#475569'
+          }
         }}>
-          <CardContent sx={{ height: '100%' }}>
-            <Box sx={{ mb: 2 }}>
-              <Typography variant="h6" fontWeight={600} sx={{ color: '#ffffff', mb: 1 }}>
+          <CardContent sx={{ height: '100%', p: { xs: 2, md: 3 } }}>
+            <Box sx={{ mb: { xs: 1, md: 2 } }}>
+              <Typography variant="h6" fontWeight={600} sx={{ color: '#ffffff', mb: 1, fontSize: { xs: '1rem', md: '1.25rem' } }}>
                 {sessionsData.title}
               </Typography>
-              <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
-                <Typography variant="h4" fontWeight={700} sx={{ color: '#ffffff', mr: 1 }}>
+              <Box sx={{ display: 'flex', alignItems: 'center', mb: 1, flexWrap: 'wrap', gap: 1 }}>
+                <Typography variant="h4" fontWeight={700} sx={{ color: '#ffffff', fontSize: { xs: '1.5rem', md: '2rem' } }}>
                   {sessionsData.value}
                 </Typography>
                 <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                  <TrendingUp sx={{ fontSize: 16, color: '#10b981', mr: 0.5 }} />
-                  <Typography variant="body2" sx={{ color: '#10b981' }}>
+                  <TrendingUp sx={{ fontSize: { xs: 14, md: 16 }, color: '#10b981', mr: 0.5 }} />
+                  <Typography variant="body2" sx={{ color: '#10b981', fontSize: { xs: '0.75rem', md: '0.875rem' } }}>
                     {sessionsData.change}
                   </Typography>
                 </Box>
               </Box>
-              <Typography variant="body2" sx={{ color: '#94a3b8', mb: 2 }}>
+              <Typography variant="body2" sx={{ color: '#94a3b8', mb: { xs: 1, md: 2 }, fontSize: { xs: '0.75rem', md: '0.875rem' } }}>
                 {sessionsData.subtitle}
               </Typography>
             </Box>
-            <Box sx={{ flex: 1, display: 'flex', alignItems: 'end' }}>
+            <Box sx={{ flex: 1, display: 'flex', alignItems: 'end', minHeight: { xs: '120px', md: '140px' } }}>
               <AreaChart data={sessionsData.chartData} color="#3b82f6" />
             </Box>
           </CardContent>
@@ -312,34 +316,38 @@ export default function AnalyticsCharts({ sessionsData, pageViewsData }: Analyti
       </Grid>
 
       {/* Page Views Chart */}
-      <Grid size={{ xs: 12, md: 6 }}>
+      <Grid size={{ xs: 12, lg: 6 }}>
         <Card sx={{ 
           backgroundColor: '#1e293b',
           border: '1px solid #334155',
           boxShadow: 'none',
-          height: '300px'
+          height: { xs: '280px', md: '300px' },
+          '&:hover': {
+            backgroundColor: '#334155',
+            borderColor: '#475569'
+          }
         }}>
-          <CardContent sx={{ height: '100%' }}>
-            <Box sx={{ mb: 2 }}>
-              <Typography variant="h6" fontWeight={600} sx={{ color: '#ffffff', mb: 1 }}>
+          <CardContent sx={{ height: '100%', p: { xs: 2, md: 3 } }}>
+            <Box sx={{ mb: { xs: 1, md: 2 } }}>
+              <Typography variant="h6" fontWeight={600} sx={{ color: '#ffffff', mb: 1, fontSize: { xs: '1rem', md: '1.25rem' } }}>
                 {pageViewsData.title}
               </Typography>
-              <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
-                <Typography variant="h4" fontWeight={700} sx={{ color: '#ffffff', mr: 1 }}>
+              <Box sx={{ display: 'flex', alignItems: 'center', mb: 1, flexWrap: 'wrap', gap: 1 }}>
+                <Typography variant="h4" fontWeight={700} sx={{ color: '#ffffff', fontSize: { xs: '1.5rem', md: '2rem' } }}>
                   {pageViewsData.value}
                 </Typography>
                 <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                  <TrendingDown sx={{ fontSize: 16, color: '#ef4444', mr: 0.5 }} />
-                  <Typography variant="body2" sx={{ color: '#ef4444' }}>
+                  <TrendingDown sx={{ fontSize: { xs: 14, md: 16 }, color: '#ef4444', mr: 0.5 }} />
+                  <Typography variant="body2" sx={{ color: '#ef4444', fontSize: { xs: '0.75rem', md: '0.875rem' } }}>
                     {pageViewsData.change}
                   </Typography>
                 </Box>
               </Box>
-              <Typography variant="body2" sx={{ color: '#94a3b8', mb: 2 }}>
+              <Typography variant="body2" sx={{ color: '#94a3b8', mb: { xs: 1, md: 2 }, fontSize: { xs: '0.75rem', md: '0.875rem' } }}>
                 {pageViewsData.subtitle}
               </Typography>
             </Box>
-            <Box sx={{ flex: 1, display: 'flex', alignItems: 'end' }}>
+            <Box sx={{ flex: 1, display: 'flex', alignItems: 'end', minHeight: { xs: '120px', md: '140px' } }}>
               <BarChart data={pageViewsData.chartData} color="#06b6d4" />
             </Box>
           </CardContent>

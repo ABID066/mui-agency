@@ -18,11 +18,19 @@ import {
   TablePagination,
   Divider,
   Menu,
-  MenuItem
+  MenuItem,
+  Card,
+  CardContent,
+  Grid,
+  useMediaQuery,
+  useTheme
 } from '@mui/material';
 import {
   Search,
-  FilterList
+  FilterList,
+  TrendingUp,
+  TrendingDown,
+  Visibility
 } from '@mui/icons-material';
 
 interface PageDetail {
@@ -55,6 +63,8 @@ export default function PageDetailsTable({ pageDetails }: PageDetailsTableProps)
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
@@ -149,83 +159,191 @@ export default function PageDetailsTable({ pageDetails }: PageDetailsTableProps)
         />
       </Box>
 
-      {/* Table Content */}
-      <TableContainer sx={{ overflowX: 'auto' }}>
-        <Table sx={{ minWidth: { xs: 700, md: 'auto' } }}>
-          <TableHead>
-            <TableRow sx={{ backgroundColor: '#334155' }}>
-              <TableCell sx={{ fontWeight: 600, color: '#e2e8f0', borderBottom: '1px solid #475569' }}>Page Title</TableCell>
-              <TableCell sx={{ fontWeight: 600, color: '#e2e8f0', borderBottom: '1px solid #475569' }}>Status</TableCell>
-              <TableCell sx={{ fontWeight: 600, color: '#e2e8f0', borderBottom: '1px solid #475569' }}>Users</TableCell>
-              <TableCell sx={{ fontWeight: 600, color: '#e2e8f0', borderBottom: '1px solid #475569' }}>Event Count</TableCell>
-              <TableCell sx={{ fontWeight: 600, color: '#e2e8f0', borderBottom: '1px solid #475569' }}>Views per User</TableCell>
-              <TableCell sx={{ fontWeight: 600, color: '#e2e8f0', borderBottom: '1px solid #475569' }}>Average Time</TableCell>
-              <TableCell sx={{ fontWeight: 600, color: '#e2e8f0', borderBottom: '1px solid #475569' }}>Product Type</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
+      {/* Table Content - Desktop View */}
+      {!isMobile ? (
+        <TableContainer sx={{ overflowX: 'auto' }}>
+          <Table sx={{ minWidth: 'auto' }}>
+            <TableHead>
+              <TableRow sx={{ backgroundColor: '#334155' }}>
+                <TableCell sx={{ fontWeight: 600, color: '#e2e8f0', borderBottom: '1px solid #475569' }}>Page Title</TableCell>
+                <TableCell sx={{ fontWeight: 600, color: '#e2e8f0', borderBottom: '1px solid #475569' }}>Status</TableCell>
+                <TableCell sx={{ fontWeight: 600, color: '#e2e8f0', borderBottom: '1px solid #475569' }}>Users</TableCell>
+                <TableCell sx={{ fontWeight: 600, color: '#e2e8f0', borderBottom: '1px solid #475569' }}>Event Count</TableCell>
+                <TableCell sx={{ fontWeight: 600, color: '#e2e8f0', borderBottom: '1px solid #475569' }}>Views per User</TableCell>
+                <TableCell sx={{ fontWeight: 600, color: '#e2e8f0', borderBottom: '1px solid #475569' }}>Average Time</TableCell>
+                <TableCell sx={{ fontWeight: 600, color: '#e2e8f0', borderBottom: '1px solid #475569' }}>Product Type</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {filteredPages
+                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                .map((pageItem, index) => (
+                <TableRow key={index} sx={{ 
+                  '&:hover': { backgroundColor: '#334155' },
+                  borderBottom: '1px solid #475569'
+                }}>
+                  <TableCell sx={{ borderBottom: '1px solid #475569' }}>
+                    <Typography variant="body2" fontWeight={500} sx={{ color: '#ffffff' }}>
+                      {pageItem.title}
+                    </Typography>
+                  </TableCell>
+                  <TableCell sx={{ borderBottom: '1px solid #475569' }}>
+                    <Chip
+                      label={pageItem.status}
+                      size="small"
+                      sx={{
+                        ...getStatusColor(pageItem.status),
+                        fontSize: '0.75rem',
+                        borderRadius: '12px'
+                      }}
+                    />
+                  </TableCell>
+                  <TableCell sx={{ borderBottom: '1px solid #475569' }}>
+                    <Typography variant="body2" sx={{ color: '#e2e8f0' }}>
+                      {pageItem.users}
+                    </Typography>
+                  </TableCell>
+                  <TableCell sx={{ borderBottom: '1px solid #475569' }}>
+                    <Typography variant="body2" sx={{ color: '#e2e8f0' }}>
+                      {pageItem.eventCount}
+                    </Typography>
+                  </TableCell>
+                  <TableCell sx={{ borderBottom: '1px solid #475569' }}>
+                    <Typography variant="body2" sx={{ color: '#e2e8f0' }}>
+                      {pageItem.viewsPerUser}
+                    </Typography>
+                  </TableCell>
+                  <TableCell sx={{ borderBottom: '1px solid #475569' }}>
+                    <Typography variant="body2" sx={{ color: '#e2e8f0' }}>
+                      {pageItem.avgTime}
+                    </Typography>
+                  </TableCell>
+                  <TableCell sx={{ borderBottom: '1px solid #475569' }}>
+                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                      <Box sx={{ 
+                        width: 8, 
+                        height: 8, 
+                        borderRadius: '50%', 
+                        backgroundColor: '#3b82f6', 
+                        mr: 1 
+                      }} />
+                      <Typography variant="body2" sx={{ color: '#e2e8f0' }}>
+                        {pageItem.productType}
+                      </Typography>
+                    </Box>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      ) : (
+        /* Mobile Card View */
+        <Box sx={{ p: 2 }}>
+          <Grid container spacing={2}>
             {filteredPages
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((pageItem, index) => (
-              <TableRow key={index} sx={{ 
-                '&:hover': { backgroundColor: '#334155' },
-                borderBottom: '1px solid #475569'
-              }}>
-                <TableCell sx={{ borderBottom: '1px solid #475569' }}>
-                  <Typography variant="body2" fontWeight={500} sx={{ color: '#ffffff' }}>
-                    {pageItem.title}
-                  </Typography>
-                </TableCell>
-                <TableCell sx={{ borderBottom: '1px solid #475569' }}>
-                  <Chip
-                    label={pageItem.status}
-                    size="small"
-                    sx={{
-                      ...getStatusColor(pageItem.status),
-                      fontSize: '0.75rem',
-                      borderRadius: '12px'
-                    }}
-                  />
-                </TableCell>
-                <TableCell sx={{ borderBottom: '1px solid #475569' }}>
-                  <Typography variant="body2" sx={{ color: '#e2e8f0' }}>
-                    {pageItem.users}
-                  </Typography>
-                </TableCell>
-                <TableCell sx={{ borderBottom: '1px solid #475569' }}>
-                  <Typography variant="body2" sx={{ color: '#e2e8f0' }}>
-                    {pageItem.eventCount}
-                  </Typography>
-                </TableCell>
-                <TableCell sx={{ borderBottom: '1px solid #475569' }}>
-                  <Typography variant="body2" sx={{ color: '#e2e8f0' }}>
-                    {pageItem.viewsPerUser}
-                  </Typography>
-                </TableCell>
-                <TableCell sx={{ borderBottom: '1px solid #475569' }}>
-                  <Typography variant="body2" sx={{ color: '#e2e8f0' }}>
-                    {pageItem.avgTime}
-                  </Typography>
-                </TableCell>
-                <TableCell sx={{ borderBottom: '1px solid #475569' }}>
-                  <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                    <Box sx={{ 
-                      width: 8, 
-                      height: 8, 
-                      borderRadius: '50%', 
-                      backgroundColor: '#3b82f6', 
-                      mr: 1 
-                    }} />
-                    <Typography variant="body2" sx={{ color: '#e2e8f0' }}>
-                      {pageItem.productType}
-                    </Typography>
-                  </Box>
-                </TableCell>
-              </TableRow>
+              <Grid sx={{ xs:12 }} key={index}>
+                <Card sx={{
+                  backgroundColor: '#334155',
+                  border: '1px solid #475569',
+                  borderRadius: 2,
+                  '&:hover': {
+                    backgroundColor: '#475569'
+                  }
+                }}>
+                  <CardContent sx={{ p: 2, '&:last-child': { pb: 2 } }}>
+                    <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 2 }}>
+                      <Typography variant="h6" fontWeight={600} sx={{ color: '#ffffff', flex: 1, mr: 2 }}>
+                        {pageItem.title}
+                      </Typography>
+                      <Chip
+                        label={pageItem.status}
+                        size="small"
+                        sx={{
+                          ...getStatusColor(pageItem.status),
+                          fontSize: '0.75rem',
+                          borderRadius: '12px'
+                        }}
+                      />
+                    </Box>
+                    
+                    <Grid container spacing={2}>
+                      <Grid sx={{ xs:6 }} >
+                        <Box sx={{ mb: 1 }}>
+                          <Typography variant="caption" sx={{ color: '#94a3b8', display: 'block' }}>
+                            Users
+                          </Typography>
+                          <Typography variant="body2" fontWeight={500} sx={{ color: '#ffffff' }}>
+                            {pageItem.users}
+                          </Typography>
+                        </Box>
+                      </Grid>
+                      <Grid sx={{ xs:6 }} >
+                        <Box sx={{ mb: 1 }}>
+                          <Typography variant="caption" sx={{ color: '#94a3b8', display: 'block' }}>
+                            Events
+                          </Typography>
+                          <Typography variant="body2" fontWeight={500} sx={{ color: '#ffffff' }}>
+                            {pageItem.eventCount}
+                          </Typography>
+                        </Box>
+                      </Grid>
+                      <Grid sx={{ xs:6 }} >
+                        <Box sx={{ mb: 1 }}>
+                          <Typography variant="caption" sx={{ color: '#94a3b8', display: 'block' }}>
+                            Views/User
+                          </Typography>
+                          <Typography variant="body2" fontWeight={500} sx={{ color: '#ffffff' }}>
+                            {pageItem.viewsPerUser}
+                          </Typography>
+                        </Box>
+                      </Grid>
+                      <Grid sx={{ xs:6 }}>
+                        <Box sx={{ mb: 1 }}>
+                          <Typography variant="caption" sx={{ color: '#94a3b8', display: 'block' }}>
+                            Avg Time
+                          </Typography>
+                          <Typography variant="body2" fontWeight={500} sx={{ color: '#ffffff' }}>
+                            {pageItem.avgTime}
+                          </Typography>
+                        </Box>
+                      </Grid>
+                    </Grid>
+                    
+                    <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mt: 2, pt: 2, borderTop: '1px solid #475569' }}>
+                      <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                        <Box sx={{ 
+                          width: 8, 
+                          height: 8, 
+                          borderRadius: '50%', 
+                          backgroundColor: '#3b82f6', 
+                          mr: 1 
+                        }} />
+                        <Typography variant="body2" sx={{ color: '#e2e8f0' }}>
+                          {pageItem.productType}
+                        </Typography>
+                      </Box>
+                      <Button
+                        size="small"
+                        startIcon={<Visibility />}
+                        sx={{
+                          color: '#3b82f6',
+                          textTransform: 'none',
+                          fontSize: '0.75rem'
+                        }}
+                      >
+                        View Details
+                      </Button>
+                    </Box>
+                  </CardContent>
+                </Card>
+              </Grid>
             ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+          </Grid>
+        </Box>
+      )}
 
       {/* Table Pagination */}
       <Divider sx={{ borderColor: '#475569' }} />
