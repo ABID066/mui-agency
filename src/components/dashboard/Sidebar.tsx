@@ -52,7 +52,7 @@ interface NavigationItem {
 const navigationItems: NavigationItem[] = [
   { name: 'Home', icon: Home, path: '/dashboard' },
   { name: 'Orders', icon: ShoppingCart, path: '/dashboard/orders' },
-  { name: 'Tasks', icon: Assignment, path: '/dashboard/tasks', hasSubmenu: true },
+  //{ name: 'Tasks', icon: Assignment, path: '/dashboard/tasks', hasSubmenu: true },
   { name: 'Messages', icon: Message, path: '/dashboard/messages', badge: 4 },
   { name: 'Users', icon: People, path: '/dashboard/users', hasSubmenu: true },
   {
