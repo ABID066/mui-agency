@@ -20,7 +20,6 @@ import {
 import {
   Home,
   ShoppingCart,
-  Assignment,
   Message,
   People,
   Support,
@@ -35,6 +34,8 @@ import {
   CreditCard
 } from '@mui/icons-material';
 import { useRouter, usePathname } from 'next/navigation';
+import useAuth from "@/hooks/useAuth";
+import { signOut } from "next-auth/react";
 
 interface NavigationItem {
   name: string;
@@ -49,12 +50,18 @@ interface NavigationItem {
   }[];
 }
 
-const navigationItems: NavigationItem[] = [
+// Admin navigation items
+const adminNavigationItems: NavigationItem[] = [
   { name: 'Home', icon: Home, path: '/dashboard' },
   { name: 'Orders', icon: ShoppingCart, path: '/dashboard/orders' },
-  //{ name: 'Tasks', icon: Assignment, path: '/dashboard/tasks', hasSubmenu: true },
   { name: 'Messages', icon: Message, path: '/dashboard/messages', badge: 4 },
   { name: 'Users', icon: People, path: '/dashboard/users', hasSubmenu: true },
+  { name: 'Support', icon: Support, path: '/dashboard/support' },
+  { name: 'Settings', icon: Settings, path: '/dashboard/settings' },
+];
+
+// User navigation items
+const userNavigationItems: NavigationItem[] = [
   {
     name: 'Organization',
     icon: Business,
@@ -82,7 +89,19 @@ export default function Sidebar({ drawerWidth, mobileOpen, onMobileClose, isMobi
   const pathname = usePathname();
   const [expandedMenus, setExpandedMenus] = useState<string[]>([]);
   const [settingsAnchorEl, setSettingsAnchorEl] = useState<HTMLElement | null>(null);
-
+  const { user, setUser } = useAuth();
+  
+  const getInitials = (name: string) => {
+    return name
+      .split(" ")
+      .map((n) => n[0])
+      .join("")
+      .toUpperCase();
+  };
+  
+  // Determine navigation items based on user role
+  const navigationItems = user?.role === 'admin' ? adminNavigationItems : userNavigationItems;
+  
   const handleNavigation = (path: string) => {
     router.push(path);
     // Auto-close sidebar on mobile when selecting an option
@@ -123,11 +142,28 @@ export default function Sidebar({ drawerWidth, mobileOpen, onMobileClose, isMobi
     }
   };
 
-  const handleLogout = () => {
-    // Add logout logic here
-    console.log('Logout clicked');
-    setSettingsAnchorEl(null);
-    // You can add actual logout functionality here
+  const handleLogout = async () => {
+    try {
+      
+      // Sign out with redirect to home page
+      await signOut({ 
+        redirect: true,
+        callbackUrl: "/" 
+      });
+      setSettingsAnchorEl(null);
+      setUser(null);
+    } catch (error) {
+      console.error('Logout error:', error);
+      // Fallback: force navigation to home
+      router.push("/");
+    }
+  };
+
+  // Navigation handler
+  const handleNavigate = (path: string) => {
+    router.push(path); 
+    
+    
   };
 
   const isSettingsOpen = Boolean(settingsAnchorEl);
@@ -315,15 +351,17 @@ export default function Sidebar({ drawerWidth, mobileOpen, onMobileClose, isMobi
         gap: 2,
         backgroundColor: '#2D3748'
       }}>
-        <Avatar sx={{ width: 44, height: 44, backgroundColor: '#718096', fontSize: '1.1rem', fontWeight: 600 }}>
-          S
+        <Avatar 
+          src={user?.image}
+          sx={{ width: 44, height: 44, backgroundColor: '#718096', fontSize: '1.1rem', fontWeight: 600 }}>
+          {!user?.image && user?.name && getInitials(user.name)}
         </Avatar>
         <Box sx={{ flex: 1 }}>
           <Typography variant="body2" fontWeight={600} sx={{ color: '#ffffff' }}>
-            Siriwat K.
+            {user?.name || 'User'}
           </Typography>
           <Typography variant="caption" sx={{ color: '#A0AEC0' }}>
-            siriwat@test.com
+            {user?.email || 'user@example.com'}
           </Typography>
         </Box>
         <IconButton 
@@ -370,15 +408,17 @@ export default function Sidebar({ drawerWidth, mobileOpen, onMobileClose, isMobi
           <Box sx={{ p: 2 }}>
             {/* User Info Header */}
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 2, pb: 2, borderBottom: '1px solid #4A5568' }}>
-              <Avatar sx={{ width: 36, height: 36, backgroundColor: '#718096', fontSize: '0.9rem', fontWeight: 600 }}>
-                S
+              <Avatar 
+                src={user?.image}
+                sx={{ width: 36, height: 36, backgroundColor: '#718096', fontSize: '0.9rem', fontWeight: 600 }}>
+                {!user?.image && user?.name && getInitials(user.name)}
               </Avatar>
               <Box>
                 <Typography variant="body2" fontWeight={600} sx={{ color: '#ffffff', lineHeight: 1.2 }}>
-                  Siriwat K.
+                  {user?.name || 'User'}
                 </Typography>
                 <Typography variant="caption" sx={{ color: '#A0AEC0' }}>
-                  siriwat@test.com
+                  {user?.email || 'user@example.com'}
                 </Typography>
               </Box>
             </Box>
