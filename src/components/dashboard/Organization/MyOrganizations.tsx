@@ -18,7 +18,10 @@ import {
   Tabs,
   Tab,
   Breadcrumbs,
-  Link
+  Link,
+  FormControl,
+  Select,
+  InputLabel
 } from '@mui/material';
 import {
   MoreVert,
@@ -254,7 +257,7 @@ export default function MyOrganizations() {
           </Box>
         </Box>
 
-        {/* Management Tabs */}
+        {/* Management Navigation */}
         <Card sx={{
           backgroundColor: '#1e293b',
           border: '1px solid #334155',
@@ -262,6 +265,62 @@ export default function MyOrganizations() {
           width: '100%',
           maxWidth: '100%'
         }}>
+          {/* Mobile Dropdown */}
+          <Box sx={{ display: { xs: 'block', md: 'none' }, p: 2, borderBottom: '1px solid #334155' }}>
+            <FormControl fullWidth>
+              <InputLabel sx={{ color: '#94a3b8', '&.Mui-focused': { color: '#3b82f6' } }}>
+                Select Section
+              </InputLabel>
+              <Select
+                value={activeTab}
+                onChange={(e) => setActiveTab(e.target.value as number)}
+                sx={{
+                  color: '#ffffff',
+                  '& .MuiOutlinedInput-notchedOutline': {
+                    borderColor: '#334155'
+                  },
+                  '&:hover .MuiOutlinedInput-notchedOutline': {
+                    borderColor: '#475569'
+                  },
+                  '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                    borderColor: '#3b82f6'
+                  },
+                  '& .MuiSvgIcon-root': {
+                    color: '#94a3b8'
+                  }
+                }}
+                MenuProps={{
+                  PaperProps: {
+                    sx: {
+                      backgroundColor: '#1e293b',
+                      border: '1px solid #334155',
+                      '& .MuiMenuItem-root': {
+                        color: '#ffffff',
+                        '&:hover': {
+                          backgroundColor: '#334155'
+                        },
+                        '&.Mui-selected': {
+                          backgroundColor: '#3b82f6',
+                          '&:hover': {
+                            backgroundColor: '#2563eb'
+                          }
+                        }
+                      }
+                    }
+                  }
+                }}
+              >
+                <MenuItem value={0}>Team Members</MenuItem>
+                <MenuItem value={1}>Invite Members</MenuItem>
+                <MenuItem value={2}>Assign Roles</MenuItem>
+                <MenuItem value={3}>Remove Members</MenuItem>
+                <MenuItem value={4}>Organization Settings</MenuItem>
+                <MenuItem value={5}>Disable/Delete</MenuItem>
+              </Select>
+            </FormControl>
+          </Box>
+
+          {/* Desktop Tabs */}
           <Tabs
             value={activeTab}
             onChange={handleTabChange}
@@ -269,11 +328,12 @@ export default function MyOrganizations() {
             scrollButtons="auto"
             allowScrollButtonsMobile
             sx={{
+              display: { xs: 'none', md: 'flex' },
               borderBottom: '1px solid #334155',
               '& .MuiTab-root': {
                 color: '#94a3b8',
-                minWidth: { xs: 120, md: 'auto' },
-                fontSize: { xs: '0.75rem', md: '0.875rem' },
+                minWidth: 'auto',
+                fontSize: '0.875rem',
                 '&.Mui-selected': {
                   color: '#3b82f6'
                 }
@@ -287,40 +347,34 @@ export default function MyOrganizations() {
             }}
           >
             <Tab 
-              icon={<People sx={{ fontSize: { xs: '1rem', md: '1.25rem' } }} />} 
+              icon={<People sx={{ fontSize: '1.25rem' }} />} 
               label="Team Members" 
               iconPosition="start"
-              sx={{ flexDirection: { xs: 'column', sm: 'row' } }}
             />
             <Tab 
-              icon={<PersonAdd sx={{ fontSize: { xs: '1rem', md: '1.25rem' } }} />} 
+              icon={<PersonAdd sx={{ fontSize: '1.25rem' }} />} 
               label="Invite Members" 
               iconPosition="start"
-              sx={{ flexDirection: { xs: 'column', sm: 'row' } }}
             />
             <Tab 
-              icon={<AdminPanelSettings sx={{ fontSize: { xs: '1rem', md: '1.25rem' } }} />} 
+              icon={<AdminPanelSettings sx={{ fontSize: '1.25rem' }} />} 
               label="Assign Roles" 
               iconPosition="start"
-              sx={{ flexDirection: { xs: 'column', sm: 'row' } }}
             />
             <Tab 
-              icon={<PersonRemove sx={{ fontSize: { xs: '1rem', md: '1.25rem' } }} />} 
+              icon={<PersonRemove sx={{ fontSize: '1.25rem' }} />} 
               label="Remove Members" 
               iconPosition="start"
-              sx={{ flexDirection: { xs: 'column', sm: 'row' } }}
             />
             <Tab 
-              icon={<Settings sx={{ fontSize: { xs: '1rem', md: '1.25rem' } }} />} 
+              icon={<Settings sx={{ fontSize: '1.25rem' }} />} 
               label="Organization Settings" 
               iconPosition="start"
-              sx={{ flexDirection: { xs: 'column', sm: 'row' } }}
             />
             <Tab 
-              icon={<Delete sx={{ fontSize: { xs: '1rem', md: '1.25rem' } }} />} 
+              icon={<Delete sx={{ fontSize: '1.25rem' }} />} 
               label="Disable/Delete" 
               iconPosition="start"
-              sx={{ flexDirection: { xs: 'column', sm: 'row' } }}
             />
           </Tabs>
           
