@@ -136,13 +136,37 @@ export default function OrgSettings() {
   };
 
   return (
-    <Box sx={{ p: 4, backgroundColor: '#0f172a', minHeight: '100vh', color: '#ffffff' }}>
+    <Box sx={{ 
+      p: { xs: 2, sm: 3, md: 4 }, 
+      backgroundColor: '#0f172a', 
+      minHeight: '100vh', 
+      color: '#ffffff',
+      width: '100%',
+      maxWidth: '100%',
+      boxSizing: 'border-box',
+      overflow: 'hidden'
+    }}>
       {/* Header */}
-      <Box sx={{ mb: 4 }}>
-        <Typography variant="h4" fontWeight={700} sx={{ color: '#ffffff', mb: 1 }}>
+      <Box sx={{ mb: { xs: 3, md: 4 } }}>
+        <Typography 
+          variant="h4" 
+          fontWeight={700} 
+          sx={{ 
+            color: '#ffffff', 
+            mb: 1,
+            fontSize: { xs: '1.5rem', sm: '2rem', md: '2.125rem' },
+            wordBreak: 'break-word'
+          }}
+        >
           Organization Settings
         </Typography>
-        <Typography variant="body1" sx={{ color: '#94a3b8' }}>
+        <Typography 
+          variant="body1" 
+          sx={{ 
+            color: '#94a3b8',
+            fontSize: { xs: '0.875rem', sm: '1rem' }
+          }}
+        >
           Manage your organization preferences and configurations
         </Typography>
       </Box>
@@ -152,30 +176,46 @@ export default function OrgSettings() {
         <Alert 
           severity="info" 
           sx={{ 
-            mb: 4,
+            mb: { xs: 3, md: 4 },
+            mt: { xs: 2, md: 0 },
             backgroundColor: '#1e293b',
             border: '1px solid #3b82f6',
             color: '#ffffff',
+            fontSize: { xs: '0.875rem', sm: '1rem' },
             '& .MuiAlert-icon': {
               color: '#3b82f6'
+            },
+            '& .MuiAlert-message': {
+              fontSize: { xs: '0.875rem', sm: '1rem' }
             }
           }}
           action={
-            <Box sx={{ display: 'flex', gap: 1 }}>
+            <Box sx={{ 
+              display: 'flex', 
+              flexDirection: { xs: 'column', sm: 'row' },
+              gap: { xs: 1, sm: 1 },
+              alignItems: { xs: 'stretch', sm: 'center' }
+            }}>
               <Button 
-                size="small" 
+                size="small"
                 onClick={handleResetSettings}
-                sx={{ color: '#94a3b8' }}
+                sx={{ 
+                  color: '#94a3b8',
+                  fontSize: { xs: '0.875rem', sm: '0.8125rem' },
+                  minWidth: { xs: 'auto', sm: 'auto' }
+                }}
               >
                 Reset
               </Button>
               <Button 
-                size="small" 
+                size="small"
                 variant="contained"
                 onClick={handleSaveSettings}
                 disabled={saving}
                 sx={{
                   backgroundColor: '#3b82f6',
+                  fontSize: { xs: '0.875rem', sm: '0.8125rem' },
+                  minWidth: { xs: 'auto', sm: 'auto' },
                   '&:hover': {
                     backgroundColor: '#2563eb'
                   }
@@ -190,15 +230,17 @@ export default function OrgSettings() {
         </Alert>
       )}
 
-      <Grid container spacing={4}>
+      <Grid container spacing={{ xs: 2, sm: 3, md: 4 }}>
         {/* Basic Information */}
-        <Grid  sx={{  xs:12, md:6}}>
+        <Grid sx={{xs:12, md:6}}>
           <Card sx={{
             backgroundColor: '#1e293b',
             border: '1px solid #334155',
-            boxShadow: 'none'
+            boxShadow: 'none',
+            width: '100%',
+            maxWidth: '100%'
           }}>
-            <CardContent>
+            <CardContent sx={{ p: { xs: 2, sm: 3, md: 3 } }}>
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 3 }}>
                 <Business sx={{ color: '#3b82f6' }} />
                 <Typography variant="h6" fontWeight={600} sx={{ color: '#ffffff' }}>
@@ -317,7 +359,7 @@ export default function OrgSettings() {
         </Grid>
 
         {/* Preferences */}
-        <Grid  sx={{xs:12, md:6}} >
+        <Grid sx={{xs:12, md:6}}>
           <Card sx={{
             backgroundColor: '#1e293b',
             border: '1px solid #334155',
@@ -443,7 +485,7 @@ export default function OrgSettings() {
         </Grid>
 
         {/* Notifications */}
-        <Grid sx={{xs:12, md:6}}>
+        <Grid sx={{xs:12, md:6}} >
           <Card sx={{
             backgroundColor: '#1e293b',
             border: '1px solid #334155',
@@ -526,7 +568,7 @@ export default function OrgSettings() {
         </Grid>
 
         {/* Security */}
-        <Grid sx={{xs:12, md:6}}>
+        <Grid sx={{xs:12, md:6}} >
           <Card sx={{
             backgroundColor: '#1e293b',
             border: '1px solid #334155',
@@ -614,7 +656,7 @@ export default function OrgSettings() {
         </Grid>
 
         {/* Danger Zone */}
-        <Grid sx={{xs:12}}>
+        <Grid sx={{xs:12}} >
           <Card sx={{
             backgroundColor: '#1e293b',
             border: '1px solid #ef4444',
@@ -643,7 +685,12 @@ export default function OrgSettings() {
                 These actions are irreversible. Please proceed with caution.
               </Alert>
               
-              <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
+              <Box sx={{ 
+                display: 'flex', 
+                flexDirection: { xs: 'column', sm: 'row' },
+                gap: { xs: 2, sm: 2 }, 
+                alignItems: { xs: 'stretch', sm: 'flex-start' }
+              }}>
                 <Button
                   variant="outlined"
                   startIcon={<Block />}
@@ -651,6 +698,10 @@ export default function OrgSettings() {
                   sx={{
                     borderColor: '#f59e0b',
                     color: '#f59e0b',
+                    fontSize: { xs: '0.875rem', sm: '1rem' },
+                    height: { xs: '44px', sm: 'auto' },
+                    minWidth: { xs: '100%', sm: 'auto' },
+                    flex: { xs: 1, sm: 'none' },
                     '&:hover': {
                       borderColor: '#d97706',
                       backgroundColor: 'rgba(245, 158, 11, 0.1)'
@@ -667,6 +718,10 @@ export default function OrgSettings() {
                   sx={{
                     borderColor: '#ef4444',
                     color: '#ef4444',
+                    fontSize: { xs: '0.875rem', sm: '1rem' },
+                    height: { xs: '44px', sm: 'auto' },
+                    minWidth: { xs: '100%', sm: 'auto' },
+                    flex: { xs: 1, sm: 'none' },
                     '&:hover': {
                       borderColor: '#dc2626',
                       backgroundColor: 'rgba(239, 68, 68, 0.1)'
@@ -687,20 +742,37 @@ export default function OrgSettings() {
         onClose={() => setShowDisableDialog(false)}
         maxWidth="sm"
         fullWidth
+        fullScreen={false}
         PaperProps={{
           sx: {
             backgroundColor: '#1e293b',
             border: '1px solid #334155',
-            color: '#ffffff'
+            color: '#ffffff',
+            margin: { xs: 0, sm: 2 },
+            maxHeight: { xs: '100vh', sm: '90vh' }
           }
         }}
       >
-        <DialogTitle sx={{ color: '#ffffff', display: 'flex', alignItems: 'center', gap: 2 }}>
+        <DialogTitle sx={{ 
+          color: '#ffffff', 
+          display: 'flex', 
+          alignItems: 'center', 
+          gap: 2,
+          p: { xs: 2, sm: 3 },
+          fontSize: { xs: '1.25rem', sm: '1.5rem' }
+        }}>
           <Block sx={{ color: '#f59e0b' }} />
           Disable Organization
         </DialogTitle>
-        <DialogContent>
-          <Typography variant="body1" sx={{ color: '#94a3b8', mb: 3 }}>
+        <DialogContent sx={{ p: { xs: 2, sm: 3 } }}>
+          <Typography 
+            variant="body1" 
+            sx={{ 
+              color: '#94a3b8', 
+              mb: 3,
+              fontSize: { xs: '0.875rem', sm: '1rem' }
+            }}
+          >
             Disabling your organization will:
           </Typography>
           <List sx={{ mb: 3 }}>
@@ -710,7 +782,10 @@ export default function OrgSettings() {
               </ListItemIcon>
               <ListItemText 
                 primary="Suspend all member access"
-                primaryTypographyProps={{ color: '#ffffff', fontSize: '0.9rem' }}
+                primaryTypographyProps={{ 
+                  color: '#ffffff', 
+                  fontSize: { xs: '0.8rem', sm: '0.9rem' }
+                }}
               />
             </ListItem>
             <ListItem sx={{ px: 0 }}>
@@ -719,7 +794,10 @@ export default function OrgSettings() {
               </ListItemIcon>
               <ListItemText 
                 primary="Pause all active subscriptions"
-                primaryTypographyProps={{ color: '#ffffff', fontSize: '0.9rem' }}
+                primaryTypographyProps={{ 
+                  color: '#ffffff', 
+                  fontSize: { xs: '0.8rem', sm: '0.9rem' }
+                }}
               />
             </ListItem>
             <ListItem sx={{ px: 0 }}>
@@ -728,12 +806,22 @@ export default function OrgSettings() {
               </ListItemIcon>
               <ListItemText 
                 primary="Preserve data for 30 days"
-                primaryTypographyProps={{ color: '#ffffff', fontSize: '0.9rem' }}
+                primaryTypographyProps={{ 
+                  color: '#ffffff', 
+                  fontSize: { xs: '0.8rem', sm: '0.9rem' }
+                }}
               />
             </ListItem>
           </List>
           
-          <Typography variant="body2" sx={{ color: '#94a3b8', mb: 2 }}>
+          <Typography 
+            variant="body2" 
+            sx={{ 
+              color: '#94a3b8', 
+              mb: 2,
+              fontSize: { xs: '0.8rem', sm: '0.875rem' }
+            }}
+          >
             Type <strong>DISABLE</strong> to confirm:
           </Typography>
           <TextField
@@ -758,8 +846,20 @@ export default function OrgSettings() {
             }}
           />
         </DialogContent>
-        <DialogActions sx={{ p: 3 }}>
-          <Button onClick={() => setShowDisableDialog(false)} sx={{ color: '#94a3b8' }}>
+        <DialogActions sx={{ 
+          p: { xs: 2, sm: 3 },
+          flexDirection: { xs: 'column', sm: 'row' },
+          gap: { xs: 1, sm: 0 }
+        }}>
+          <Button 
+            onClick={() => setShowDisableDialog(false)} 
+            sx={{ 
+              color: '#94a3b8',
+              fontSize: { xs: '0.875rem', sm: '1rem' },
+              minWidth: { xs: '100%', sm: 'auto' },
+              order: { xs: 2, sm: 1 }
+            }}
+          >
             Cancel
           </Button>
           <Button 
@@ -768,6 +868,9 @@ export default function OrgSettings() {
             variant="contained"
             sx={{
               backgroundColor: '#f59e0b',
+              fontSize: { xs: '0.875rem', sm: '1rem' },
+              minWidth: { xs: '100%', sm: 'auto' },
+              order: { xs: 1, sm: 2 },
               '&:hover': {
                 backgroundColor: '#d97706'
               },
@@ -788,19 +891,29 @@ export default function OrgSettings() {
         onClose={() => setShowDeleteDialog(false)}
         maxWidth="sm"
         fullWidth
+        fullScreen={false}
         PaperProps={{
           sx: {
             backgroundColor: '#1e293b',
             border: '1px solid #334155',
-            color: '#ffffff'
+            color: '#ffffff',
+            margin: { xs: 0, sm: 2 },
+            maxHeight: { xs: '100vh', sm: '90vh' }
           }
         }}
       >
-        <DialogTitle sx={{ color: '#ffffff', display: 'flex', alignItems: 'center', gap: 2 }}>
+        <DialogTitle sx={{ 
+          color: '#ffffff', 
+          display: 'flex', 
+          alignItems: 'center', 
+          gap: 2,
+          p: { xs: 2, sm: 3 },
+          fontSize: { xs: '1.25rem', sm: '1.5rem' }
+        }}>
           <Delete sx={{ color: '#ef4444' }} />
           Delete Organization
         </DialogTitle>
-        <DialogContent>
+        <DialogContent sx={{ p: { xs: 2, sm: 3 } }}>
           <Alert 
             severity="error" 
             sx={{ 
@@ -808,15 +921,26 @@ export default function OrgSettings() {
               backgroundColor: '#1e293b',
               border: '1px solid #ef4444',
               color: '#ffffff',
+              fontSize: { xs: '0.875rem', sm: '1rem' },
               '& .MuiAlert-icon': {
                 color: '#ef4444'
+              },
+              '& .MuiAlert-message': {
+                fontSize: { xs: '0.875rem', sm: '1rem' }
               }
             }}
           >
             This action is permanent and cannot be undone!
           </Alert>
           
-          <Typography variant="body1" sx={{ color: '#94a3b8', mb: 3 }}>
+          <Typography 
+            variant="body1" 
+            sx={{ 
+              color: '#94a3b8', 
+              mb: 3,
+              fontSize: { xs: '0.875rem', sm: '1rem' }
+            }}
+          >
             Deleting your organization will:
           </Typography>
           <List sx={{ mb: 3 }}>
@@ -826,7 +950,10 @@ export default function OrgSettings() {
               </ListItemIcon>
               <ListItemText 
                 primary="Permanently delete all data"
-                primaryTypographyProps={{ color: '#ffffff', fontSize: '0.9rem' }}
+                primaryTypographyProps={{ 
+                  color: '#ffffff', 
+                  fontSize: { xs: '0.8rem', sm: '0.9rem' }
+                }}
               />
             </ListItem>
             <ListItem sx={{ px: 0 }}>
@@ -835,7 +962,10 @@ export default function OrgSettings() {
               </ListItemIcon>
               <ListItemText 
                 primary="Remove all members immediately"
-                primaryTypographyProps={{ color: '#ffffff', fontSize: '0.9rem' }}
+                primaryTypographyProps={{ 
+                  color: '#ffffff', 
+                  fontSize: { xs: '0.8rem', sm: '0.9rem' }
+                }}
               />
             </ListItem>
             <ListItem sx={{ px: 0 }}>
@@ -844,12 +974,22 @@ export default function OrgSettings() {
               </ListItemIcon>
               <ListItemText 
                 primary="Cancel all subscriptions"
-                primaryTypographyProps={{ color: '#ffffff', fontSize: '0.9rem' }}
+                primaryTypographyProps={{ 
+                  color: '#ffffff', 
+                  fontSize: { xs: '0.8rem', sm: '0.9rem' }
+                }}
               />
             </ListItem>
           </List>
           
-          <Typography variant="body2" sx={{ color: '#94a3b8', mb: 2 }}>
+          <Typography 
+            variant="body2" 
+            sx={{ 
+              color: '#94a3b8', 
+              mb: 2,
+              fontSize: { xs: '0.8rem', sm: '0.875rem' }
+            }}
+          >
             Type <strong>DELETE PERMANENTLY</strong> to confirm:
           </Typography>
           <TextField
@@ -874,8 +1014,20 @@ export default function OrgSettings() {
             }}
           />
         </DialogContent>
-        <DialogActions sx={{ p: 3 }}>
-          <Button onClick={() => setShowDeleteDialog(false)} sx={{ color: '#94a3b8' }}>
+        <DialogActions sx={{ 
+          p: { xs: 2, sm: 3 },
+          flexDirection: { xs: 'column', sm: 'row' },
+          gap: { xs: 1, sm: 0 }
+        }}>
+          <Button 
+            onClick={() => setShowDeleteDialog(false)} 
+            sx={{ 
+              color: '#94a3b8',
+              fontSize: { xs: '0.875rem', sm: '1rem' },
+              minWidth: { xs: '100%', sm: 'auto' },
+              order: { xs: 2, sm: 1 }
+            }}
+          >
             Cancel
           </Button>
           <Button 
@@ -884,6 +1036,9 @@ export default function OrgSettings() {
             variant="contained"
             sx={{
               backgroundColor: '#ef4444',
+              fontSize: { xs: '0.875rem', sm: '1rem' },
+              minWidth: { xs: '100%', sm: 'auto' },
+              order: { xs: 1, sm: 2 },
               '&:hover': {
                 backgroundColor: '#dc2626'
               },

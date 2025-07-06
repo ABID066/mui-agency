@@ -172,29 +172,67 @@ export default function InviteMember() {
   };
 
   return (
-    <Box sx={{ p: 4, backgroundColor: '#0f172a', minHeight: '100vh', color: '#ffffff' }}>
+    <Box sx={{ 
+      p: { xs: 1, sm: 2, md: 3 }, 
+      color: '#ffffff',
+      width: '100%',
+      maxWidth: '100%',
+      boxSizing: 'border-box',
+      overflow: 'hidden'
+    }}>
       {/* Header */}
-      <Box sx={{ mb: 4 }}>
-        <Typography variant="h4" fontWeight={700} sx={{ color: '#ffffff', mb: 1 }}>
+      <Box sx={{ mb: { xs: 2, md: 3 }, width: '100%', maxWidth: '100%' }}>
+        <Typography 
+          variant="h5" 
+          fontWeight={600} 
+          sx={{ 
+            color: '#ffffff', 
+            mb: 1,
+            fontSize: { xs: '1.25rem', sm: '1.5rem', md: '1.75rem' },
+            wordBreak: 'break-word'
+          }}
+        >
           Invite Team Members
         </Typography>
-        <Typography variant="body1" sx={{ color: '#94a3b8' }}>
+        <Typography 
+          variant="body1" 
+          sx={{ 
+            color: '#94a3b8',
+            fontSize: { xs: '0.875rem', md: '1rem' }
+          }}
+        >
           Send invitations to new team members to join your organization
         </Typography>
       </Box>
 
-      <Grid container spacing={4}>
+      <Grid container spacing={{ xs: 2, md: 3 }}>
         {/* Invite Form */}
-        <Grid size={{ xs: 12, md: 8 }}>
+        <Grid size={{ xs: 12, lg: 8 }}>
           <Card sx={{
             backgroundColor: '#1e293b',
             border: '1px solid #334155',
             boxShadow: 'none',
-            mb: 4
+            mb: { xs: 2, md: 3 },
+            width: '100%',
+            maxWidth: '100%'
           }}>
-            <CardContent sx={{ p: 4 }}>
-              <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
-                <Typography variant="h6" fontWeight={600} sx={{ color: '#ffffff' }}>
+            <CardContent sx={{ p: { xs: 2, sm: 3, md: 4 } }}>
+              <Box sx={{ 
+                display: 'flex', 
+                flexDirection: { xs: 'column', sm: 'row' },
+                justifyContent: 'space-between', 
+                alignItems: { xs: 'flex-start', sm: 'center' }, 
+                mb: 3,
+                gap: { xs: 2, sm: 0 }
+              }}>
+                <Typography 
+                  variant="h6" 
+                  fontWeight={600} 
+                  sx={{ 
+                    color: '#ffffff',
+                    fontSize: { xs: '1rem', md: '1.25rem' }
+                  }}
+                >
                   {showBulkInvite ? 'Bulk Invite' : 'Single Invite'}
                 </Typography>
                 <Button
@@ -203,6 +241,9 @@ export default function InviteMember() {
                   sx={{
                     borderColor: '#475569',
                     color: '#ffffff',
+                    fontSize: { xs: '0.75rem', md: '0.875rem' },
+                    width: { xs: '100%', sm: 'auto' },
+                    height: { xs: '36px', md: '40px' },
                     '&:hover': {
                       borderColor: '#94a3b8',
                       backgroundColor: 'rgba(255, 255, 255, 0.05)'
@@ -213,7 +254,7 @@ export default function InviteMember() {
                 </Button>
               </Box>
               
-              <Grid container spacing={3}>
+              <Grid container spacing={{ xs: 2, md: 3 }}>
                 {showBulkInvite ? (
                   <Grid size={{ xs: 12 }}>
                     <TextField
@@ -418,13 +459,15 @@ export default function InviteMember() {
         </Grid>
 
         {/* Pending Invites */}
-        <Grid size={{ xs: 12, md: 4 }}>
+        <Grid size={{ xs: 12, lg: 4 }}>
           <Card sx={{
             backgroundColor: '#1e293b',
             border: '1px solid #334155',
-            boxShadow: 'none'
+            boxShadow: 'none',
+            width: '100%',
+            maxWidth: '100%'
           }}>
-            <CardContent sx={{ p: 3 }}>
+            <CardContent sx={{ p: { xs: 2, sm: 3 } }}>
               <Typography variant="h6" fontWeight={600} sx={{ color: '#ffffff', mb: 3 }}>
                 Pending Invites ({pendingInvites.length})
               </Typography>
@@ -503,12 +546,16 @@ export default function InviteMember() {
       <Alert 
         severity="info" 
         sx={{ 
-          mt: 4,
+          mt: { xs: 2, md: 3 },
           backgroundColor: '#1e293b',
           border: '1px solid #334155',
           color: '#ffffff',
+          fontSize: { xs: '0.875rem', md: '1rem' },
           '& .MuiAlert-icon': {
             color: '#3b82f6'
+          },
+          '& .MuiAlert-message': {
+            fontSize: { xs: '0.875rem', md: '1rem' }
           }
         }}
       >

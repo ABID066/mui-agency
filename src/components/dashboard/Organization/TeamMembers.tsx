@@ -22,7 +22,11 @@ import {
   TableRow,
   TablePagination,
   Tabs,
-  Tab
+  Tab,
+  Grid,
+  FormControl,
+  Select,
+  InputLabel
 } from '@mui/material';
 import {
   Search,
@@ -359,253 +363,462 @@ export default function TeamMembers() {
         </Box>
       </Box>
 
-      {/* Tabs */}
-      <Tabs
-        value={tabValue}
-        onChange={(e, newValue) => setTabValue(newValue)}
-        variant="scrollable"
-        scrollButtons="auto"
-        allowScrollButtonsMobile
-        sx={{
-          mb: 3,
-          width: '100%',
-          maxWidth: '100%',
-          '& .MuiTab-root': {
-            color: '#94a3b8',
-            minWidth: { xs: 80, sm: 120 },
-            fontSize: { xs: '0.75rem', sm: '0.875rem' },
-            '&.Mui-selected': {
-              color: '#ffffff'
-            }
-          },
-          '& .MuiTabs-indicator': {
-            backgroundColor: '#3b82f6'
-          },
-          '& .MuiTabs-scrollButtons': {
-            color: '#94a3b8'
-          }
-        }}
-      >
-        <Tab label="All Members" />
-        <Tab label="Active" />
-        <Tab label="Pending" />
-        <Tab label="Inactive" />
-      </Tabs>
-
-      {/* Members Table */}
-      <Card sx={{
-        backgroundColor: '#1e293b',
-        border: '1px solid #334155',
-        boxShadow: 'none',
-        width: '100%',
-        maxWidth: '100%'
-      }}>
-        <TableContainer sx={{ 
-          overflowX: 'auto',
-          width: '100%',
-          maxWidth: '100%'
-        }}>
-          <Table sx={{ 
-            minWidth: { xs: 700, md: 800 },
-            width: '100%'
-          }}>
-            <TableHead>
-              <TableRow>
-                <TableCell sx={{ 
-                  color: '#94a3b8', 
-                  borderBottom: '1px solid #334155',
-                  fontSize: { xs: '0.75rem', md: '0.875rem' },
-                  minWidth: { xs: 200, md: 250 }
-                }}>Member</TableCell>
-                <TableCell sx={{ 
-                  color: '#94a3b8', 
-                  borderBottom: '1px solid #334155',
-                  fontSize: { xs: '0.75rem', md: '0.875rem' },
-                  minWidth: { xs: 80, md: 100 }
-                }}>Role</TableCell>
-                <TableCell sx={{ 
-                  color: '#94a3b8', 
-                  borderBottom: '1px solid #334155',
-                  fontSize: { xs: '0.75rem', md: '0.875rem' },
-                  minWidth: { xs: 100, md: 120 }
-                }}>Department</TableCell>
-                <TableCell sx={{ 
-                  color: '#94a3b8', 
-                  borderBottom: '1px solid #334155',
-                  fontSize: { xs: '0.75rem', md: '0.875rem' },
-                  minWidth: { xs: 80, md: 100 }
-                }}>Status</TableCell>
-                <TableCell sx={{ 
-                  color: '#94a3b8', 
-                  borderBottom: '1px solid #334155',
-                  fontSize: { xs: '0.75rem', md: '0.875rem' },
-                  minWidth: { xs: 100, md: 120 }
-                }}>Join Date</TableCell>
-                <TableCell sx={{ 
-                  color: '#94a3b8', 
-                  borderBottom: '1px solid #334155',
-                  fontSize: { xs: '0.75rem', md: '0.875rem' },
-                  minWidth: { xs: 60, md: 80 }
-                }}>Actions</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {paginatedMembers.map((member) => (
-                <TableRow key={member.id} sx={{ '&:hover': { backgroundColor: '#334155' } }}>
-                  <TableCell sx={{ 
-                    borderBottom: '1px solid #334155',
-                    minWidth: { xs: 200, md: 250 },
-                    maxWidth: { xs: 250, md: 300 }
-                  }}>
-                    <Box sx={{ 
-                      display: 'flex', 
-                      flexDirection: { xs: 'column', sm: 'row' },
-                      alignItems: { xs: 'flex-start', sm: 'center' }, 
-                      gap: { xs: 1, sm: 2 }
-                    }}>
-                      <Avatar sx={{ 
-                        width: { xs: 32, md: 40 }, 
-                        height: { xs: 32, md: 40 }, 
+      {/* Filter Navigation */}
+      <Box sx={{ mb: 3, width: '100%', maxWidth: '100%' }}>
+        {/* Mobile Dropdown */}
+        <Box sx={{ display: { xs: 'block', md: 'none' } }}>
+          <FormControl fullWidth>
+            <InputLabel sx={{ color: '#94a3b8', '&.Mui-focused': { color: '#3b82f6' } }}>
+              Filter Members
+            </InputLabel>
+            <Select
+              value={tabValue}
+              onChange={(e) => setTabValue(e.target.value as number)}
+              sx={{
+                color: '#ffffff',
+                '& .MuiOutlinedInput-notchedOutline': {
+                  borderColor: '#334155'
+                },
+                '&:hover .MuiOutlinedInput-notchedOutline': {
+                  borderColor: '#475569'
+                },
+                '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                  borderColor: '#3b82f6'
+                },
+                '& .MuiSvgIcon-root': {
+                  color: '#94a3b8'
+                }
+              }}
+              MenuProps={{
+                PaperProps: {
+                  sx: {
+                    backgroundColor: '#1e293b',
+                    border: '1px solid #334155',
+                    '& .MuiMenuItem-root': {
+                      color: '#ffffff',
+                      '&:hover': {
+                        backgroundColor: '#334155'
+                      },
+                      '&.Mui-selected': {
                         backgroundColor: '#3b82f6',
-                        fontSize: { xs: '0.75rem', md: '0.9rem' },
-                        fontWeight: 600
-                      }}>
-                        {member.avatar}
-                      </Avatar>
-                      <Box sx={{ width: '100%', minWidth: 0 }}>
-                        <Typography 
-                          variant="body2" 
-                          fontWeight={600} 
-                          sx={{ 
-                            color: '#ffffff',
-                            fontSize: { xs: '0.75rem', md: '0.875rem' },
-                            wordBreak: 'break-word'
-                          }}
-                        >
-                          {member.name}
-                        </Typography>
-                        <Box sx={{ 
-                          display: 'flex', 
-                          flexDirection: 'column',
-                          gap: 0.5, 
-                          mt: 0.5 
-                        }}>
-                          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                            <Email sx={{ fontSize: { xs: 12, md: 14 }, color: '#94a3b8' }} />
-                            <Typography 
-                              variant="caption" 
-                              sx={{ 
-                                color: '#94a3b8',
-                                fontSize: { xs: '0.625rem', md: '0.75rem' },
-                                wordBreak: 'break-all'
-                              }}
-                            >
-                              {member.email}
-                            </Typography>
-                          </Box>
-                          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                            <Phone sx={{ fontSize: { xs: 12, md: 14 }, color: '#94a3b8' }} />
-                            <Typography 
-                              variant="caption" 
-                              sx={{ 
-                                color: '#94a3b8',
-                                fontSize: { xs: '0.625rem', md: '0.75rem' }
-                              }}
-                            >
-                              {member.phone}
-                            </Typography>
-                          </Box>
-                        </Box>
-                      </Box>
-                    </Box>
-                  </TableCell>
-                  <TableCell sx={{ 
-                    borderBottom: '1px solid #334155',
-                    minWidth: { xs: 80, md: 100 }
-                  }}>
-                    <Chip
-                      label={member.role}
-                      size="small"
-                      sx={{
-                        backgroundColor: getRoleColor(member.role),
-                        color: '#ffffff',
-                        fontWeight: 500,
-                        fontSize: { xs: '0.625rem', md: '0.75rem' }
-                      }}
-                    />
-                  </TableCell>
-                  <TableCell sx={{ 
-                    color: '#ffffff', 
-                    borderBottom: '1px solid #334155',
-                    fontSize: { xs: '0.75rem', md: '0.875rem' },
-                    minWidth: { xs: 100, md: 120 },
-                    wordBreak: 'break-word'
-                  }}>
-                    {member.department}
-                  </TableCell>
-                  <TableCell sx={{ 
-                    borderBottom: '1px solid #334155',
-                    minWidth: { xs: 80, md: 100 }
-                  }}>
-                    <Chip
-                      label={member.status}
-                      size="small"
-                      variant="outlined"
-                      sx={{
-                        borderColor: getStatusColor(member.status),
-                        color: getStatusColor(member.status),
-                        textTransform: 'capitalize',
-                        fontSize: { xs: '0.625rem', md: '0.75rem' }
-                      }}
-                    />
-                  </TableCell>
-                  <TableCell sx={{ 
-                    color: '#ffffff', 
-                    borderBottom: '1px solid #334155',
-                    fontSize: { xs: '0.75rem', md: '0.875rem' },
-                    minWidth: { xs: 100, md: 120 },
-                    whiteSpace: 'nowrap'
-                  }}>
-                    {new Date(member.joinDate).toLocaleDateString()}
-                  </TableCell>
-                  <TableCell sx={{ 
-                    borderBottom: '1px solid #334155',
-                    minWidth: { xs: 60, md: 80 }
-                  }}>
-                    <IconButton
-                      size="small"
-                      onClick={handleMenuOpen}
-                      sx={{ 
-                        color: '#94a3b8',
-                        width: { xs: 32, md: 40 },
-                        height: { xs: 32, md: 40 }
-                      }}
-                    >
-                      <MoreVert sx={{ fontSize: { xs: '1rem', md: '1.25rem' } }} />
-                    </IconButton>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-        
-        <TablePagination
-          component="div"
-          count={filteredMembers.length}
-          page={page}
-          onPageChange={handleChangePage}
-          rowsPerPage={rowsPerPage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
+                        '&:hover': {
+                          backgroundColor: '#2563eb'
+                        }
+                      }
+                    }
+                  }
+                }
+              }}
+            >
+              <MenuItem value={0}>All Members</MenuItem>
+              <MenuItem value={1}>Active</MenuItem>
+              <MenuItem value={2}>Pending</MenuItem>
+              <MenuItem value={3}>Inactive</MenuItem>
+            </Select>
+          </FormControl>
+        </Box>
+
+        {/* Desktop Tabs */}
+        <Tabs
+          value={tabValue}
+          onChange={(e, newValue) => setTabValue(newValue)}
+          variant="scrollable"
+          scrollButtons="auto"
+          allowScrollButtonsMobile
           sx={{
-            color: '#94a3b8',
-            borderTop: '1px solid #334155',
-            '& .MuiTablePagination-selectIcon': {
+            display: { xs: 'none', md: 'flex' },
+            width: '100%',
+            maxWidth: '100%',
+            '& .MuiTab-root': {
+              color: '#94a3b8',
+              minWidth: 120,
+              fontSize: '0.875rem',
+              '&.Mui-selected': {
+                color: '#ffffff'
+              }
+            },
+            '& .MuiTabs-indicator': {
+              backgroundColor: '#3b82f6'
+            },
+            '& .MuiTabs-scrollButtons': {
               color: '#94a3b8'
             }
           }}
-        />
-      </Card>
+        >
+          <Tab label="All Members" />
+          <Tab label="Active" />
+          <Tab label="Pending" />
+          <Tab label="Inactive" />
+        </Tabs>
+      </Box>
+
+      {/* Members Display */}
+      <Box sx={{ width: '100%', maxWidth: '100%' }}>
+        {/* Mobile Cards */}
+        <Box sx={{ display: { xs: 'block', md: 'none' } }}>
+          <Grid container spacing={2}>
+            {paginatedMembers.map((member) => (
+              <Grid key={member.id} size={12}>
+                <Card sx={{
+                  backgroundColor: '#1e293b',
+                  border: '1px solid #334155',
+                  boxShadow: 'none',
+                  width: '100%',
+                  '&:hover': {
+                    borderColor: '#475569',
+                    boxShadow: '0 2px 4px rgba(0, 0, 0, 0.2)'
+                  }
+                }}>
+                  <CardContent sx={{ p: 2 }}>
+                    <Box sx={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', mb: 2 }}>
+                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, flex: 1 }}>
+                        <Avatar sx={{ 
+                          width: 48, 
+                          height: 48, 
+                          backgroundColor: '#3b82f6',
+                          fontSize: '1rem',
+                          fontWeight: 600
+                        }}>
+                          {member.avatar}
+                        </Avatar>
+                        <Box sx={{ flex: 1, minWidth: 0 }}>
+                          <Typography 
+                            variant="h6" 
+                            fontWeight={600} 
+                            sx={{ 
+                              color: '#ffffff',
+                              fontSize: '1rem',
+                              wordBreak: 'break-word',
+                              mb: 0.5
+                            }}
+                          >
+                            {member.name}
+                          </Typography>
+                          <Typography 
+                            variant="body2" 
+                            sx={{ 
+                              color: '#94a3b8',
+                              fontSize: '0.875rem'
+                            }}
+                          >
+                            {member.department}
+                          </Typography>
+                        </Box>
+                      </Box>
+                      <IconButton
+                        size="small"
+                        onClick={handleMenuOpen}
+                        sx={{ color: '#94a3b8' }}
+                      >
+                        <MoreVert />
+                      </IconButton>
+                    </Box>
+                    
+                    <Box sx={{ mb: 2 }}>
+                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
+                        <Email sx={{ fontSize: 16, color: '#94a3b8' }} />
+                        <Typography 
+                          variant="body2" 
+                          sx={{ 
+                            color: '#94a3b8',
+                            fontSize: '0.875rem',
+                            wordBreak: 'break-all'
+                          }}
+                        >
+                          {member.email}
+                        </Typography>
+                      </Box>
+                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                        <Phone sx={{ fontSize: 16, color: '#94a3b8' }} />
+                        <Typography 
+                          variant="body2" 
+                          sx={{ 
+                            color: '#94a3b8',
+                            fontSize: '0.875rem'
+                          }}
+                        >
+                          {member.phone}
+                        </Typography>
+                      </Box>
+                    </Box>
+                    
+                    <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, mb: 2 }}>
+                      <Chip
+                        label={member.role}
+                        size="small"
+                        sx={{
+                          backgroundColor: getRoleColor(member.role),
+                          color: '#ffffff',
+                          fontWeight: 500
+                        }}
+                      />
+                      <Chip
+                        label={member.status}
+                        size="small"
+                        variant="outlined"
+                        sx={{
+                          borderColor: getStatusColor(member.status),
+                          color: getStatusColor(member.status),
+                          textTransform: 'capitalize'
+                        }}
+                      />
+                    </Box>
+                    
+                    <Typography 
+                      variant="body2" 
+                      sx={{ 
+                        color: '#94a3b8',
+                        fontSize: '0.875rem'
+                      }}
+                    >
+                      Joined: {new Date(member.joinDate).toLocaleDateString()}
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </Grid>
+            ))}
+          </Grid>
+        </Box>
+
+        {/* Desktop Table */}
+        <Card sx={{
+          backgroundColor: '#1e293b',
+          border: '1px solid #334155',
+          boxShadow: 'none',
+          width: '100%',
+          maxWidth: '100%',
+          display: { xs: 'none', md: 'block' }
+        }}>
+          <TableContainer sx={{ 
+            overflowX: 'auto',
+            width: '100%',
+            maxWidth: '100%'
+          }}>
+            <Table sx={{ 
+              minWidth: 800,
+              width: '100%'
+            }}>
+              <TableHead>
+                <TableRow>
+                  <TableCell sx={{ 
+                    color: '#94a3b8', 
+                    borderBottom: '1px solid #334155',
+                    fontSize: '0.875rem',
+                    minWidth: 250
+                  }}>Member</TableCell>
+                  <TableCell sx={{ 
+                    color: '#94a3b8', 
+                    borderBottom: '1px solid #334155',
+                    fontSize: '0.875rem',
+                    minWidth: 100
+                  }}>Role</TableCell>
+                  <TableCell sx={{ 
+                    color: '#94a3b8', 
+                    borderBottom: '1px solid #334155',
+                    fontSize: '0.875rem',
+                    minWidth: 120
+                  }}>Department</TableCell>
+                  <TableCell sx={{ 
+                    color: '#94a3b8', 
+                    borderBottom: '1px solid #334155',
+                    fontSize: '0.875rem',
+                    minWidth: 100
+                  }}>Status</TableCell>
+                  <TableCell sx={{ 
+                    color: '#94a3b8', 
+                    borderBottom: '1px solid #334155',
+                    fontSize: '0.875rem',
+                    minWidth: 120
+                  }}>Join Date</TableCell>
+                  <TableCell sx={{ 
+                    color: '#94a3b8', 
+                    borderBottom: '1px solid #334155',
+                    fontSize: '0.875rem',
+                    minWidth: 80
+                  }}>Actions</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {paginatedMembers.map((member) => (
+                  <TableRow key={member.id} sx={{ '&:hover': { backgroundColor: '#334155' } }}>
+                    <TableCell sx={{ 
+                      borderBottom: '1px solid #334155',
+                      minWidth: 250,
+                      maxWidth: 300
+                    }}>
+                      <Box sx={{ 
+                        display: 'flex', 
+                        alignItems: 'center', 
+                        gap: 2
+                      }}>
+                        <Avatar sx={{ 
+                          width: 40, 
+                          height: 40, 
+                          backgroundColor: '#3b82f6',
+                          fontSize: '0.9rem',
+                          fontWeight: 600
+                        }}>
+                          {member.avatar}
+                        </Avatar>
+                        <Box sx={{ width: '100%', minWidth: 0 }}>
+                          <Typography 
+                            variant="body2" 
+                            fontWeight={600} 
+                            sx={{ 
+                              color: '#ffffff',
+                              fontSize: '0.875rem',
+                              wordBreak: 'break-word'
+                            }}
+                          >
+                            {member.name}
+                          </Typography>
+                          <Box sx={{ 
+                            display: 'flex', 
+                            flexDirection: 'column',
+                            gap: 0.5, 
+                            mt: 0.5 
+                          }}>
+                            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                              <Email sx={{ fontSize: 14, color: '#94a3b8' }} />
+                              <Typography 
+                                variant="caption" 
+                                sx={{ 
+                                  color: '#94a3b8',
+                                  fontSize: '0.75rem',
+                                  wordBreak: 'break-all'
+                                }}
+                              >
+                                {member.email}
+                              </Typography>
+                            </Box>
+                            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                              <Phone sx={{ fontSize: 14, color: '#94a3b8' }} />
+                              <Typography 
+                                variant="caption" 
+                                sx={{ 
+                                  color: '#94a3b8',
+                                  fontSize: '0.75rem'
+                                }}
+                              >
+                                {member.phone}
+                              </Typography>
+                            </Box>
+                          </Box>
+                        </Box>
+                      </Box>
+                    </TableCell>
+                    <TableCell sx={{ 
+                      borderBottom: '1px solid #334155',
+                      minWidth: 100
+                    }}>
+                      <Chip
+                        label={member.role}
+                        size="small"
+                        sx={{
+                          backgroundColor: getRoleColor(member.role),
+                          color: '#ffffff',
+                          fontWeight: 500,
+                          fontSize: '0.75rem'
+                        }}
+                      />
+                    </TableCell>
+                    <TableCell sx={{ 
+                      color: '#ffffff', 
+                      borderBottom: '1px solid #334155',
+                      fontSize: '0.875rem',
+                      minWidth: 120,
+                      wordBreak: 'break-word'
+                    }}>
+                      {member.department}
+                    </TableCell>
+                    <TableCell sx={{ 
+                      borderBottom: '1px solid #334155',
+                      minWidth: 100
+                    }}>
+                      <Chip
+                        label={member.status}
+                        size="small"
+                        variant="outlined"
+                        sx={{
+                          borderColor: getStatusColor(member.status),
+                          color: getStatusColor(member.status),
+                          textTransform: 'capitalize',
+                          fontSize: '0.75rem'
+                        }}
+                      />
+                    </TableCell>
+                    <TableCell sx={{ 
+                      color: '#ffffff', 
+                      borderBottom: '1px solid #334155',
+                      fontSize: '0.875rem',
+                      minWidth: 120,
+                      whiteSpace: 'nowrap'
+                    }}>
+                      {new Date(member.joinDate).toLocaleDateString()}
+                    </TableCell>
+                    <TableCell sx={{ 
+                      borderBottom: '1px solid #334155',
+                      minWidth: 80
+                    }}>
+                      <IconButton
+                        size="small"
+                        onClick={handleMenuOpen}
+                        sx={{ 
+                          color: '#94a3b8',
+                          width: 40,
+                          height: 40
+                        }}
+                      >
+                        <MoreVert sx={{ fontSize: '1.25rem' }} />
+                      </IconButton>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+          
+          <TablePagination
+            component="div"
+            count={filteredMembers.length}
+            page={page}
+            onPageChange={handleChangePage}
+            rowsPerPage={rowsPerPage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+            sx={{
+              color: '#94a3b8',
+              borderTop: '1px solid #334155',
+              '& .MuiTablePagination-selectIcon': {
+                color: '#94a3b8'
+              }
+            }}
+          />
+        </Card>
+        
+        {/* Mobile Pagination */}
+        <Box sx={{ display: { xs: 'block', md: 'none' }, mt: 2 }}>
+          <Card sx={{
+            backgroundColor: '#1e293b',
+            border: '1px solid #334155',
+            boxShadow: 'none'
+          }}>
+            <TablePagination
+              component="div"
+              count={filteredMembers.length}
+              page={page}
+              onPageChange={handleChangePage}
+              rowsPerPage={rowsPerPage}
+              onRowsPerPageChange={handleChangeRowsPerPage}
+              sx={{
+                color: '#94a3b8',
+                '& .MuiTablePagination-selectIcon': {
+                  color: '#94a3b8'
+                }
+              }}
+            />
+          </Card>
+        </Box>
+      </Box>
 
       {/* Context Menu */}
       <Menu

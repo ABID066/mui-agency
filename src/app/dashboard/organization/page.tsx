@@ -1,4 +1,4 @@
-import Organization from "../../../components/dashboard/Organization/Organization";
+import Organization from "../../../components/dashboard/Organization/MyOrganizations";
 
 export default function OrganizationPage() {
   return (
