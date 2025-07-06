@@ -25,6 +25,8 @@ import {
   Logout
 } from '@mui/icons-material';
 import { useRouter} from 'next/navigation';
+import useAuth from "@/hooks/useAuth";
+import { signOut } from "next-auth/react";
 
 interface NavigationItem {
   name: string;
@@ -41,8 +43,17 @@ interface NavbarProps {
 export default function Navbar({ drawerWidth, onMenuClick }: NavbarProps) {
   const theme = useTheme();
   const router = useRouter();
+  const { user, setUser } = useAuth();
   
   const [profileAnchorEl, setProfileAnchorEl] = useState<HTMLElement | null>(null);
+  
+  const getInitials = (name: string) => {
+    return name
+      .split(" ")
+      .map((n) => n[0])
+      .join("")
+      .toUpperCase();
+  };
 
   
 
@@ -62,10 +73,20 @@ export default function Navbar({ drawerWidth, onMenuClick }: NavbarProps) {
 
   
 
-  const handleLogout = () => {
-    // Add logout logic here
-    console.log('Logout clicked');
-    setProfileAnchorEl(null);
+  const handleLogout = async () => {
+    try {
+      setProfileAnchorEl(null);
+      setUser(null);
+      // Sign out with redirect to home page
+      await signOut({ 
+        redirect: true,
+        callbackUrl: "/" 
+      });
+    } catch (error) {
+      console.error('Logout error:', error);
+      // Fallback: force navigation to home
+      router.push("/");
+    }
   };
 
   const isProfileOpen = Boolean(profileAnchorEl);
@@ -149,15 +170,17 @@ export default function Navbar({ drawerWidth, onMenuClick }: NavbarProps) {
           <Box sx={{ p: 2 }}>
             {/* User Info Header */}
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 2, pb: 2, borderBottom: '1px solid #4A5568' }}>
-              <Avatar sx={{ width: 36, height: 36, backgroundColor: '#718096', fontSize: '0.9rem', fontWeight: 600 }}>
-                S
+              <Avatar 
+                src={user?.image}
+                sx={{ width: 36, height: 36, backgroundColor: '#718096', fontSize: '0.9rem', fontWeight: 600 }}>
+                {!user?.image && user?.name && getInitials(user.name)}
               </Avatar>
               <Box>
                 <Typography variant="body2" fontWeight={600} sx={{ color: '#ffffff', lineHeight: 1.2 }}>
-                  Siriwat K.
+                  {user?.name || 'User'}
                 </Typography>
                 <Typography variant="caption" sx={{ color: '#A0AEC0' }}>
-                  siriwat@test.com
+                  {user?.email || 'user@example.com'}
                 </Typography>
               </Box>
             </Box>
